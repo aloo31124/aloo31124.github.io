@@ -15,7 +15,7 @@
 <meta property="og:description" content="在 jsp 中 template 自定義標籤，會對應到 tld 檔與 xxxTag.java 程式，若要設定新的屬性與其在該標籤中的運作邏輯，名稱一樣即可。 如下範例為 在  template:multiselect 標籤中判斷是否為發布 ( ${editable} ) ，若已經發布自訂屬性: editabled 會將 該項目的刪除鈕 『x』disable無法按。 src&#x2F;main&#x2F;webapp&#x2F;">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2020-07-24T10:11:25.000Z">
-<meta property="article:modified_time" content="2020-07-24T10:20:15.061Z">
+<meta property="article:modified_time" content="2020-07-24T10:28:59.958Z">
 <meta property="article:author" content="盧本翔">
 <meta property="article:tag" content="程式">
 <meta property="article:tag" content=" java">
@@ -115,21 +115,13 @@
  &lt;tagclass&gt;com.cyberlink.encore.ctl.form.MultiSelectTag&lt;/tagclass&gt;
 
 &lt;bodycontent&gt;EMPTY&lt;/bodycontent&gt;
-
     ......
-
 &lt;attribute&gt; ... &lt;/attribute&gt;
-
     ......
-
 &lt;attribute&gt;
-
     &lt;name&gt;editabled&lt;/name&gt;
-
     &lt;required&gt;false&lt;/required&gt;
-
     &lt;rtexprvalue&gt;true&lt;/rtexprvalue&gt;
-
 &lt;/attribute&gt;</code></pre></li>
 </ul>
 <p>src/main/java/com/cyberlink/encore/ctl/form/MultiSelectTag.java</p>
@@ -174,7 +166,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/24/java-%E4%BF%AE%E6%94%B9-jsp-%E4%B8%AD-template-%E5%B0%8D%E6%87%89-tld-%E8%88%87-tag-java-%E7%A8%8B%E5%BC%8F-1/" data-id="ckd02uoej00010kx1897pa20l" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/24/java-%E4%BF%AE%E6%94%B9-jsp-%E4%B8%AD-template-%E5%B0%8D%E6%87%89-tld-%E8%88%87-tag-java-%E7%A8%8B%E5%BC%8F-1/" data-id="ckd034iio0001zsx10m7se0xd" class="article-share-link">Share</a>
       
       
     </footer>

@@ -71,6 +71,79 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-js-DOM-JS-在-head-與-body-標籤中運行的差異" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/25/js-DOM-JS-%E5%9C%A8-head-%E8%88%87-body-%E6%A8%99%E7%B1%A4%E4%B8%AD%E9%81%8B%E8%A1%8C%E7%9A%84%E5%B7%AE%E7%95%B0/" class="article-date">
+  <time datetime="2020-07-25T01:35:00.000Z" itemprop="datePublished">2020-07-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/js-%E9%9A%A8%E7%AD%86%E8%A8%98/">js 隨筆記</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/25/js-DOM-JS-%E5%9C%A8-head-%E8%88%87-body-%E6%A8%99%E7%B1%A4%E4%B8%AD%E9%81%8B%E8%A1%8C%E7%9A%84%E5%B7%AE%E7%95%B0/">[js][DOM] JS 在 &lt;head&gt; 與 &lt;body&gt; 標籤中運行的差異</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在處理 js 的程式中常常會有很多疑惑，js 常常在某些條件下能執行，<br>在某一些條件下卻又莫名的掛掉了，讓我很不解阿 =”= </p>
+<p>尤其是 js 的程式有時候能在 <head>中執行，但有些條件下又不行了…???<br>直到看了 Kuro Hsu 大大的文章才解惑阿…。</p>
+<p>其實 js 的執行情況跟 瀏覽器中解析的 DOM 機制有很大的關西，一般 JS 放置的位置不外乎就兩個地方，head 與 body 標籤中。</p>
+<ul>
+<li>head 標籤裡</li>
+<li>body 標籤裡 </li>
+</ul>
+<p>但其實這兩個位置在運作上就有很大的差異，如下的範例:</p>
+<ul>
+<li>程式以  document.querySelector 取得 id=”A” 的節點，並使用文字內容 textContent 把 ‘HELLO’ 的字串放在id=”A” 的節點裡面為例</li>
+</ul>
+<p><img src="/images/pasted-5.png" alt="upload successful"></p>
+<p><img src="/images/pasted-6.png" alt="upload successful"></p>
+<p>情況:</p>
+<ul>
+<li>原本可以在 body 內執行的 script 標籤程式，換到 head中卻無法執行。</li>
+<li>在 head 的 script 無法操作 body 中的節點，</li>
+</ul>
+<p>原因:</p>
+<ul>
+<li>原來是因為 網頁被載入瀏覽器後，瀏覽器會由上而下 來解析該檔。</li>
+<li>而在 head 標籤中解析到 script 時，會立即執行 script 的內容，</li>
+<li>但 body內容卻還沒被解析，自然無法找到 body內的節點。</li>
+</ul>
+<p>了解完之後猶如醍醐灌頂，原來 撰寫 JS 程式真要能熟練，可不只是要知道JS核心 的物件導向語法、還得對 瀏覽器中的 BOM tree 模型與BOM 的核心 window 物件有一定的了解才行阿…。</p>
+<hr>
+參考資料:<br>
+<a href="https://ithelp.ithome.com.tw/articles/10191765" target="_blank" rel="noopener">
+重新認識 JavaScript: Day 12 透過 DOM API 查找節點
+</a>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://aloo31124.github.io/2020/07/25/js-DOM-JS-%E5%9C%A8-head-%E8%88%87-body-%E6%A8%99%E7%B1%A4%E4%B8%AD%E9%81%8B%E8%A1%8C%E7%9A%84%E5%B7%AE%E7%95%B0/" data-id="ckd1013e5000254x1clelcszx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DOM/" rel="tag">DOM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-laravel-作品集1-以-migration資料遷移程式-新增db中的資料表" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/07/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%861-%E4%BB%A5-migration%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F-%E6%96%B0%E5%A2%9Edb%E4%B8%AD%E7%9A%84%E8%B3%87%E6%96%99%E8%A1%A8/" class="article-date">
@@ -159,7 +232,7 @@ php artisan migrate
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%861-%E4%BB%A5-migration%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F-%E6%96%B0%E5%A2%9Edb%E4%B8%AD%E7%9A%84%E8%B3%87%E6%96%99%E8%A1%A8/" data-id="ckd0xq6640000egx15sk86lvr" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%861-%E4%BB%A5-migration%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F-%E6%96%B0%E5%A2%9Edb%E4%B8%AD%E7%9A%84%E8%B3%87%E6%96%99%E8%A1%A8/" data-id="ckd1013e9000554x1hyha5ct5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/migration/" rel="tag">migration</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
@@ -199,16 +272,19 @@ php artisan migrate
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>關於 \r\n</p>
+        <p>關於 \r\n 介紹</p>
 <ul>
-<li>\r\n通常是微軟的文件、pdf 會產生的，在其它的編輯器裡面，</li>
-<li>會在一行的節尾看到 ^M，那就是\r\n</li>
-<li>是\r\n，不是\n\r ，會無效</li>
-</ul>
-<p>關於 \n 與 \n</p>
-<ul>
-<li>‘\r’是回車( carriage return) ，’\n’是換行 ( line feed )</li>
-<li>‘\r’ 是光標到行首，’\n’是光標下移一行</li>
+<li><p>\r\n通常是微軟的文件、pdf 會產生的，在其它的編輯器裡面，</p>
+</li>
+<li><p>會在一行的節尾看到 ^M，那就是\r\n</p>
+</li>
+<li><p>是\r\n，不是\n\r ，會無效</p>
+<p>字符 \r 與 \n 差異</p>
+</li>
+<li><p>‘\r’是回車( carriage return) ，’\n’是換行 ( line feed )</p>
+</li>
+<li><p>‘\r’ 是光標到行首，’\n’是光標下移一行</p>
+</li>
 </ul>
 <p>“回車”（carriage return） 由來</p>
 <ul>
@@ -230,7 +306,7 @@ php artisan migrate
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/24/%E7%B7%A8%E7%A2%BC-%E9%97%9C%E6%96%BC-n-%E8%88%87-n-%E5%AD%97%E7%AC%A6/" data-id="ckd0xq66b0001egx1czzxeet1" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/24/%E7%B7%A8%E7%A2%BC-%E9%97%9C%E6%96%BC-n-%E8%88%87-n-%E5%AD%97%E7%AC%A6/" data-id="ckd1013ea000654x1fx4i3i8z" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" rel="tag">檔案上傳</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%B7%A8%E7%A2%BC/" rel="tag">編碼</a></li></ul>
@@ -339,7 +415,7 @@ php artisan migrate
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/24/java-%E4%BF%AE%E6%94%B9-jsp-%E4%B8%AD-template-%E5%B0%8D%E6%87%89-tld-%E8%88%87-tag-java-%E7%A8%8B%E5%BC%8F-1/" data-id="ckd0xq66w000gegx187yla674" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/24/java-%E4%BF%AE%E6%94%B9-jsp-%E4%B8%AD-template-%E5%B0%8D%E6%87%89-tld-%E8%88%87-tag-java-%E7%A8%8B%E5%BC%8F-1/" data-id="ckd1013e3000154x19c75bu1q" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jsp/" rel="tag">jsp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tagbase/" rel="tag">tagbase</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tld/" rel="tag">tld</a></li></ul>
@@ -390,7 +466,7 @@ php artisan migrate
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/24/hello-world/" data-id="ckd0xq670000regx1bi8x07xj" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/24/hello-world/" data-id="ckd1013dx000054x1dmihappn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -410,7 +486,7 @@ php artisan migrate
   <div class="widget-wrap">
     <h3 class="widget-title">分類</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/laravel-%E5%B1%A5%E6%AD%B7%E4%BD%9C%E5%93%81%E7%B7%B4%E7%BF%92/">laravel 履歷作品練習</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B7%A8%E7%A2%BC/">編碼</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js-%E9%9A%A8%E7%AD%86%E8%A8%98/">js 隨筆記</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/laravel-%E5%B1%A5%E6%AD%B7%E4%BD%9C%E5%93%81%E7%B7%B4%E7%BF%92/">laravel 履歷作品練習</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B7%A8%E7%A2%BC/">編碼</a></li></ul>
     </div>
   </div>
 
@@ -420,7 +496,7 @@ php artisan migrate
   <div class="widget-wrap">
     <h3 class="widget-title">標籤</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/" rel="tag">jsp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/migration/" rel="tag">migration</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tagbase/" rel="tag">tagbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tld/" rel="tag">tld</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" rel="tag">檔案上傳</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B7%A8%E7%A2%BC/" rel="tag">編碼</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOM/" rel="tag">DOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/" rel="tag">jsp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/migration/" rel="tag">migration</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tagbase/" rel="tag">tagbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tld/" rel="tag">tld</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" rel="tag">檔案上傳</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B7%A8%E7%A2%BC/" rel="tag">編碼</a></li></ul>
     </div>
   </div>
 
@@ -430,7 +506,7 @@ php artisan migrate
   <div class="widget-wrap">
     <h3 class="widget-title">標籤雲</h3>
     <div class="widget tagcloud">
-      <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/laravel/" style="font-size: 10px;">laravel</a> <a href="/tags/migration/" style="font-size: 10px;">migration</a> <a href="/tags/php/" style="font-size: 10px;">php</a> <a href="/tags/tagbase/" style="font-size: 10px;">tagbase</a> <a href="/tags/tld/" style="font-size: 10px;">tld</a> <a href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" style="font-size: 10px;">檔案上傳</a> <a href="/tags/%E7%B7%A8%E7%A2%BC/" style="font-size: 10px;">編碼</a>
+      <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/laravel/" style="font-size: 10px;">laravel</a> <a href="/tags/migration/" style="font-size: 10px;">migration</a> <a href="/tags/php/" style="font-size: 10px;">php</a> <a href="/tags/tagbase/" style="font-size: 10px;">tagbase</a> <a href="/tags/tld/" style="font-size: 10px;">tld</a> <a href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" style="font-size: 10px;">檔案上傳</a> <a href="/tags/%E7%B7%A8%E7%A2%BC/" style="font-size: 10px;">編碼</a>
     </div>
   </div>
 
@@ -450,6 +526,10 @@ php artisan migrate
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/07/25/js-DOM-JS-%E5%9C%A8-head-%E8%88%87-body-%E6%A8%99%E7%B1%A4%E4%B8%AD%E9%81%8B%E8%A1%8C%E7%9A%84%E5%B7%AE%E7%95%B0/">[js][DOM] JS 在 &lt;head&gt; 與 &lt;body&gt; 標籤中運行的差異</a>
+          </li>
         
           <li>
             <a href="/2020/07/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%861-%E4%BB%A5-migration%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F-%E6%96%B0%E5%A2%9Edb%E4%B8%AD%E7%9A%84%E8%B3%87%E6%96%99%E8%A1%A8/">[laravel] [作品集1] 以 migration資料遷移程式 新增db中的資料表</a>

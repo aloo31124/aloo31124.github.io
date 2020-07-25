@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>[laravel] [作品集1] 以 migration資料遷移程式 新增db中的資料表 | 阿盧的程式筆記</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="規劃設計一個能有左選單樹進行分類的作品集介面，如下圖:  此章節先從新增資料庫設計開始，我習慣先設計資料庫的結構與欄位，如下圖。因為每個作品都有其分類，自然在作品表中需要對應一個分類id，portfolio_category_id 。既然作品有分類，當然就需要另外設計一個作品分類表，畢竟設計是樹狀選單，使用無線層的樹狀結構設計最常見。也就是每個分類再一對一對應其父分類的id，用遞迴就能簡單長出整棵">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[laravel] [作品集1] 以 migration資料遷移程式 新增db中的資料表">
+<meta property="og:url" content="http://aloo31124.github.io/2020/07/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%861-%E4%BB%A5-migration%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F-%E6%96%B0%E5%A2%9Edb%E4%B8%AD%E7%9A%84%E8%B3%87%E6%96%99%E8%A1%A8/index.html">
+<meta property="og:site_name" content="阿盧的程式筆記">
+<meta property="og:description" content="規劃設計一個能有左選單樹進行分類的作品集介面，如下圖:  此章節先從新增資料庫設計開始，我習慣先設計資料庫的結構與欄位，如下圖。因為每個作品都有其分類，自然在作品表中需要對應一個分類id，portfolio_category_id 。既然作品有分類，當然就需要另外設計一個作品分類表，畢竟設計是樹狀選單，使用無線層的樹狀結構設計最常見。也就是每個分類再一對一對應其父分類的id，用遞迴就能簡單長出整棵">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-1.png">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-0.png">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-2.png">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-3.png">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-4.png">
+<meta property="article:published_time" content="2020-07-25T00:28:00.000Z">
+<meta property="article:modified_time" content="2020-07-25T00:46:41.081Z">
+<meta property="article:author" content="盧本翔">
+<meta property="article:tag" content="php">
+<meta property="article:tag" content="laravel">
+<meta property="article:tag" content="migration">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://aloo31124.github.io/images/pasted-1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="阿盧的程式筆記" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">阿盧的程式筆記</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">程式學海無涯~回頭是岸阿~~ QAQ</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜尋"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://aloo31124.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-laravel-作品集1-以-migration資料遷移程式-新增db中的資料表" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%861-%E4%BB%A5-migration%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F-%E6%96%B0%E5%A2%9Edb%E4%B8%AD%E7%9A%84%E8%B3%87%E6%96%99%E8%A1%A8/" class="article-date">
+  <time datetime="2020-07-25T00:28:00.000Z" itemprop="datePublished">2020-07-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/laravel-%E5%B1%A5%E6%AD%B7%E4%BD%9C%E5%93%81%E7%B7%B4%E7%BF%92/">laravel 履歷作品練習</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [laravel] [作品集1] 以 migration資料遷移程式 新增db中的資料表
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>規劃設計一個能有左選單樹進行分類的作品集介面，如下圖:</p>
+<p><img src="/images/pasted-1.png" alt="upload successful"></p>
+<p>此章節先從新增資料庫設計開始，我習慣先設計資料庫的結構與欄位，如下圖。<br>因為每個作品都有其分類，自然在作品表中需要對應一個分類id，portfolio_category_id 。<br>既然作品有分類，當然就需要另外設計一個作品分類表，畢竟設計是樹狀選單，使用無線層的樹狀結構設計最常見。<br>也就是每個分類再一對一對應其父分類的id，用遞迴就能簡單長出整棵樹了。</p>
+<p><img src="/images/pasted-0.png" alt="upload successful"></p>
+<p>先下指令新增 作品 與 作品分類的 migration 資料遷移程式</p>
+<pre>
+php artisan make:migration create_portfolio_table
+php artisan make:migration create_portfolio_category_table
+</pre>
+
+<p>下完新增 migration 的資料遷移程式後，便會在 laravel的 [根目錄] /database/migrations/ 目錄下新增程式，如下圖:</p>
+<p><img src="/images/pasted-2.png" alt="upload successful"></p>
+<p>點開如上圖的程式，可以看到剛新增的 migration資料遷移程式中，會有個 up() 的函式，<br>使用 Schema 類的 create()方法在新增表格時定義其欄位，<br>通常需要修改的就是 Schema::create( … ) 中的定義欄位內容。</p>
+<pre><code>public function up()
+{
+    Schema::create(&apos;portfolio&apos;, function (Blueprint $table) {
+        $table-&gt;id();
+        $table-&gt;timestamps();
+    });
+}</code></pre><p>依照之前的欄位設計，修該兩之程式的 Schema::create( … ) 中的定義欄位內容，如下:</p>
+<ul>
+<li>portfolio 作品表</li>
+</ul>
+<pre><code>public function up()
+{
+    Schema::create(&apos;portfolio&apos;, function (Blueprint $table) {
+        $table-&gt;bigIncrements(&apos;id&apos;);
+        $table-&gt;bigInteger(&apos;portfolio_category_id&apos;);
+        $table-&gt;string(&apos;name&apos;);
+        $table-&gt;string(&apos;discription&apos;);
+        $table-&gt;bigInteger(&apos;sort&apos;);
+        $table-&gt;boolean(&apos;is_show&apos;)-&gt;default(1);
+        $table-&gt;boolean(&apos;is_delete&apos;)-&gt;default(0);
+        $table-&gt;timestamps();
+    });
+}</code></pre><ul>
+<li>portfolio_category 作品分類表</li>
+</ul>
+<pre><code>public function up()
+{
+    Schema::create(&apos;portfolio_category&apos;, function (Blueprint $table) {
+        $table-&gt;bigIncrements(&apos;id&apos;);
+        $table-&gt;bigInteger(&apos;parent_id&apos;);
+        $table-&gt;string(&apos;name&apos;);
+        $table-&gt;bigInteger(&apos;sort&apos;);
+        $table-&gt;boolean(&apos;is_show&apos;)-&gt;default(1);
+        $table-&gt;boolean(&apos;is_delete&apos;)-&gt;default(0);
+        $table-&gt;timestamps();
+    });
+}</code></pre><p>最後下資料遷移的指令，就能將migration 程式中的欄位定義 patch到資料庫:    </p>
+<pre>
+php artisan migrate
+</pre>
+
+
+<p>成功執行畫面:<br><img src="/images/pasted-3.png" alt="upload successful"></p>
+<p>資料庫也成功新增此兩表:<br><img src="/images/pasted-4.png" alt="upload successful"></p>
+<p>到這邊就成功的使用 migration 資料遷移程式新增資料表與定義欄位了，<br>下一章將會一樣使用 migration 資料遷移程式在此兩表插入測試資料。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://aloo31124.github.io/2020/07/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%861-%E4%BB%A5-migration%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F-%E6%96%B0%E5%A2%9Edb%E4%B8%AD%E7%9A%84%E8%B3%87%E6%96%99%E8%A1%A8/" data-id="ckd0xq6640000egx15sk86lvr" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/migration/" rel="tag">migration</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/07/24/%E7%B7%A8%E7%A2%BC-%E9%97%9C%E6%96%BC-n-%E8%88%87-n-%E5%AD%97%E7%AC%A6/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[編碼] 關於 
+ 與 
+ 字符</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分類</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/laravel-%E5%B1%A5%E6%AD%B7%E4%BD%9C%E5%93%81%E7%B7%B4%E7%BF%92/">laravel 履歷作品練習</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B7%A8%E7%A2%BC/">編碼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/" rel="tag">jsp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/migration/" rel="tag">migration</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tagbase/" rel="tag">tagbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tld/" rel="tag">tld</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" rel="tag">檔案上傳</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B7%A8%E7%A2%BC/" rel="tag">編碼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤雲</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/laravel/" style="font-size: 10px;">laravel</a> <a href="/tags/migration/" style="font-size: 10px;">migration</a> <a href="/tags/php/" style="font-size: 10px;">php</a> <a href="/tags/tagbase/" style="font-size: 10px;">tagbase</a> <a href="/tags/tld/" style="font-size: 10px;">tld</a> <a href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" style="font-size: 10px;">檔案上傳</a> <a href="/tags/%E7%B7%A8%E7%A2%BC/" style="font-size: 10px;">編碼</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">彙整</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%861-%E4%BB%A5-migration%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F-%E6%96%B0%E5%A2%9Edb%E4%B8%AD%E7%9A%84%E8%B3%87%E6%96%99%E8%A1%A8/">[laravel] [作品集1] 以 migration資料遷移程式 新增db中的資料表</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/24/%E7%B7%A8%E7%A2%BC-%E9%97%9C%E6%96%BC-n-%E8%88%87-n-%E5%AD%97%E7%AC%A6/">[編碼] 關於 
+ 與 
+ 字符</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/24/java-%E4%BF%AE%E6%94%B9-jsp-%E4%B8%AD-template-%E5%B0%8D%E6%87%89-tld-%E8%88%87-tag-java-%E7%A8%8B%E5%BC%8F-1/">[java] 修改 jsp 中 template 對應 .tld 與 tag.java 程式</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/24/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 盧本翔<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

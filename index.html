@@ -71,6 +71,193 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-laravel-作品集2-以-migration-資料遷移程式新增測試資料" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/26/laravel-%E4%BD%9C%E5%93%81%E9%9B%862-%E4%BB%A5-migration-%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F%E6%96%B0%E5%A2%9E%E6%B8%AC%E8%A9%A6%E8%B3%87%E6%96%99/" class="article-date">
+  <time datetime="2020-07-26T10:17:07.000Z" itemprop="datePublished">2020-07-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/26/laravel-%E4%BD%9C%E5%93%81%E9%9B%862-%E4%BB%A5-migration-%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F%E6%96%B0%E5%A2%9E%E6%B8%AC%E8%A9%A6%E8%B3%87%E6%96%99/">[laravel][作品集2] 以 migration 資料遷移程式新增測試資料</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>規劃設計一個能有左選單樹進行分類的作品集介面，如下圖:<br><img src="/images/pasted-1.png" alt="upload successful"></p>
+<hr>
+在這章節中，先新增測試資料，方便後續撰寫程式時顯示。
+一樣使用 migration資料遷移程式對作品表與作品分類表插入資料。
+
+<p>一樣與 新增表格一樣，下指令新增 migration 資料遷移程式:</p>
+<pre>
+php artisan make:migration insert_portfolio_category_table
+</pre>
+
+<p>成功新增 migration 資料遷移程式:</p>
+<p><img src="/images/pasted-7.png" alt="upload successful"></p>
+<p>依照如上圖的樹狀選單，設計出階層分類的作品集資料:</p>
+<ul>
+<li>總目錄<ul>
+<li>大學作品<ul>
+<li>專題作品</li>
+<li>研究所開發系統/論文</li>
+</ul>
+</li>
+<li>自行開發系統<ul>
+<li>網頁</li>
+<li>手機 app</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>在 insert_portfolio_category_table 分類的 up() 函式撰寫程式內容，<br>一樣在 up( ) 執行 插入資料的語法:</p>
+<pre>
+DB::table('[資料表名稱]') -> insert( array ( ..., ... ) );
+</pre>
+
+<p>依照如上設計，第一層分類為 大學作品，自行開發系統，第二層分類是專題作品、網頁… 以此類推。<br>insert_portfolio_category_table 分類的 up() 函式 程式內容:</p>
+<pre>
+    public function up()
+    {        
+        DB::table('portfolio_category')->insert(array(
+            'id' => '1',
+            'parent_id' => '0',//父節點為 [總目錄]
+            'name' => '大學作品',
+            'sort' => '0',
+            'created_at' => date('Y-m-d H:m:s'),
+            'updated_at' => date('Y-m-d H:m:s')
+        ));
+        DB::table('portfolio_category')->insert(array(
+            'id' => '2',
+            'parent_id' => '0',//父節點為 [總目錄]
+            'name' => '自行開發系統',
+            'sort' => '0',
+            'created_at' => date('Y-m-d H:m:s'),
+            'updated_at' => date('Y-m-d H:m:s')
+        ));
+        DB::table('portfolio_category')->insert(array(
+            'id' => '3',
+            'parent_id' => '1',
+            'name' => '專題作品',
+            'sort' => '0',
+            'created_at' => date('Y-m-d H:m:s'),
+            'updated_at' => date('Y-m-d H:m:s')
+        ));
+        DB::table('portfolio_category')->insert(array(
+            'id' => '4',
+            'parent_id' => '1',
+            'name' => '研究所開發系統/論文',
+            'sort' => '0',
+            'created_at' => date('Y-m-d H:m:s'),
+            'updated_at' => date('Y-m-d H:m:s')
+        ));
+        DB::table('portfolio_category')->insert(array(
+            'id' => '5',
+            'parent_id' => '2',
+            'name' => '網頁',
+            'sort' => '0',
+            'created_at' => date('Y-m-d H:m:s'),
+            'updated_at' => date('Y-m-d H:m:s')
+        ));
+        DB::table('portfolio_category')->insert(array(
+            'id' => '6',
+            'parent_id' => '2',
+            'name' => '手機app',
+            'sort' => '0',
+            'created_at' => date('Y-m-d H:m:s'),
+            'updated_at' => date('Y-m-d H:m:s')
+        ));
+    }
+</pre>
+
+
+<p>下migrate 資料遷移指令，patch 上述分類的資料內容</p>
+<pre>
+php artisan migrate
+</pre>
+
+<p>於 portfolio_category表成功 insert 資料<br><img src="/images/pasted-8.png" alt="upload successful"></p>
+<hr>
+另外新增作品表的資料內容，先增作品表遷移程式
+<pre>
+php artisan make:migration insert_portfolio_table
+</pre>
+
+
+<p>一樣使用 DB::table(‘[資料表名稱]’) -&gt; insert(… ) 新增作品表內容:</p>
+<pre>
+    public function up()
+    {
+        DB::table('portfolio')->insert(array(
+            'id' => '1',
+            'portfolio_category_id' => '4',
+            'name' => 'AQI視覺化介面',
+            'discription' => '從web端顯示全台各空氣汙染數值。',
+            'sort' => '0',
+            'created_at' => date('Y-m-d H:m:s'),
+            'updated_at' => date('Y-m-d H:m:s')
+        ));  
+        DB::table('portfolio')->insert(array(
+            'id' => '2',
+            'portfolio_category_id' => '4',
+            'name' => 'IDW動態網頁',
+            'discription' => '應用IDW視覺化PM2.5趨勢走向，並用IDW修補ARIMA時序資料破損。',
+            'sort' => '0',
+            'created_at' => date('Y-m-d H:m:s'),
+            'updated_at' => date('Y-m-d H:m:s')
+        ));
+         DB::table('portfolio')->insert(array(
+            'id' => '3',
+            'portfolio_category_id' => '5',
+            'name' => '個人履歷網系統',
+            'discription' => '該個人履歷往有後台可調整前台資訊給使用者觀看。',
+            'sort' => '0',
+            'created_at' => date('Y-m-d H:m:s'),
+            'updated_at' => date('Y-m-d H:m:s')
+        ));  
+        DB::table('portfolio')->insert(array(
+            'id' => '4',
+            'portfolio_category_id' => '6',
+            'name' => '叫車app',
+            'discription' => '',
+            'sort' => '0',
+            'created_at' => date('Y-m-d H:m:s'),
+            'updated_at' => date('Y-m-d H:m:s')
+        ));        
+    }       
+</pre>
+
+<p>下migrate 資料遷移指令，patch 上述作品表的資料內容</p>
+<pre>
+php artisan migrate
+</pre>
+
+<p>於 portfolio 表成功 insert 資料:<br><img src="/images/pasted-9.png" alt="upload successful"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://aloo31124.github.io/2020/07/26/laravel-%E4%BD%9C%E5%93%81%E9%9B%862-%E4%BB%A5-migration-%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F%E6%96%B0%E5%A2%9E%E6%B8%AC%E8%A9%A6%E8%B3%87%E6%96%99/" data-id="ckd2y00u40002yox185lkh0je" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-js-DOM-JS-在-head-與-body-標籤中運行的差異" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/07/25/js-DOM-JS-%E5%9C%A8-head-%E8%88%87-body-%E6%A8%99%E7%B1%A4%E4%B8%AD%E9%81%8B%E8%A1%8C%E7%9A%84%E5%B7%AE%E7%95%B0/" class="article-date">
@@ -132,7 +319,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/25/js-DOM-JS-%E5%9C%A8-head-%E8%88%87-body-%E6%A8%99%E7%B1%A4%E4%B8%AD%E9%81%8B%E8%A1%8C%E7%9A%84%E5%B7%AE%E7%95%B0/" data-id="ckd1013e5000254x1clelcszx" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/25/js-DOM-JS-%E5%9C%A8-head-%E8%88%87-body-%E6%A8%99%E7%B1%A4%E4%B8%AD%E9%81%8B%E8%A1%8C%E7%9A%84%E5%B7%AE%E7%95%B0/" data-id="ckd2y00um000dyox12d6zah9i" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DOM/" rel="tag">DOM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
@@ -232,7 +419,7 @@ php artisan migrate
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%861-%E4%BB%A5-migration%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F-%E6%96%B0%E5%A2%9Edb%E4%B8%AD%E7%9A%84%E8%B3%87%E6%96%99%E8%A1%A8/" data-id="ckd1013e9000554x1hyha5ct5" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%861-%E4%BB%A5-migration%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F-%E6%96%B0%E5%A2%9Edb%E4%B8%AD%E7%9A%84%E8%B3%87%E6%96%99%E8%A1%A8/" data-id="ckd2y00ut000myox1amhbbi22" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/migration/" rel="tag">migration</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
@@ -306,7 +493,7 @@ php artisan migrate
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/24/%E7%B7%A8%E7%A2%BC-%E9%97%9C%E6%96%BC-n-%E8%88%87-n-%E5%AD%97%E7%AC%A6/" data-id="ckd1013ea000654x1fx4i3i8z" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/24/%E7%B7%A8%E7%A2%BC-%E9%97%9C%E6%96%BC-n-%E8%88%87-n-%E5%AD%97%E7%AC%A6/" data-id="ckd2y00uu000nyox1byqo2971" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" rel="tag">檔案上傳</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%B7%A8%E7%A2%BC/" rel="tag">編碼</a></li></ul>
@@ -415,7 +602,7 @@ php artisan migrate
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/24/java-%E4%BF%AE%E6%94%B9-jsp-%E4%B8%AD-template-%E5%B0%8D%E6%87%89-tld-%E8%88%87-tag-java-%E7%A8%8B%E5%BC%8F-1/" data-id="ckd1013e3000154x19c75bu1q" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/24/java-%E4%BF%AE%E6%94%B9-jsp-%E4%B8%AD-template-%E5%B0%8D%E6%87%89-tld-%E8%88%87-tag-java-%E7%A8%8B%E5%BC%8F-1/" data-id="ckd2y00u20001yox1elde3xu9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jsp/" rel="tag">jsp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tagbase/" rel="tag">tagbase</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tld/" rel="tag">tld</a></li></ul>
@@ -466,7 +653,7 @@ php artisan migrate
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/24/hello-world/" data-id="ckd1013dx000054x1dmihappn" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/24/hello-world/" data-id="ckd2y00tv0000yox10liud1x7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -528,6 +715,10 @@ php artisan migrate
       <ul>
         
           <li>
+            <a href="/2020/07/26/laravel-%E4%BD%9C%E5%93%81%E9%9B%862-%E4%BB%A5-migration-%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F%E6%96%B0%E5%A2%9E%E6%B8%AC%E8%A9%A6%E8%B3%87%E6%96%99/">[laravel][作品集2] 以 migration 資料遷移程式新增測試資料</a>
+          </li>
+        
+          <li>
             <a href="/2020/07/25/js-DOM-JS-%E5%9C%A8-head-%E8%88%87-body-%E6%A8%99%E7%B1%A4%E4%B8%AD%E9%81%8B%E8%A1%8C%E7%9A%84%E5%B7%AE%E7%95%B0/">[js][DOM] JS 在 &lt;head&gt; 與 &lt;body&gt; 標籤中運行的差異</a>
           </li>
         
@@ -543,10 +734,6 @@ php artisan migrate
         
           <li>
             <a href="/2020/07/24/java-%E4%BF%AE%E6%94%B9-jsp-%E4%B8%AD-template-%E5%B0%8D%E6%87%89-tld-%E8%88%87-tag-java-%E7%A8%8B%E5%BC%8F-1/">[java] 修改 jsp 中 template 對應 .tld 與 tag.java 程式</a>
-          </li>
-        
-          <li>
-            <a href="/2020/07/24/hello-world/">Hello World</a>
           </li>
         
       </ul>

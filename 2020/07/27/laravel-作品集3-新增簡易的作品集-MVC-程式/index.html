@@ -7,12 +7,12 @@
   
   <title>[laravel][作品集3] 新增簡易的作品集 MVC 架構 | 阿盧的程式筆記</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="規劃設計一個能有左選單樹進行分類的作品集介面，如下圖:  設計MVC簡易架構 新增作品集的 MVC 三支程式: * Model :  portfolioCategory.php * View : portfolioIndex.blade.php * Controller : portfolioController.php  讓網址 http:&#x2F;&#x2F;127.0.0.1:8000&#x2F;portfolio 的">
+  <meta name="description" content="規劃設計一個能有左選單樹進行分類的作品集介面，如下圖:  設計MVC簡易架構 新增作品集的 MVC 三支程式:        Model :  portfolioCategory.php     View : portfolioIndex.blade.php     Controller : portfolioController.php    網址請求 http:&#x2F;&#x2F;127.0.0.1:8000">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[laravel][作品集3] 新增簡易的作品集 MVC 架構">
 <meta property="og:url" content="http://aloo31124.github.io/2020/07/27/laravel-%E4%BD%9C%E5%93%81%E9%9B%863-%E6%96%B0%E5%A2%9E%E7%B0%A1%E6%98%93%E7%9A%84%E4%BD%9C%E5%93%81%E9%9B%86-MVC-%E7%A8%8B%E5%BC%8F/index.html">
 <meta property="og:site_name" content="阿盧的程式筆記">
-<meta property="og:description" content="規劃設計一個能有左選單樹進行分類的作品集介面，如下圖:  設計MVC簡易架構 新增作品集的 MVC 三支程式: * Model :  portfolioCategory.php * View : portfolioIndex.blade.php * Controller : portfolioController.php  讓網址 http:&#x2F;&#x2F;127.0.0.1:8000&#x2F;portfolio 的">
+<meta property="og:description" content="規劃設計一個能有左選單樹進行分類的作品集介面，如下圖:  設計MVC簡易架構 新增作品集的 MVC 三支程式:        Model :  portfolioCategory.php     View : portfolioIndex.blade.php     Controller : portfolioController.php    網址請求 http:&#x2F;&#x2F;127.0.0.1:8000">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="http://aloo31124.github.io/images/pasted-1.png">
 <meta property="og:image" content="http://aloo31124.github.io/images/pasted-11.png">
@@ -27,10 +27,10 @@
 <meta property="og:image" content="http://aloo31124.github.io/images/pasted-20.png">
 <meta property="og:image" content="http://aloo31124.github.io/images/pasted-21.png">
 <meta property="article:published_time" content="2020-07-27T11:04:00.000Z">
-<meta property="article:modified_time" content="2020-07-28T03:56:57.352Z">
+<meta property="article:modified_time" content="2020-07-30T00:06:34.390Z">
 <meta property="article:author" content="盧本翔">
-<meta property="article:tag" content="php">
 <meta property="article:tag" content="laravel">
+<meta property="article:tag" content="php">
 <meta property="article:tag" content="mvc">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://aloo31124.github.io/images/pasted-1.png">
@@ -116,11 +116,14 @@
 <hr>
 <h4>設計MVC簡易架構</h4>
 新增作品集的 MVC 三支程式:
-* Model :  portfolioCategory.php
-* View : portfolioIndex.blade.php
-* Controller : portfolioController.php
+<ul>
+      <li>Model :  portfolioCategory.php</li>
+    <li>View : portfolioIndex.blade.php</li>
+    <li>Controller : portfolioController.php</li>
+</ul>
 
-<p>讓網址 <a href="http://127.0.0.1:8000/portfolio" target="_blank" rel="noopener">http://127.0.0.1:8000/portfolio</a> 的時候路由程式 routes/ web.php 會導向 controller ，<br>controller 程式在使用 index 方法初始並顯示作品集的頁面。再Model撈取測試資料。</p>
+
+<p>網址請求 <a href="http://127.0.0.1:8000/portfolio" target="_blank" rel="noopener">http://127.0.0.1:8000/portfolio</a> 的時候路由程式 routes/ web.php 會導向 controller後，controller 程式再使用 index 方法初始並顯示使用 Model 從資料庫撈取的資料於作品集的頁面。</p>
 <hr>
 <h4>Controller路由導向View</h4>
 於resources / views 目錄下手動新增 作品集的 .blade.php頁面 portfolioIndex.blade.php
@@ -173,7 +176,7 @@ return view("portfolioIndex", [ 'portfolioCategory' => $portfolioCategory ]);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/27/laravel-%E4%BD%9C%E5%93%81%E9%9B%863-%E6%96%B0%E5%A2%9E%E7%B0%A1%E6%98%93%E7%9A%84%E4%BD%9C%E5%93%81%E9%9B%86-MVC-%E7%A8%8B%E5%BC%8F/" data-id="ckd5ewjgt0006oox14qkq3dc9" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/27/laravel-%E4%BD%9C%E5%93%81%E9%9B%863-%E6%96%B0%E5%A2%9E%E7%B0%A1%E6%98%93%E7%9A%84%E4%BD%9C%E5%93%81%E9%9B%86-MVC-%E7%A8%8B%E5%BC%8F/" data-id="ckd81krwc0004aox12ylo3haq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
@@ -183,6 +186,15 @@ return view("portfolioIndex", [ 'portfolioCategory' => $portfolioCategory ]);
   
     
 <nav id="article-nav">
+  
+    <a href="/2020/07/28/laravel-%E4%BD%9C%E5%93%81%E9%9B%864-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE1-%E5%BE%9E%E8%B3%87%E6%96%99%E5%BA%AB%E6%92%88%E5%8F%96%E7%AC%AC%E4%B8%80%E5%B1%A4/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          [laravel][作品集4] 撰寫左樹選單1-設計樣式 與 操作邏輯
+        
+      </div>
+    </a>
   
   
     <a href="/2020/07/26/laravel-%E4%BD%9C%E5%93%81%E9%9B%862-%E4%BB%A5-migration-%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F%E6%96%B0%E5%A2%9E%E6%B8%AC%E8%A9%A6%E8%B3%87%E6%96%99/" id="article-nav-older" class="article-nav-link-wrap">
@@ -245,6 +257,10 @@ return view("portfolioIndex", [ 'portfolioCategory' => $portfolioCategory ]);
       <ul>
         
           <li>
+            <a href="/2020/07/28/laravel-%E4%BD%9C%E5%93%81%E9%9B%864-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE1-%E5%BE%9E%E8%B3%87%E6%96%99%E5%BA%AB%E6%92%88%E5%8F%96%E7%AC%AC%E4%B8%80%E5%B1%A4/">[laravel][作品集4] 撰寫左樹選單1-設計樣式 與 操作邏輯</a>
+          </li>
+        
+          <li>
             <a href="/2020/07/27/laravel-%E4%BD%9C%E5%93%81%E9%9B%863-%E6%96%B0%E5%A2%9E%E7%B0%A1%E6%98%93%E7%9A%84%E4%BD%9C%E5%93%81%E9%9B%86-MVC-%E7%A8%8B%E5%BC%8F/">[laravel][作品集3] 新增簡易的作品集 MVC 架構</a>
           </li>
         
@@ -258,10 +274,6 @@ return view("portfolioIndex", [ 'portfolioCategory' => $portfolioCategory ]);
         
           <li>
             <a href="/2020/07/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%861-%E4%BB%A5-migration%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F-%E6%96%B0%E5%A2%9Edb%E4%B8%AD%E7%9A%84%E8%B3%87%E6%96%99%E8%A1%A8/">[laravel] [作品集1] 以 migration資料遷移程式 新增db中的資料表</a>
-          </li>
-        
-          <li>
-            <a href="/2020/07/24/%E7%B7%A8%E7%A2%BC-%E9%97%9C%E6%96%BC-n-%E8%88%87-n-%E5%AD%97%E7%AC%A6/">[編碼] 關於\r  與\n  字符</a>
           </li>
         
       </ul>

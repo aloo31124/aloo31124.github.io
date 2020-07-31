@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>[laravel][作品集6] 撰寫左樹選單3-產生下一層節點，並使用jquery設計樹選單開闔 | 阿盧的程式筆記</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="規劃設計一個能有左選單樹進行分類的作品集介面，如下圖:  Jquery 實現左樹選單操作邏輯 在前文中提到，該左樹選單在網頁初始時只會產生第一層節點，點選其中一個節點的icon(資料夾圖示) 後才會產生該節點的下一層子節點 (點選該節點的文字是不會有反應的喔 ) 。產生子節點後，其每個子節點都承襲一樣的邏輯可點選icon再產生子節點。  父節點在產生子節點後，就不需要再次產生一次子節點，要不失去節">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[laravel][作品集6] 撰寫左樹選單3-產生下一層節點，並使用jquery設計樹選單開闔">
+<meta property="og:url" content="http://aloo31124.github.io/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%866-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE3-%E7%94%A2%E7%94%9F%E4%B8%8B%E4%B8%80%E5%B1%A4%E7%AF%80%E9%BB%9E%EF%BC%8C%E4%B8%A6%E4%BD%BF%E7%94%A8jquery%E8%A8%AD%E8%A8%88%E6%A8%B9%E9%81%B8%E5%96%AE%E9%96%8B%E9%97%94/index.html">
+<meta property="og:site_name" content="阿盧的程式筆記">
+<meta property="og:description" content="規劃設計一個能有左選單樹進行分類的作品集介面，如下圖:  Jquery 實現左樹選單操作邏輯 在前文中提到，該左樹選單在網頁初始時只會產生第一層節點，點選其中一個節點的icon(資料夾圖示) 後才會產生該節點的下一層子節點 (點選該節點的文字是不會有反應的喔 ) 。產生子節點後，其每個子節點都承襲一樣的邏輯可點選icon再產生子節點。  父節點在產生子節點後，就不需要再次產生一次子節點，要不失去節">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-1.png">
+<meta property="article:published_time" content="2020-07-31T11:15:00.000Z">
+<meta property="article:modified_time" content="2020-07-31T11:29:54.344Z">
+<meta property="article:author" content="盧本翔">
+<meta property="article:tag" content="php">
+<meta property="article:tag" content="laravel">
+<meta property="article:tag" content="jquery">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://aloo31124.github.io/images/pasted-1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="阿盧的程式筆記" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">阿盧的程式筆記</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">程式學海無涯~回頭是岸阿~~ QAQ</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜尋"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://aloo31124.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-laravel-作品集6-撰寫左樹選單3-產生下一層節點，並使用jquery設計樹選單開闔" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%866-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE3-%E7%94%A2%E7%94%9F%E4%B8%8B%E4%B8%80%E5%B1%A4%E7%AF%80%E9%BB%9E%EF%BC%8C%E4%B8%A6%E4%BD%BF%E7%94%A8jquery%E8%A8%AD%E8%A8%88%E6%A8%B9%E9%81%B8%E5%96%AE%E9%96%8B%E9%97%94/" class="article-date">
+  <time datetime="2020-07-31T11:15:00.000Z" itemprop="datePublished">2020-07-31</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/laravel-%E5%B1%A5%E6%AD%B7%E4%BD%9C%E5%93%81%E7%B7%B4%E7%BF%92/">laravel 履歷作品練習</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [laravel][作品集6] 撰寫左樹選單3-產生下一層節點，並使用jquery設計樹選單開闔
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>規劃設計一個能有左選單樹進行分類的作品集介面，如下圖:<br><img src="/images/pasted-1.png" alt="圖:預計畫面"></p>
+<hr>
+<h4>Jquery 實現左樹選單操作邏輯</h4>
+在前文中提到，該左樹選單在網頁初始時只會產生第一層節點，點選其中一個節點的icon(資料夾圖示) 後才會產生該節點的下一層子節點
+(點選該節點的文字是不會有反應的喔 ) 。產生子節點後，其每個子節點都承襲一樣的邏輯可點選icon再產生子節點。
+
+<p>父節點在產生子節點後，就不需要再次產生一次子節點，要不失去節省效能的意義，因此這部分也需要加上程式判斷，<br>並且在已經產生子節點後，該父節點就需要另外做展開與收合的判斷。</p>
+<p>雖然初學者撰寫一些工能都是邊開發邊整理邏輯，但能的話我還是會練習在開發前盡量去梳理出大致的程式邏輯，呈上整理出邏輯如下:</p>
+<ul>
+<li>點選左樹選單的 icon圖示<ul>
+<li>if 判斷該圖示的所屬節點 ( li 項目) 其還未產生子節點<ul>
+<li>若該父節點還未產生子節點，則執行 ajax()產生</li>
+</ul>
+</li>
+<li>else if 若該父節點已經產生子節點，另外判斷是否開闔 ( 隱藏或顯示 )<ul>
+<li>if 該父親節點是打開的( 其下的多個子節點是顯示的)<ul>
+<li>將其下多個子節點隱藏</li>
+</ul>
+</li>
+<li>else if 該父親節點是收合的( 其下的多個子節點是隱藏的)<ul>
+<li>將其下多個子節點顯示<br>整理出大致的程式邏輯與流程後，便開始以 jquery 撰寫。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4>點選 icon後產生其子節點</h4>
+範例程式:
+<pre>
+&#x3C;ul&#x3E;
+    &#x3C;li id=&#x27; [父節點 id] &#x27; class=&#x27;list-group-item&#x27;&#x3E;
+        &#x3C;img id=&#x27;folder_icon&#x27; class=&#x27;rounded&#x27; src=&#x27;&#x2F;icon&#x2F;folder-open.png&#x27;&#x3E;
+        &#x3C;span id=&#x27;folder_span&#x27;&#x3E;[ 父節點名稱  ] &#x3C;&#x2F;span&#x3E;
+    &#x3C;&#x2F;li&#x3E;
+
+<pre><code>&amp;#x3C;ul&amp;#x3E;
+    &amp;#x3C;li id=&amp;#x27; [子節點-1 id] &amp;#x27; class=&amp;#x27;list-group-item&amp;#x27;&amp;#x3E;
+        &amp;#x3C;img id=&amp;#x27;folder_icon&amp;#x27; class=&amp;#x27;rounded&amp;#x27; src=&amp;#x27;&amp;#x2F;icon&amp;#x2F;folder-open.png&amp;#x27;&amp;#x3E;
+        &amp;#x3C;span id=&amp;#x27;folder_span&amp;#x27;&amp;#x3E;[ 子節點-1 名稱  ] &amp;#x3C;&amp;#x2F;span&amp;#x3E;
+    &amp;#x3C;&amp;#x2F;li&amp;#x3E;
+            ......
+&amp;#x3C;&amp;#x2F;ul&amp;#x3E;</code></pre><p>   ……<br>&#x3C;&#x2F;ul&#x3E;<br></pre></p>
+<p>點選該左樹選單內的 icon 圖示，本文使用的是 .on()的方法，去判斷 樹選單內的元素是否被點選:</p>
+<pre>
+$("#LeftTreeMenu" ).on ( "click" , "img" , function() { ...點選後執行動作... } );
+</pre>
+
+<p>點選 icon 圖示( 標籤img )後，先判斷該被點選的節點 (父節點) 是否其下有其他項目，<br>也就是該父節點的 li 後面是否有接新的 ul ，如上的範例程式。<br>被點選的該圖示( img標籤 ) 在函式中以 $( this ) 表示，使用 .parent() 方法只往上層(外層)找一層去找尋是否符合的 li 標籤，<br>找到對應的 li 就是父節點，再以父節點為準再往下一層 .next() 找是否符合的 ul 元素，程式如下:</p>
+<pre>
+if($(this).parent("li").next("ul").length == 0){
+    // 若該父節點還未產生子節點，則執行 ajax()產生
+}else {
+    // 若該父節點已經產生子節點，另外判斷是否開闔 ( 隱藏或顯示 )
+}
+</pre>
+
+<p>判斷確定父節點還未產生節點後，要先取得該父節點的 id ，這樣才能依照該 id 執行上一章節中撰寫的 ajax()程式產生下一層的子節點。<br>一樣使用 $( this ) 指向該 img ，這次換 .closest() 方法，此方法會不斷向上找符合條件的才會停止，也就是要找到 li 元素並取的 id。<br>隨後找到 父節點 li 後，便用 .attr( ‘id’ ) 取得 id ，程式如下:</p>
+<pre>
+var ThisNodeCategoryId = $(this).closest("li").attr("id");
+</pre>
+<p>再來切換 icon圖片，一樣使用 .attr() 方法更換該圖示 img 的 src 路徑 ， .attr( ‘修改元素’  ,  ‘修改該元素值’ )</p>
+<pre>
+$(this).attr('src','/icon/folder-open.png');
+</pre>
+
+<p>因為圖片本身沒設定onclick 方法，所以這個 .on( “clcik” … ) 的事件需要再 文件的 DOM 被瀏覽器解析好後執行，需將該 .on() 的觸發判斷寫在 $( document ).ready() 事件中，因此最終完成程式如下:</p>
+<pre>
+$(document).ready(function(){
+    ......
+  $("#LeftTreeMenu").on("click", "img" ,function(){
+    if($(this).attr('id')=='folder_icon'){      
+      if($(this).parent("li").next("ul").length == 0){
+        $(this).attr('src','/icon/folder-open.png');
+        var ThisNodeCategoryId = $(this).closest("li").attr("id");
+        buildNextLevelByThisNodeIdForTreeMenu(ThisNodeCategoryId);
+      }else{   
+        // 若該父節點已經產生子節點，另外判斷是否開闔 ( 隱藏或顯示 )
+      }
+    }  
+  });
+});
+</pre>
+
+<hr>
+<h4> ajax() 將產生的子節點加入父節點之後</h4>
+由上一章所撰寫的 controller 串出的下一層子節點一樣回傳到 ajax() 的 success:function( result ) 的 result 參數中。不過跟上一章節使用的 .append() 是不同的方法 ，是使用 .after() 。
+<pre>
+function buildNextLevelByThisNodeIdForTreeMenu(ThisNodeCategoryId){
+    $.ajax({
+       ......
+      success:function(result){
+        if(ThisNodeCategoryId==0){ // 一開始網頁初始
+          $("#LeftTreeMenu").append(result);
+        }else{// 產生該父節點下一層子節點
+          $("#"+ThisNodeCategoryId).after(result);   
+        }
+      },error:function(){　......　}
+    });
+}
+</pre>
+兩這方法的差異處在於 .append() 是將 html 組成在該元素的 div 內，但 after() 是串在該標籤的下一個標籤位置。
+參閱文章一開始的範例程式，也就是父節點 li 的下一個位置產生 ul ，此就為 .after() 的功能。
+
+<hr>
+<h4>產生左樹選單節點開合功能</h4>
+最後，若該父節點已經產生其下一層的子節點，那剩下需要處理的邏輯就是將該父節點下一層 ul 標籤隱藏或顯示。
+一樣是將該功能另外分隔出另外一個函式: changeTreeChildNodesShowAndHiden($(this)) ，
+將該圖示 img 傳遞給此函示，並命名為 clickImg ，最後續處裡。<br><br>
+
+
+<p>同樣參考本文章一開始的範例程式，一樣的尋找邏輯，該圖示 img 被點選後，先用 .parent() 去尋找其所屬的父節點，然後再用 .next() 找父節點下一個的 子節點 ul 標籤。跟前文一開始判斷該父節點是否產生子節點一樣的語法。<br>只是再加上  .is( ‘:hidden’ ) 或 .is( ‘:visible’ ) 判斷是否開啟或關閉，若該子節點 ul 標籤是隱藏的  .is( ‘:hidden’ ) ，並顯示子節點 .show(“slow”) 並用 attr() 切換圖片。<br>反之子節點 ul 標籤是顯示的  .is( ‘:visible’ ) ，就隱藏子節點 .hide(“slow”) 然後同樣用 attr() 切換圖片，完整程式如下:</p>
+<pre>
+$(document).ready(function(){  ......
+  $("#LeftTreeMenu").on("click", "img" ,function(){
+    ......
+    if($(this).parent("li").next("ul").length == 0){
+        // 若該父節點還未產生子節點，則執行 ajax()產生
+    }else {
+        // 若該父節點已經產生子節點，另外判斷是否開闔 ( 隱藏或顯示 )
+        changeTreeChildNodesShowAndHiden($(this));
+    }
+    ......
+  });
+});
+
+function changeTreeChildNodesShowAndHiden(clickImg){
+    if(clickImg.parent("li").next('ul').is(':hidden')){      
+      clickImg.parent("li").next('ul').show("slow");
+      clickImg.attr('src','/icon/folder-open.png');
+    }else if(clickImg.parent("li").next('ul').is(':visible')){         
+      clickImg.parent("li").next('ul').hide("slow");
+      clickImg.attr('src','/icon/folder-close.png');
+    }
+}
+</pre>
+
+
+<hr>
+<h4>呈現結果</h4>
+呈現效果如下:
+![](/images/左樹選單開合.gif)
+
+<p>完成程式如下:</p>
+<pre>
+@extends(&#x27;layout.master.baseMaster&#x27;)
+
+@section(&#x27;content&#x27;)
+&#x3C;script&#x3E;
+$(document).ready(function(){
+  buildNextLevelByThisNodeIdForTreeMenu(0);
+
+  $(&#x22;&#x23;LeftTreeMenu&#x22;).on(&#x22;click&#x22;, &#x22;img&#x22; ,function(){
+    if($(this).attr(&#x27;id&#x27;)==&#x27;folder_icon&#x27;){      
+      if($(this).parent(&#x22;li&#x22;).next(&#x22;ul&#x22;).length == 0){
+        $(this).attr(&#x27;src&#x27;,&#x27;&#x2F;icon&#x2F;folder-open.png&#x27;);
+        var ThisNodeCategoryId = $(this).closest(&#x22;li&#x22;).attr(&#x22;id&#x22;);
+        buildNextLevelByThisNodeIdForTreeMenu(ThisNodeCategoryId);
+      }else{   
+        changeTreeChildNodesShowAndHiden($(this));
+      }
+    }  
+  });
+});
+function buildNextLevelByThisNodeIdForTreeMenu(ThisNodeCategoryId){
+    $.ajax({
+      type:&#x27;GET&#x27;,
+      url:&#x27;&#x2F;portfolioTreeMenuThisNodeBuildNextLevel&#x27;,
+      data: {ThisNodeCategoryId:ThisNodeCategoryId,
+         &#x22;_token&#x22;: &#x22; csrf_token() &#x22;} ,&#x2F;&#x2F;412
+      success:function(result){
+        if(ThisNodeCategoryId==0){&#x2F;&#x2F; first level of Tree view
+          $(&#x22;&#x23;LeftTreeMenu&#x22;).append(result);
+        }else{
+          $(&#x22;&#x23;&#x22;+ThisNodeCategoryId).after(result);   
+        }
+      },
+      error:function(){
+        console.log(&#x22;buildNextLevelByThisNodeIdForTreeMenu error &#x22;);
+      }
+    });
+}
+
+function changeTreeChildNodesShowAndHiden(clickImg){
+    if(clickImg.parent(&#x22;li&#x22;).next(&#x27;ul&#x27;).is(&#x27;:hidden&#x27;)){      
+      clickImg.parent(&#x22;li&#x22;).next(&#x27;ul&#x27;).show(&#x22;slow&#x22;);
+      clickImg.attr(&#x27;src&#x27;,&#x27;&#x2F;icon&#x2F;folder-open.png&#x27;);
+    }else if(clickImg.parent(&#x22;li&#x22;).next(&#x27;ul&#x27;).is(&#x27;:visible&#x27;)){            
+      clickImg.parent(&#x22;li&#x22;).next(&#x27;ul&#x27;).hide(&#x22;slow&#x22;);
+      clickImg.attr(&#x27;src&#x27;,&#x27;&#x2F;icon&#x2F;folder-close.png&#x27;);
+    }
+}
+&#x3C;&#x2F;script&#x3E;
+
+&#x3C;div id=&#x22;LeftTreeMenu&#x22; class=&#x22;col-4 list-group list-group-flush&#x22; style=&#x22;margin-top:20px&#x22;&#x3E;
+@endsection(&#x27;content&#x27;)
+</pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://aloo31124.github.io/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%866-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE3-%E7%94%A2%E7%94%9F%E4%B8%8B%E4%B8%80%E5%B1%A4%E7%AF%80%E9%BB%9E%EF%BC%8C%E4%B8%A6%E4%BD%BF%E7%94%A8jquery%E8%A8%AD%E8%A8%88%E6%A8%B9%E9%81%B8%E5%96%AE%E9%96%8B%E9%97%94/" data-id="ckda5clja001hcsx1ddhzb0oy" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%865-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE2-%E5%88%9D%E5%A7%8B%E9%A0%81%E9%9D%A2%E5%BE%9E%E8%B3%87%E6%96%99%E5%BA%AB%E6%92%88%E5%8F%96%E7%AC%AC%E4%B8%80%E5%B1%A4/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[laravel][作品集5] 撰寫左樹選單2-初始頁面從資料庫撈取第一層</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分類</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js-%E9%9A%A8%E7%AD%86%E8%A8%98/">js 隨筆記</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/laravel-%E5%B1%A5%E6%AD%B7%E4%BD%9C%E5%93%81%E7%B7%B4%E7%BF%92/">laravel 履歷作品練習</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B7%A8%E7%A2%BC/">編碼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOM/" rel="tag">DOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ajax/" rel="tag">ajax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/" rel="tag">jsp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/migration/" rel="tag">migration</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tagbase/" rel="tag">tagbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tld/" rel="tag">tld</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" rel="tag">檔案上傳</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B7%A8%E7%A2%BC/" rel="tag">編碼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤雲</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/laravel/" style="font-size: 20px;">laravel</a> <a href="/tags/migration/" style="font-size: 15px;">migration</a> <a href="/tags/mvc/" style="font-size: 10px;">mvc</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/tagbase/" style="font-size: 10px;">tagbase</a> <a href="/tags/tld/" style="font-size: 10px;">tld</a> <a href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" style="font-size: 10px;">檔案上傳</a> <a href="/tags/%E7%B7%A8%E7%A2%BC/" style="font-size: 10px;">編碼</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">彙整</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%866-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE3-%E7%94%A2%E7%94%9F%E4%B8%8B%E4%B8%80%E5%B1%A4%E7%AF%80%E9%BB%9E%EF%BC%8C%E4%B8%A6%E4%BD%BF%E7%94%A8jquery%E8%A8%AD%E8%A8%88%E6%A8%B9%E9%81%B8%E5%96%AE%E9%96%8B%E9%97%94/">[laravel][作品集6] 撰寫左樹選單3-產生下一層節點，並使用jquery設計樹選單開闔</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%865-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE2-%E5%88%9D%E5%A7%8B%E9%A0%81%E9%9D%A2%E5%BE%9E%E8%B3%87%E6%96%99%E5%BA%AB%E6%92%88%E5%8F%96%E7%AC%AC%E4%B8%80%E5%B1%A4/">[laravel][作品集5] 撰寫左樹選單2-初始頁面從資料庫撈取第一層</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/28/laravel-%E4%BD%9C%E5%93%81%E9%9B%864-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE1-%E5%BE%9E%E8%B3%87%E6%96%99%E5%BA%AB%E6%92%88%E5%8F%96%E7%AC%AC%E4%B8%80%E5%B1%A4/">[laravel][作品集4] 撰寫左樹選單1-設計樣式 與 操作邏輯</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/27/laravel-%E4%BD%9C%E5%93%81%E9%9B%863-%E6%96%B0%E5%A2%9E%E7%B0%A1%E6%98%93%E7%9A%84%E4%BD%9C%E5%93%81%E9%9B%86-MVC-%E7%A8%8B%E5%BC%8F/">[laravel][作品集3] 新增簡易的作品集 MVC 架構</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/26/laravel-%E4%BD%9C%E5%93%81%E9%9B%862-%E4%BB%A5-migration-%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F%E6%96%B0%E5%A2%9E%E6%B8%AC%E8%A9%A6%E8%B3%87%E6%96%99/">[laravel][作品集2] 以 migration 資料遷移程式新增測試資料</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 盧本翔<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -71,6 +71,240 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-laravel-作品集7-撰寫左樹選單4-按下選單後對應右內容頁" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/01/laravel-%E4%BD%9C%E5%93%81%E9%9B%867-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE4-%E6%8C%89%E4%B8%8B%E9%81%B8%E5%96%AE%E5%BE%8C%E5%B0%8D%E6%87%89%E5%8F%B3%E5%85%A7%E5%AE%B9%E9%A0%81/" class="article-date">
+  <time datetime="2020-08-01T02:06:00.000Z" itemprop="datePublished">2020-08-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/laravel-%E5%B1%A5%E6%AD%B7%E4%BD%9C%E5%93%81%E7%B7%B4%E7%BF%92/">laravel 履歷作品練習</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/01/laravel-%E4%BD%9C%E5%93%81%E9%9B%867-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE4-%E6%8C%89%E4%B8%8B%E9%81%B8%E5%96%AE%E5%BE%8C%E5%B0%8D%E6%87%89%E5%8F%B3%E5%85%A7%E5%AE%B9%E9%A0%81/">[laravel][作品集7] 撰寫左樹選單4-按下選單後對應右內容頁</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>規劃設計一個能有左選單樹進行分類的作品集介面，如下圖:<br><img src="/images/pasted-1.png" alt="圖:預計畫面"></p>
+<p>依照之前定義的操作邏輯，點選左樹選單的 span 標籤內的文字後，右內容頁面的上方 title 會產生分類名稱，並且右內容頁會產生縮圖元件來顯示作品內容。</p>
+<hr>
+依照前篇文章，如下左樹選單程式，點選 資料夾圖示 img 會展開與合併左樹選單，
+而點選如下程式中的 span 標籤內的文字，來觸發反應。
+<pre>
+&#x3C;ul&#x3E;
+    &#x3C;li id=&#x27; [子項目1 id] &#x27; class=&#x27;list-group-item&#x27;&#x3E;
+        &#x3C;img id=&#x27;folder_icon&#x27; class=&#x27;rounded&#x27; src=&#x27;&#x2F;icon&#x2F;folder-open.png&#x27; alt=&#x27;profile Pic&#x27;&#x3E;
+        &#x3C;span id=&#x27;folder_span&#x27;&#x3E;[ 子項目1名稱  ] &#x3C;&#x2F;span&#x3E;
+    &#x3C;&#x2F;li&#x3E;
+    &#x3C;li id=&#x27; [子項目2 id] &#x27; class=&#x27;list-group-item&#x27;&#x3E;
+        &#x3C;img id=&#x27;folder_icon&#x27; class=&#x27;rounded&#x27; src=&#x27;&#x2F;icon&#x2F;folder-open.png&#x27; alt=&#x27;profile Pic&#x27;&#x3E;
+        &#x3C;span id=&#x27;folder_span&#x27;&#x3E;[ 子項目2名稱  ] &#x3C;&#x2F;span&#x3E;
+    &#x3C;&#x2F;li&#x3E;
+...
+&#x3C;&#x2F;ul&#x3E;
+</pre>
+
+<p>如下為 右內容頁面的程式，對!就那麼簡單，因為後續內容一樣使用 controller 串出。</p>
+<pre>
+  &#x3C;div class=&#x22;col-8&#x22;&#x3E;  
+    &#x3C;h2&#x3E;作品分類:&#x3C;span id=&#x27;RightContentTitle&#x27;&#x3E;&#x3C;&#x2F;span&#x3E;&#x3C;&#x2F;h2&#x3E;    
+    &#x3C;div id=&#x22;RightContent&#x22; class=&#x22;card-deck&#x22; style=&#x22;margin-top:20px&#x22; &#x3E;&#x3C;&#x2F;div&#x3E;
+  &#x3C;&#x2F;div&#x3E;
+</pre>
+
+<hr>
+<h4>點選span文字後變粗體字，並右內容頁面title顯示分類名稱</h4>
+與前一篇文章觸發 資料夾圖示一樣， $( ).on("click" , "xxx" , function(){... } ); 
+的觸發方法需要在文件被瀏覽器解析時 $(document).ready(function(){ }); 方法裡執行。
+span被點選後，使用 changeTreeWordingWeightBolder () 方法讓字體變粗。
+
+<p>這邊changeTreeWordingWeightBolder() 函式中改變字體的粗細會使用 removeClass() 與 addClass() 兩個對應的jQuery方法，<br>此系統先定義被點選後粗體字使用此三個效果: font-weight-bolder 、text-info 、h5 ，如下:</p>
+<ul>
+    <li>font-weight-bolder : 字體變粗</li>
+    <li>text-info : boostrap 字體效果，呈現水藍色</li>
+    <li>h5 :  標題，可讓字體變大</li>
+</ul>
+
+
+<p>因此該函式將字體變粗的邏輯就很簡單，當有 span 文字被點選時，<br>使用 removeClass() 移除該左樹選單所有被變粗字體的效果，然後使用 addClass() 將該被點選的span文字變為粗體字。</p>
+<pre>
+$(document).ready(function(){
+  $("#LeftTreeMenu").on("click", "span" ,function(){
+    if($(this).attr('id')=='folder_span'){      
+        changeTreeWordingWeightBolder($(this));
+    ...
+  });
+});
+
+function changeTreeWordingWeightBolder(clickSpan){   
+  $("#LeftTreeMenu").find("span").removeClass("font-weight-bolder text-info h5");
+  clickSpan.addClass("font-weight-bolder text-info h5");
+}
+</pre>
+
+<p>依照右邊內容頁面的程式，如下:</p>
+<pre>
+  &#x3C;div class=&#x22;col-8&#x22;&#x3E;  
+    &#x3C;h2&#x3E;作品分類:&#x3C;span id=&#x27;RightContentTitle&#x27;&#x3E;&#x3C;&#x2F;span&#x3E;&#x3C;&#x2F;h2&#x3E;    
+    &#x3C;div id=&#x22;RightContent&#x22; class=&#x22;card-deck&#x22; style=&#x22;margin-top:20px&#x22; &#x3E;&#x3C;&#x2F;div&#x3E;
+  &#x3C;&#x2F;div&#x3E;
+</pre>
+
+<p>若點選該 span 的分類名稱文字後，使用 .text() 將該名稱文字顯示在 id 為 RightContentTitle 的右內容頁面的 span 標題上，如下程式:</p>
+<pre>
+$("#LeftTreeMenu").on("click", "span" ,function(){
+      ......    
+    $("#RightContentTitle").text($(this).text());
+      ......   
+</pre>
+
+<hr>
+<h4>ajax 導向 controller 串出右內容頁字卡效果</h4>
+如下圖為右內容頁字卡效果:
+![](/images/pasted-27.png)
+
+
+<p>一樣承前面小節中所提的右內容頁，與串出左選單樹邏輯類似，將之後串出的右內容頁字卡 html 以 jquery 的 .html()的方法產生於 id為 RightContent 的 div 內部。 </p>
+<pre>
+  &#x3C;div class=&#x22;col-8&#x22;&#x3E;  
+    &#x3C;h2&#x3E;作品分類:&#x3C;span id=&#x27;RightContentTitle&#x27;&#x3E;&#x3C;&#x2F;span&#x3E;&#x3C;&#x2F;h2&#x3E;    
+    &#x3C;div id=&#x22;RightContent&#x22; class=&#x22;card-deck&#x22; style=&#x22;margin-top:20px&#x22; &#x3E;&#x3C;&#x2F;div&#x3E;
+  &#x3C;&#x2F;div&#x3E;
+</pre>
+
+<p>承上一樣的操作邏輯，點選 span 後使用 ajax 網址導向到 routes / web.php ，如下程式:</p>
+<pre>
+$(document).ready(function(){
+    ......
+  $(&#x22;&#x23;LeftTreeMenu&#x22;).on(&#x22;click&#x22;, &#x22;span&#x22; ,function(){
+    if($(this).attr(&#x27;id&#x27;)==&#x27;folder_span&#x27;){   
+        ......
+      buildRightContentCard(ThisNodeCategoryId);
+    }
+  });
+});
+
+function buildRightContentCard(ThisNodeCategoryId){
+  $.ajax({
+    type:&#x27;GET&#x27;,
+    url:&#x27;&#x2F;portfolioRightContentBuild&#x27;,
+    data: {ThisNodeCategoryId:ThisNodeCategoryId,
+       &#x22;_token&#x22;: &#x22; csrf_token() &#x22;} ,&#x2F;&#x2F;412
+    success:function(result){    
+      $(&#x22;&#x23;RightContent&#x22;).html(result);      
+    } 
+  });
+}
+</pre>
+
+<p>routes / web.php 導向的寫法:</p>
+<pre>
+//點選左樹選單後，產生右內容頁
+Route::get('/portfolioRightContentBuild','portfolioController@buildRightContent');
+</pre>
+
+<hr>
+<h4>controller 串出右內容字卡內容</h4>
+路由 routes / web.php 導向 controller ，需要先從之前新增的作品表 portfolio 撈取資料。新增作品表<的 Model 後，使用 ->where() 方法依照分類 id 找出所有的作品項目，程式如下:
+<pre>
+&#x3C;?php
+namespace App;
+use Illuminate&#x5C;Database&#x5C;Eloquent&#x5C;Model;
+use Illuminate&#x5C;Support&#x5C;Facades&#x5C;DB;
+
+<p>class portfolio extends Model<br>{<br>    protected $table = &#x27;portfolio&#x27;;<br>    function findportfolioInfoByCategoryId(int $categoryId){<br>        return DB::table(&#x27;portfolio&#x27;)<br>        -&#x3E;where(&#x27;portfolio_category_id&#x27;,&#x27;=&#x27;, $categoryId )<br>        -&#x3E;where(&#x27;is_delete&#x27;,&#x27;=&#x27;,0)<br>        -&#x3E;get();<br>    }<br>}<br></pre></p>
+<p>路由導向到 controller 後，進入 buildRightContent()方法，使用 portfolio() 資料模型，並用上面於Model建立的 findportfolioInfoByCategoryId() 方法，並將取出的作品資料存入 $portfolioInfoFromDB 變數。</p>
+<p>使用 foreach() 迴圈逐筆將$portfolioInfoFromDB參數中的作品資料取出，並串組成右內容頁的作品字卡。使用 $cardNumInRow = 2 該字卡樣板是否每列 row 兩個字卡，超過就是用 div 換行，如下程式:</p>
+<pre>
+use App&#x5C;portfolio;
+class portfolioController extends Controller{
+        ......
+    function buildRightContent(Request $request){
+        $db = new portfolio();
+        $portfolioInfoFromDB = $db -&#x3E; findportfolioInfoByCategoryId($request-&#x3E;ThisNodeCategoryId);
+        $RightContentHtml = &#x22;&#x22;;
+
+        $cardCount = 1;
+        $cardNumInRow = 2;
+        foreach($portfolioInfoFromDB as $portfolio){
+            if($cardCount%$cardNumInRow==1  ) $RightContentHtml = $RightContentHtml.&#x22;&#x3C;div class=&#x27;row col-12&#x27; style=&#x27;margin-top:20px&#x27;&#x3E;&#x22;;
+            $RightContentHtml = $RightContentHtml
+            .&#x22;&#x3C;div class=&#x27;card col-md-12 col-12&#x27;&#x3E;&#x22;
+                .&#x22;&#x3C;div class=&#x27;card-body&#x27;&#x3E;&#x22;
+                    .&#x22;&#x3C;h5 class=&#x27;card-title&#x27;&#x3E;&#x22;
+                        .&#x22;&#x3C;img id=&#x27;skill_icon&#x27; class=&#x27;rounded&#x27; src=&#x27;&#x2F;icon&#x2F;skill.png&#x27; alt=&#x27;profile Pic&#x27;&#x3E;&#x22;
+                        .$portfolio-&#x3E;name
+                    .&#x22;&#x3C;&#x2F;h5&#x3E;&#x22;            
+                    .&#x22;&#x3C;p class=&#x27;card-text&#x27;&#x3E;&#x22;.$portfolio-&#x3E;discription .&#x22;&#x3C;&#x2F;p&#x3E;&#x22;
+                    .&#x22;&#x3C;input type=&#x27;submit&#x27; value=&#x27;編輯&#x27; class=&#x27;btn btn-info&#x27; data-toggle=&#x27;modal&#x27; data-target=&#x27;&#x23;editWorkingAbilityModal_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27; &#x3E;&#x22;
+                    .&#x22;&#x3C;input type=&#x27;button&#x27; value=&#x27;刪除&#x27; class=&#x27;btn btn-danger&#x27; onclick=&#x27;deleteWorkingAbilityAndReloadRightContentCard(&#x22;.$portfolio-&#x3E;id.&#x22;)&#x27; &#x3E;&#x22;
+                .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;
+            .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;;
+            if($cardCount%$cardNumInRow==0  ) $RightContentHtml = $RightContentHtml.&#x22;&#x3C;&#x2F;div&#x3E;&#x22;;            
+            $cardCount ++;
+        }        
+        return $RightContentHtml;
+    }
+</pre>
+
+
+<p>回到 view 的 ajax() 中，將串出的html回傳使用 .html() 的 jquery方法，在 id 為 RightContent 的 div 中組出右內容頁的作品縮圖，程式如下:</p>
+<pre>
+function buildRightContentCard(ThisNodeCategoryId){  
+  $.ajax({
+    type:&#x27;GET&#x27;,
+    url:&#x27;&#x2F;portfolioRightContentBuild&#x27;,
+    data: {ThisNodeCategoryId:ThisNodeCategoryId,
+       &#x22;_token&#x22;: &#x22; csrf_token() &#x22;} ,&#x2F;&#x2F;412
+    success:function(result){    
+      $(&#x22;&#x23;RightContent&#x22;).html(result);      
+    },
+    error:function(){
+      console.log(&#x22;buildRightContentCard error &#x22;);
+    }
+  });
+}
+
+        ......
+
+  &#x3C;div class=&#x22;col-8&#x22;&#x3E;  
+    &#x3C;h2&#x3E;作品分類:&#x3C;span id=&#x27;RightContentTitle&#x27;&#x3E;&#x3C;&#x2F;span&#x3E;&#x3C;&#x2F;h2&#x3E;    
+    &#x3C;div id=&#x22;RightContent&#x22; class=&#x22;card-deck&#x22; style=&#x22;margin-top:20px&#x22; &#x3E;&#x3C;&#x2F;div&#x3E;
+  &#x3C;&#x2F;div&#x3E;
+</pre>
+
+<hr>
+<h4>呈現結果</h4>
+完成後，點選左樹選單的項目後，右內容頁的標題會顯示分類名稱，並且顯示作品縮圖。
+
+<img src="https://i.imgur.com/HmgMO77.gif" />
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://aloo31124.github.io/2020/08/01/laravel-%E4%BD%9C%E5%93%81%E9%9B%867-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE4-%E6%8C%89%E4%B8%8B%E9%81%B8%E5%96%AE%E5%BE%8C%E5%B0%8D%E6%87%89%E5%8F%B3%E5%85%A7%E5%AE%B9%E9%A0%81/" data-id="ckdodnugt001ar0x1hc6p6ae1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-laravel-作品集6-撰寫左樹選單3-產生下一層節點，並使用jquery設計樹選單開闔" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%866-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE3-%E7%94%A2%E7%94%9F%E4%B8%8B%E4%B8%80%E5%B1%A4%E7%AF%80%E9%BB%9E%EF%BC%8C%E4%B8%A6%E4%BD%BF%E7%94%A8jquery%E8%A8%AD%E8%A8%88%E6%A8%B9%E9%81%B8%E5%96%AE%E9%96%8B%E9%97%94/" class="article-date">
@@ -303,7 +537,7 @@ function changeTreeChildNodesShowAndHiden(clickImg){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%866-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE3-%E7%94%A2%E7%94%9F%E4%B8%8B%E4%B8%80%E5%B1%A4%E7%AF%80%E9%BB%9E%EF%BC%8C%E4%B8%A6%E4%BD%BF%E7%94%A8jquery%E8%A8%AD%E8%A8%88%E6%A8%B9%E9%81%B8%E5%96%AE%E9%96%8B%E9%97%94/" data-id="ckdaxiyvd001r70x117yqa1qk" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%866-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE3-%E7%94%A2%E7%94%9F%E4%B8%8B%E4%B8%80%E5%B1%A4%E7%AF%80%E9%BB%9E%EF%BC%8C%E4%B8%A6%E4%BD%BF%E7%94%A8jquery%E8%A8%AD%E8%A8%88%E6%A8%B9%E9%81%B8%E5%96%AE%E9%96%8B%E9%97%94/" data-id="ckdodnuhs001zr0x13g9z6wdh" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
@@ -531,7 +765,7 @@ function buildNextLevelByThisNodeIdForTreeMenu(ThisNodeCategoryId){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%865-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE2-%E5%88%9D%E5%A7%8B%E9%A0%81%E9%9D%A2%E5%BE%9E%E8%B3%87%E6%96%99%E5%BA%AB%E6%92%88%E5%8F%96%E7%AC%AC%E4%B8%80%E5%B1%A4/" data-id="ckdaxiyva001q70x1a68mchgx" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%865-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE2-%E5%88%9D%E5%A7%8B%E9%A0%81%E9%9D%A2%E5%BE%9E%E8%B3%87%E6%96%99%E5%BA%AB%E6%92%88%E5%8F%96%E7%AC%AC%E4%B8%80%E5%B1%A4/" data-id="ckdodnugu001br0x1ht898l5o" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ajax/" rel="tag">ajax</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
@@ -683,7 +917,7 @@ function buildNextLevelByThisNodeIdForTreeMenu(ThisNodeCategoryId){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/28/laravel-%E4%BD%9C%E5%93%81%E9%9B%864-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE1-%E5%BE%9E%E8%B3%87%E6%96%99%E5%BA%AB%E6%92%88%E5%8F%96%E7%AC%AC%E4%B8%80%E5%B1%A4/" data-id="ckdaxiyur000670x1c1mkgo0o" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/28/laravel-%E4%BD%9C%E5%93%81%E9%9B%864-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE1-%E5%BE%9E%E8%B3%87%E6%96%99%E5%BA%AB%E6%92%88%E5%8F%96%E7%AC%AC%E4%B8%80%E5%B1%A4/" data-id="ckdodnugc0009r0x14cfr19gp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
@@ -785,7 +1019,7 @@ return view("portfolioIndex", [ 'portfolioCategory' => $portfolioCategory ]);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/27/laravel-%E4%BD%9C%E5%93%81%E9%9B%863-%E6%96%B0%E5%A2%9E%E7%B0%A1%E6%98%93%E7%9A%84%E4%BD%9C%E5%93%81%E9%9B%86-MVC-%E7%A8%8B%E5%BC%8F/" data-id="ckdaxiyus000770x1abspc7lk" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/27/laravel-%E4%BD%9C%E5%93%81%E9%9B%863-%E6%96%B0%E5%A2%9E%E7%B0%A1%E6%98%93%E7%9A%84%E4%BD%9C%E5%93%81%E9%9B%86-MVC-%E7%A8%8B%E5%BC%8F/" data-id="ckdodnuh5001mr0x1gmar7nf3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
@@ -978,7 +1212,7 @@ php artisan migrate
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/26/laravel-%E4%BD%9C%E5%93%81%E9%9B%862-%E4%BB%A5-migration-%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F%E6%96%B0%E5%A2%9E%E6%B8%AC%E8%A9%A6%E8%B3%87%E6%96%99/" data-id="ckdaxiyut000a70x14bf08biz" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/26/laravel-%E4%BD%9C%E5%93%81%E9%9B%862-%E4%BB%A5-migration-%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F%E6%96%B0%E5%A2%9E%E6%B8%AC%E8%A9%A6%E8%B3%87%E6%96%99/" data-id="ckdodnugb0006r0x13b4m32p5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/migration/" rel="tag">migration</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
@@ -1051,7 +1285,7 @@ php artisan migrate
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/25/js-DOM-JS-%E5%9C%A8-head-%E8%88%87-body-%E6%A8%99%E7%B1%A4%E4%B8%AD%E9%81%8B%E8%A1%8C%E7%9A%84%E5%B7%AE%E7%95%B0/" data-id="ckdaxiyuk000170x19wkw0760" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/25/js-DOM-JS-%E5%9C%A8-head-%E8%88%87-body-%E6%A8%99%E7%B1%A4%E4%B8%AD%E9%81%8B%E8%A1%8C%E7%9A%84%E5%B7%AE%E7%95%B0/" data-id="ckdodnug90004r0x16gbk0oah" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DOM/" rel="tag">DOM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
@@ -1151,7 +1385,7 @@ php artisan migrate
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%861-%E4%BB%A5-migration%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F-%E6%96%B0%E5%A2%9Edb%E4%B8%AD%E7%9A%84%E8%B3%87%E6%96%99%E8%A1%A8/" data-id="ckdaxiyuq000570x1378y21tw" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%861-%E4%BB%A5-migration%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F-%E6%96%B0%E5%A2%9Edb%E4%B8%AD%E7%9A%84%E8%B3%87%E6%96%99%E8%A1%A8/" data-id="ckdodnuga0005r0x11t346miz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/migration/" rel="tag">migration</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
@@ -1223,7 +1457,7 @@ php artisan migrate
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/24/%E7%B7%A8%E7%A2%BC-%E9%97%9C%E6%96%BC-n-%E8%88%87-n-%E5%AD%97%E7%AC%A6/" data-id="ckdaxiyuu000b70x1fqy0dz8o" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/24/%E7%B7%A8%E7%A2%BC-%E9%97%9C%E6%96%BC-n-%E8%88%87-n-%E5%AD%97%E7%AC%A6/" data-id="ckdodnuh9001nr0x18kwb4txz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" rel="tag">檔案上傳</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%B7%A8%E7%A2%BC/" rel="tag">編碼</a></li></ul>
@@ -1332,7 +1566,7 @@ php artisan migrate
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/24/java-%E4%BF%AE%E6%94%B9-jsp-%E4%B8%AD-template-%E5%B0%8D%E6%87%89-tld-%E8%88%87-tag-java-%E7%A8%8B%E5%BC%8F-1/" data-id="ckdaxiyum000270x1a48pf73e" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/24/java-%E4%BF%AE%E6%94%B9-jsp-%E4%B8%AD-template-%E5%B0%8D%E6%87%89-tld-%E8%88%87-tag-java-%E7%A8%8B%E5%BC%8F-1/" data-id="ckdodnufy0000r0x10bie8bt5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jsp/" rel="tag">jsp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tagbase/" rel="tag">tagbase</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tld/" rel="tag">tld</a></li></ul>
@@ -1344,56 +1578,12 @@ php artisan migrate
 
 
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/07/24/hello-world/" class="article-date">
-  <time datetime="2020-07-24T09:53:55.693Z" itemprop="datePublished">2020-07-24</time>
-</a>
+
+
+  <nav id="page-nav">
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/24/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/24/hello-world/" data-id="ckdaxiyud000070x118un7y3b" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一頁 &amp;raquo;</a>
+  </nav>
 
 </section>
         
@@ -1423,7 +1613,7 @@ php artisan migrate
   <div class="widget-wrap">
     <h3 class="widget-title">標籤雲</h3>
     <div class="widget tagcloud">
-      <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/laravel/" style="font-size: 20px;">laravel</a> <a href="/tags/migration/" style="font-size: 15px;">migration</a> <a href="/tags/mvc/" style="font-size: 10px;">mvc</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/tagbase/" style="font-size: 10px;">tagbase</a> <a href="/tags/tld/" style="font-size: 10px;">tld</a> <a href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" style="font-size: 10px;">檔案上傳</a> <a href="/tags/%E7%B7%A8%E7%A2%BC/" style="font-size: 10px;">編碼</a>
+      <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jquery/" style="font-size: 15px;">jquery</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/laravel/" style="font-size: 20px;">laravel</a> <a href="/tags/migration/" style="font-size: 15px;">migration</a> <a href="/tags/mvc/" style="font-size: 10px;">mvc</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/tagbase/" style="font-size: 10px;">tagbase</a> <a href="/tags/tld/" style="font-size: 10px;">tld</a> <a href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" style="font-size: 10px;">檔案上傳</a> <a href="/tags/%E7%B7%A8%E7%A2%BC/" style="font-size: 10px;">編碼</a>
     </div>
   </div>
 
@@ -1432,7 +1622,7 @@ php artisan migrate
   <div class="widget-wrap">
     <h3 class="widget-title">彙整</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li></ul>
     </div>
   </div>
 
@@ -1443,6 +1633,10 @@ php artisan migrate
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/08/01/laravel-%E4%BD%9C%E5%93%81%E9%9B%867-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE4-%E6%8C%89%E4%B8%8B%E9%81%B8%E5%96%AE%E5%BE%8C%E5%B0%8D%E6%87%89%E5%8F%B3%E5%85%A7%E5%AE%B9%E9%A0%81/">[laravel][作品集7] 撰寫左樹選單4-按下選單後對應右內容頁</a>
+          </li>
         
           <li>
             <a href="/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%866-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE3-%E7%94%A2%E7%94%9F%E4%B8%8B%E4%B8%80%E5%B1%A4%E7%AF%80%E9%BB%9E%EF%BC%8C%E4%B8%A6%E4%BD%BF%E7%94%A8jquery%E8%A8%AD%E8%A8%88%E6%A8%B9%E9%81%B8%E5%96%AE%E9%96%8B%E9%97%94/">[laravel][作品集6] 撰寫左樹選單3-產生下一層節點，並使用jquery設計樹選單開闔</a>
@@ -1458,10 +1652,6 @@ php artisan migrate
         
           <li>
             <a href="/2020/07/27/laravel-%E4%BD%9C%E5%93%81%E9%9B%863-%E6%96%B0%E5%A2%9E%E7%B0%A1%E6%98%93%E7%9A%84%E4%BD%9C%E5%93%81%E9%9B%86-MVC-%E7%A8%8B%E5%BC%8F/">[laravel][作品集3] 新增簡易的作品集 MVC 架構</a>
-          </li>
-        
-          <li>
-            <a href="/2020/07/26/laravel-%E4%BD%9C%E5%93%81%E9%9B%862-%E4%BB%A5-migration-%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F%E6%96%B0%E5%A2%9E%E6%B8%AC%E8%A9%A6%E8%B3%87%E6%96%99/">[laravel][作品集2] 以 migration 資料遷移程式新增測試資料</a>
           </li>
         
       </ul>

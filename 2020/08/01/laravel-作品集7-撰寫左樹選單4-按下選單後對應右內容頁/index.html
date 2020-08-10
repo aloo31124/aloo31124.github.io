@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>[laravel][作品集7] 撰寫左樹選單4-按下選單後對應右內容頁 | 阿盧的程式筆記</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="規劃設計一個能有左選單樹進行分類的作品集介面，如下圖: 依照之前定義的操作邏輯，點選左樹選單的 span 標籤內的文字後，右內容頁面的上方 title 會產生分類名稱，並且右內容頁會產生縮圖元件來顯示作品內容。  依照前篇文章，如下左樹選單程式，點選 資料夾圖示 img 會展開與合併左樹選單， 而點選如下程式中的 span 標籤內的文字，來觸發反應。  &amp;#x3C;ul&amp;#x3E;     &amp;#x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[laravel][作品集7] 撰寫左樹選單4-按下選單後對應右內容頁">
+<meta property="og:url" content="http://aloo31124.github.io/2020/08/01/laravel-%E4%BD%9C%E5%93%81%E9%9B%867-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE4-%E6%8C%89%E4%B8%8B%E9%81%B8%E5%96%AE%E5%BE%8C%E5%B0%8D%E6%87%89%E5%8F%B3%E5%85%A7%E5%AE%B9%E9%A0%81/index.html">
+<meta property="og:site_name" content="阿盧的程式筆記">
+<meta property="og:description" content="規劃設計一個能有左選單樹進行分類的作品集介面，如下圖: 依照之前定義的操作邏輯，點選左樹選單的 span 標籤內的文字後，右內容頁面的上方 title 會產生分類名稱，並且右內容頁會產生縮圖元件來顯示作品內容。  依照前篇文章，如下左樹選單程式，點選 資料夾圖示 img 會展開與合併左樹選單， 而點選如下程式中的 span 標籤內的文字，來觸發反應。  &amp;#x3C;ul&amp;#x3E;     &amp;#x">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-1.png">
+<meta property="og:image" content="https://i.imgur.com/HmgMO77.gif">
+<meta property="article:published_time" content="2020-08-01T02:06:00.000Z">
+<meta property="article:modified_time" content="2020-08-10T10:31:46.039Z">
+<meta property="article:author" content="盧本翔">
+<meta property="article:tag" content="php">
+<meta property="article:tag" content="laravel">
+<meta property="article:tag" content="jquery">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://aloo31124.github.io/images/pasted-1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="阿盧的程式筆記" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">阿盧的程式筆記</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">程式學海無涯~回頭是岸阿~~ QAQ</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜尋"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://aloo31124.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-laravel-作品集7-撰寫左樹選單4-按下選單後對應右內容頁" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/01/laravel-%E4%BD%9C%E5%93%81%E9%9B%867-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE4-%E6%8C%89%E4%B8%8B%E9%81%B8%E5%96%AE%E5%BE%8C%E5%B0%8D%E6%87%89%E5%8F%B3%E5%85%A7%E5%AE%B9%E9%A0%81/" class="article-date">
+  <time datetime="2020-08-01T02:06:00.000Z" itemprop="datePublished">2020-08-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/laravel-%E5%B1%A5%E6%AD%B7%E4%BD%9C%E5%93%81%E7%B7%B4%E7%BF%92/">laravel 履歷作品練習</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [laravel][作品集7] 撰寫左樹選單4-按下選單後對應右內容頁
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>規劃設計一個能有左選單樹進行分類的作品集介面，如下圖:<br><img src="/images/pasted-1.png" alt="圖:預計畫面"></p>
+<p>依照之前定義的操作邏輯，點選左樹選單的 span 標籤內的文字後，右內容頁面的上方 title 會產生分類名稱，並且右內容頁會產生縮圖元件來顯示作品內容。</p>
+<hr>
+依照前篇文章，如下左樹選單程式，點選 資料夾圖示 img 會展開與合併左樹選單，
+而點選如下程式中的 span 標籤內的文字，來觸發反應。
+<pre>
+&#x3C;ul&#x3E;
+    &#x3C;li id=&#x27; [子項目1 id] &#x27; class=&#x27;list-group-item&#x27;&#x3E;
+        &#x3C;img id=&#x27;folder_icon&#x27; class=&#x27;rounded&#x27; src=&#x27;&#x2F;icon&#x2F;folder-open.png&#x27; alt=&#x27;profile Pic&#x27;&#x3E;
+        &#x3C;span id=&#x27;folder_span&#x27;&#x3E;[ 子項目1名稱  ] &#x3C;&#x2F;span&#x3E;
+    &#x3C;&#x2F;li&#x3E;
+    &#x3C;li id=&#x27; [子項目2 id] &#x27; class=&#x27;list-group-item&#x27;&#x3E;
+        &#x3C;img id=&#x27;folder_icon&#x27; class=&#x27;rounded&#x27; src=&#x27;&#x2F;icon&#x2F;folder-open.png&#x27; alt=&#x27;profile Pic&#x27;&#x3E;
+        &#x3C;span id=&#x27;folder_span&#x27;&#x3E;[ 子項目2名稱  ] &#x3C;&#x2F;span&#x3E;
+    &#x3C;&#x2F;li&#x3E;
+...
+&#x3C;&#x2F;ul&#x3E;
+</pre>
+
+<p>如下為 右內容頁面的程式，對!就那麼簡單，因為後續內容一樣使用 controller 串出。</p>
+<pre>
+  &#x3C;div class=&#x22;col-8&#x22;&#x3E;  
+    &#x3C;h2&#x3E;作品分類:&#x3C;span id=&#x27;RightContentTitle&#x27;&#x3E;&#x3C;&#x2F;span&#x3E;&#x3C;&#x2F;h2&#x3E;    
+    &#x3C;div id=&#x22;RightContent&#x22; class=&#x22;card-deck&#x22; style=&#x22;margin-top:20px&#x22; &#x3E;&#x3C;&#x2F;div&#x3E;
+  &#x3C;&#x2F;div&#x3E;
+</pre>
+
+<hr>
+<h4>點選span文字後變粗體字，並右內容頁面title顯示分類名稱</h4>
+與前一篇文章觸發 資料夾圖示一樣， $( ).on("click" , "xxx" , function(){... } ); 
+的觸發方法需要在文件被瀏覽器解析時 $(document).ready(function(){ }); 方法裡執行。
+span被點選後，使用 changeTreeWordingWeightBolder () 方法讓字體變粗。
+
+<p>這邊changeTreeWordingWeightBolder() 函式中改變字體的粗細會使用 removeClass() 與 addClass() 兩個對應的jQuery方法，<br>此系統先定義被點選後粗體字使用此三個效果: font-weight-bolder 、text-info 、h5 ，如下:</p>
+<ul>
+    <li>font-weight-bolder : 字體變粗</li>
+    <li>text-info : boostrap 字體效果，呈現水藍色</li>
+    <li>h5 :  標題，可讓字體變大</li>
+</ul>
+
+
+<p>因此該函式將字體變粗的邏輯就很簡單，當有 span 文字被點選時，<br>使用 removeClass() 移除該左樹選單所有被變粗字體的效果，然後使用 addClass() 將該被點選的span文字變為粗體字。</p>
+<pre>
+$(document).ready(function(){
+  $("#LeftTreeMenu").on("click", "span" ,function(){
+    if($(this).attr('id')=='folder_span'){      
+        changeTreeWordingWeightBolder($(this));
+    ...
+  });
+});
+
+function changeTreeWordingWeightBolder(clickSpan){   
+  $("#LeftTreeMenu").find("span").removeClass("font-weight-bolder text-info h5");
+  clickSpan.addClass("font-weight-bolder text-info h5");
+}
+</pre>
+
+<p>依照右邊內容頁面的程式，如下:</p>
+<pre>
+  &#x3C;div class=&#x22;col-8&#x22;&#x3E;  
+    &#x3C;h2&#x3E;作品分類:&#x3C;span id=&#x27;RightContentTitle&#x27;&#x3E;&#x3C;&#x2F;span&#x3E;&#x3C;&#x2F;h2&#x3E;    
+    &#x3C;div id=&#x22;RightContent&#x22; class=&#x22;card-deck&#x22; style=&#x22;margin-top:20px&#x22; &#x3E;&#x3C;&#x2F;div&#x3E;
+  &#x3C;&#x2F;div&#x3E;
+</pre>
+
+<p>若點選該 span 的分類名稱文字後，使用 .text() 將該名稱文字顯示在 id 為 RightContentTitle 的右內容頁面的 span 標題上，如下程式:</p>
+<pre>
+$("#LeftTreeMenu").on("click", "span" ,function(){
+      ......    
+    $("#RightContentTitle").text($(this).text());
+      ......   
+</pre>
+
+<hr>
+<h4>ajax 導向 controller 串出右內容頁字卡效果</h4>
+如下圖為右內容頁字卡效果:
+![](/images/pasted-27.png)
+
+
+<p>一樣承前面小節中所提的右內容頁，與串出左選單樹邏輯類似，將之後串出的右內容頁字卡 html 以 jquery 的 .html()的方法產生於 id為 RightContent 的 div 內部。 </p>
+<pre>
+  &#x3C;div class=&#x22;col-8&#x22;&#x3E;  
+    &#x3C;h2&#x3E;作品分類:&#x3C;span id=&#x27;RightContentTitle&#x27;&#x3E;&#x3C;&#x2F;span&#x3E;&#x3C;&#x2F;h2&#x3E;    
+    &#x3C;div id=&#x22;RightContent&#x22; class=&#x22;card-deck&#x22; style=&#x22;margin-top:20px&#x22; &#x3E;&#x3C;&#x2F;div&#x3E;
+  &#x3C;&#x2F;div&#x3E;
+</pre>
+
+<p>承上一樣的操作邏輯，點選 span 後使用 ajax 網址導向到 routes / web.php ，如下程式:</p>
+<pre>
+$(document).ready(function(){
+    ......
+  $(&#x22;&#x23;LeftTreeMenu&#x22;).on(&#x22;click&#x22;, &#x22;span&#x22; ,function(){
+    if($(this).attr(&#x27;id&#x27;)==&#x27;folder_span&#x27;){   
+        ......
+      buildRightContentCard(ThisNodeCategoryId);
+    }
+  });
+});
+
+function buildRightContentCard(ThisNodeCategoryId){
+  $.ajax({
+    type:&#x27;GET&#x27;,
+    url:&#x27;&#x2F;portfolioRightContentBuild&#x27;,
+    data: {ThisNodeCategoryId:ThisNodeCategoryId,
+       &#x22;_token&#x22;: &#x22; csrf_token() &#x22;} ,&#x2F;&#x2F;412
+    success:function(result){    
+      $(&#x22;&#x23;RightContent&#x22;).html(result);      
+    } 
+  });
+}
+</pre>
+
+<p>routes / web.php 導向的寫法:</p>
+<pre>
+//點選左樹選單後，產生右內容頁
+Route::get('/portfolioRightContentBuild','portfolioController@buildRightContent');
+</pre>
+
+<hr>
+<h4>controller 串出右內容字卡內容</h4>
+路由 routes / web.php 導向 controller ，需要先從之前新增的作品表 portfolio 撈取資料。新增作品表<的 Model 後，使用 ->where() 方法依照分類 id 找出所有的作品項目，程式如下:
+<pre>
+&#x3C;?php
+namespace App;
+use Illuminate&#x5C;Database&#x5C;Eloquent&#x5C;Model;
+use Illuminate&#x5C;Support&#x5C;Facades&#x5C;DB;
+
+<p>class portfolio extends Model<br>{<br>    protected $table = &#x27;portfolio&#x27;;<br>    function findportfolioInfoByCategoryId(int $categoryId){<br>        return DB::table(&#x27;portfolio&#x27;)<br>        -&#x3E;where(&#x27;portfolio_category_id&#x27;,&#x27;=&#x27;, $categoryId )<br>        -&#x3E;where(&#x27;is_delete&#x27;,&#x27;=&#x27;,0)<br>        -&#x3E;get();<br>    }<br>}<br></pre></p>
+<p>路由導向到 controller 後，進入 buildRightContent()方法，使用 portfolio() 資料模型，並用上面於Model建立的 findportfolioInfoByCategoryId() 方法，並將取出的作品資料存入 $portfolioInfoFromDB 變數。</p>
+<p>使用 foreach() 迴圈逐筆將$portfolioInfoFromDB參數中的作品資料取出，並串組成右內容頁的作品字卡。使用 $cardNumInRow = 2 該字卡樣板是否每列 row 兩個字卡，超過就是用 div 換行，如下程式:</p>
+<pre>
+use App&#x5C;portfolio;
+class portfolioController extends Controller{
+        ......
+    function buildRightContent(Request $request){
+        $db = new portfolio();
+        $portfolioInfoFromDB = $db -&#x3E; findportfolioInfoByCategoryId($request-&#x3E;ThisNodeCategoryId);
+        $RightContentHtml = &#x22;&#x22;;
+
+        $cardCount = 1;
+        $cardNumInRow = 2;
+        foreach($portfolioInfoFromDB as $portfolio){
+            if($cardCount%$cardNumInRow==1  ) $RightContentHtml = $RightContentHtml.&#x22;&#x3C;div class=&#x27;row col-12&#x27; style=&#x27;margin-top:20px&#x27;&#x3E;&#x22;;
+            $RightContentHtml = $RightContentHtml
+            .&#x22;&#x3C;div class=&#x27;card col-md-12 col-12&#x27;&#x3E;&#x22;
+                .&#x22;&#x3C;div class=&#x27;card-body&#x27;&#x3E;&#x22;
+                    .&#x22;&#x3C;h5 class=&#x27;card-title&#x27;&#x3E;&#x22;
+                        .&#x22;&#x3C;img id=&#x27;skill_icon&#x27; class=&#x27;rounded&#x27; src=&#x27;&#x2F;icon&#x2F;skill.png&#x27; alt=&#x27;profile Pic&#x27;&#x3E;&#x22;
+                        .$portfolio-&#x3E;name
+                    .&#x22;&#x3C;&#x2F;h5&#x3E;&#x22;            
+                    .&#x22;&#x3C;p class=&#x27;card-text&#x27;&#x3E;&#x22;.$portfolio-&#x3E;discription .&#x22;&#x3C;&#x2F;p&#x3E;&#x22;
+                    .&#x22;&#x3C;input type=&#x27;submit&#x27; value=&#x27;編輯&#x27; class=&#x27;btn btn-info&#x27; data-toggle=&#x27;modal&#x27; data-target=&#x27;&#x23;editWorkingAbilityModal_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27; &#x3E;&#x22;
+                    .&#x22;&#x3C;input type=&#x27;button&#x27; value=&#x27;刪除&#x27; class=&#x27;btn btn-danger&#x27; onclick=&#x27;deleteWorkingAbilityAndReloadRightContentCard(&#x22;.$portfolio-&#x3E;id.&#x22;)&#x27; &#x3E;&#x22;
+                .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;
+            .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;;
+            if($cardCount%$cardNumInRow==0  ) $RightContentHtml = $RightContentHtml.&#x22;&#x3C;&#x2F;div&#x3E;&#x22;;            
+            $cardCount ++;
+        }        
+        return $RightContentHtml;
+    }
+</pre>
+
+
+<p>回到 view 的 ajax() 中，將串出的html回傳使用 .html() 的 jquery方法，在 id 為 RightContent 的 div 中組出右內容頁的作品縮圖，程式如下:</p>
+<pre>
+function buildRightContentCard(ThisNodeCategoryId){  
+  $.ajax({
+    type:&#x27;GET&#x27;,
+    url:&#x27;&#x2F;portfolioRightContentBuild&#x27;,
+    data: {ThisNodeCategoryId:ThisNodeCategoryId,
+       &#x22;_token&#x22;: &#x22; csrf_token() &#x22;} ,&#x2F;&#x2F;412
+    success:function(result){    
+      $(&#x22;&#x23;RightContent&#x22;).html(result);      
+    },
+    error:function(){
+      console.log(&#x22;buildRightContentCard error &#x22;);
+    }
+  });
+}
+
+        ......
+
+  &#x3C;div class=&#x22;col-8&#x22;&#x3E;  
+    &#x3C;h2&#x3E;作品分類:&#x3C;span id=&#x27;RightContentTitle&#x27;&#x3E;&#x3C;&#x2F;span&#x3E;&#x3C;&#x2F;h2&#x3E;    
+    &#x3C;div id=&#x22;RightContent&#x22; class=&#x22;card-deck&#x22; style=&#x22;margin-top:20px&#x22; &#x3E;&#x3C;&#x2F;div&#x3E;
+  &#x3C;&#x2F;div&#x3E;
+</pre>
+
+<hr>
+<h4>呈現結果</h4>
+完成後，點選左樹選單的項目後，右內容頁的標題會顯示分類名稱，並且顯示作品縮圖。
+
+<img src="https://i.imgur.com/HmgMO77.gif" />
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://aloo31124.github.io/2020/08/01/laravel-%E4%BD%9C%E5%93%81%E9%9B%867-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE4-%E6%8C%89%E4%B8%8B%E9%81%B8%E5%96%AE%E5%BE%8C%E5%B0%8D%E6%87%89%E5%8F%B3%E5%85%A7%E5%AE%B9%E9%A0%81/" data-id="ckdodnugt001ar0x1hc6p6ae1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%866-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE3-%E7%94%A2%E7%94%9F%E4%B8%8B%E4%B8%80%E5%B1%A4%E7%AF%80%E9%BB%9E%EF%BC%8C%E4%B8%A6%E4%BD%BF%E7%94%A8jquery%E8%A8%AD%E8%A8%88%E6%A8%B9%E9%81%B8%E5%96%AE%E9%96%8B%E9%97%94/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[laravel][作品集6] 撰寫左樹選單3-產生下一層節點，並使用jquery設計樹選單開闔</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分類</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js-%E9%9A%A8%E7%AD%86%E8%A8%98/">js 隨筆記</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/laravel-%E5%B1%A5%E6%AD%B7%E4%BD%9C%E5%93%81%E7%B7%B4%E7%BF%92/">laravel 履歷作品練習</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B7%A8%E7%A2%BC/">編碼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOM/" rel="tag">DOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ajax/" rel="tag">ajax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/" rel="tag">jsp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/migration/" rel="tag">migration</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tagbase/" rel="tag">tagbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tld/" rel="tag">tld</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" rel="tag">檔案上傳</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B7%A8%E7%A2%BC/" rel="tag">編碼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤雲</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jquery/" style="font-size: 15px;">jquery</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/laravel/" style="font-size: 20px;">laravel</a> <a href="/tags/migration/" style="font-size: 15px;">migration</a> <a href="/tags/mvc/" style="font-size: 10px;">mvc</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/tagbase/" style="font-size: 10px;">tagbase</a> <a href="/tags/tld/" style="font-size: 10px;">tld</a> <a href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" style="font-size: 10px;">檔案上傳</a> <a href="/tags/%E7%B7%A8%E7%A2%BC/" style="font-size: 10px;">編碼</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">彙整</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/08/01/laravel-%E4%BD%9C%E5%93%81%E9%9B%867-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE4-%E6%8C%89%E4%B8%8B%E9%81%B8%E5%96%AE%E5%BE%8C%E5%B0%8D%E6%87%89%E5%8F%B3%E5%85%A7%E5%AE%B9%E9%A0%81/">[laravel][作品集7] 撰寫左樹選單4-按下選單後對應右內容頁</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%866-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE3-%E7%94%A2%E7%94%9F%E4%B8%8B%E4%B8%80%E5%B1%A4%E7%AF%80%E9%BB%9E%EF%BC%8C%E4%B8%A6%E4%BD%BF%E7%94%A8jquery%E8%A8%AD%E8%A8%88%E6%A8%B9%E9%81%B8%E5%96%AE%E9%96%8B%E9%97%94/">[laravel][作品集6] 撰寫左樹選單3-產生下一層節點，並使用jquery設計樹選單開闔</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%865-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE2-%E5%88%9D%E5%A7%8B%E9%A0%81%E9%9D%A2%E5%BE%9E%E8%B3%87%E6%96%99%E5%BA%AB%E6%92%88%E5%8F%96%E7%AC%AC%E4%B8%80%E5%B1%A4/">[laravel][作品集5] 撰寫左樹選單2-初始頁面從資料庫撈取第一層</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/28/laravel-%E4%BD%9C%E5%93%81%E9%9B%864-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE1-%E5%BE%9E%E8%B3%87%E6%96%99%E5%BA%AB%E6%92%88%E5%8F%96%E7%AC%AC%E4%B8%80%E5%B1%A4/">[laravel][作品集4] 撰寫左樹選單1-設計樣式 與 操作邏輯</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/27/laravel-%E4%BD%9C%E5%93%81%E9%9B%863-%E6%96%B0%E5%A2%9E%E7%B0%A1%E6%98%93%E7%9A%84%E4%BD%9C%E5%93%81%E9%9B%86-MVC-%E7%A8%8B%E5%BC%8F/">[laravel][作品集3] 新增簡易的作品集 MVC 架構</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 盧本翔<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

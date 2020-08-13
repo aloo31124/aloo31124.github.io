@@ -71,6 +71,79 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-js-DOM-JS-在-head-與-body-標籤中運行的差異" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/25/js-DOM-JS-%E5%9C%A8-head-%E8%88%87-body-%E6%A8%99%E7%B1%A4%E4%B8%AD%E9%81%8B%E8%A1%8C%E7%9A%84%E5%B7%AE%E7%95%B0/" class="article-date">
+  <time datetime="2020-07-25T01:35:00.000Z" itemprop="datePublished">2020-07-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/js-%E9%9A%A8%E7%AD%86%E8%A8%98/">js 隨筆記</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/25/js-DOM-JS-%E5%9C%A8-head-%E8%88%87-body-%E6%A8%99%E7%B1%A4%E4%B8%AD%E9%81%8B%E8%A1%8C%E7%9A%84%E5%B7%AE%E7%95%B0/">[js][DOM] JS 在 &lt;head&gt; 與 &lt;body&gt; 標籤中運行的差異</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在處理 js 的程式中常常會有很多疑惑，js 常常在某些條件下能執行，<br>在某一些條件下卻又莫名的掛掉了，讓我很不解阿 =”= </p>
+<p>尤其是 js 的程式有時候能在 <head>中執行，但有些條件下又不行了…???<br>直到看了 Kuro Hsu 大大的文章才解惑阿…。</p>
+<p>其實 js 的執行情況跟 瀏覽器中解析的 DOM 機制有很大的關西，一般 JS 放置的位置不外乎就兩個地方，head 與 body 標籤中。</p>
+<ul>
+<li>head 標籤裡</li>
+<li>body 標籤裡 </li>
+</ul>
+<p>但其實這兩個位置在運作上就有很大的差異，如下的範例:</p>
+<ul>
+<li>程式以  document.querySelector 取得 id=”A” 的節點，並使用文字內容 textContent 把 ‘HELLO’ 的字串放在id=”A” 的節點裡面為例</li>
+</ul>
+<p><img src="/images/pasted-5.png" alt="upload successful"></p>
+<p><img src="/images/pasted-6.png" alt="upload successful"></p>
+<p>情況:</p>
+<ul>
+<li>原本可以在 body 內執行的 script 標籤程式，換到 head中卻無法執行。</li>
+<li>在 head 的 script 無法操作 body 中的節點，</li>
+</ul>
+<p>原因:</p>
+<ul>
+<li>原來是因為 網頁被載入瀏覽器後，瀏覽器會由上而下 來解析該檔。</li>
+<li>而在 head 標籤中解析到 script 時，會立即執行 script 的內容，</li>
+<li>但 body內容卻還沒被解析，自然無法找到 body內的節點。</li>
+</ul>
+<p>了解完之後猶如醍醐灌頂，原來 撰寫 JS 程式真要能熟練，可不只是要知道JS核心 的物件導向語法、還得對 瀏覽器中的 BOM tree 模型與BOM 的核心 window 物件有一定的了解才行阿…。</p>
+<hr>
+參考資料:<br>
+<a href="https://ithelp.ithome.com.tw/articles/10191765" target="_blank" rel="noopener">
+重新認識 JavaScript: Day 12 透過 DOM API 查找節點
+</a>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://aloo31124.github.io/2020/07/25/js-DOM-JS-%E5%9C%A8-head-%E8%88%87-body-%E6%A8%99%E7%B1%A4%E4%B8%AD%E9%81%8B%E8%A1%8C%E7%9A%84%E5%B7%AE%E7%95%B0/" data-id="ckdsqbn5b000074x131w95zd8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DOM/" rel="tag">DOM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-laravel-作品集1-以-migration資料遷移程式-新增db中的資料表" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/07/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%861-%E4%BB%A5-migration%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F-%E6%96%B0%E5%A2%9Edb%E4%B8%AD%E7%9A%84%E8%B3%87%E6%96%99%E8%A1%A8/" class="article-date">
@@ -159,7 +232,7 @@ php artisan migrate
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%861-%E4%BB%A5-migration%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F-%E6%96%B0%E5%A2%9Edb%E4%B8%AD%E7%9A%84%E8%B3%87%E6%96%99%E8%A1%A8/" data-id="ckds5h7qw0009e0x1ddqr983o" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%861-%E4%BB%A5-migration%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F-%E6%96%B0%E5%A2%9Edb%E4%B8%AD%E7%9A%84%E8%B3%87%E6%96%99%E8%A1%A8/" data-id="ckdsqbn5m000574x1fce0d6a8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/migration/" rel="tag">migration</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
@@ -231,7 +304,7 @@ php artisan migrate
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/24/%E7%B7%A8%E7%A2%BC-%E9%97%9C%E6%96%BC-n-%E8%88%87-n-%E5%AD%97%E7%AC%A6/" data-id="ckds5h7r4000je0x1fxkn67ds" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/24/%E7%B7%A8%E7%A2%BC-%E9%97%9C%E6%96%BC-n-%E8%88%87-n-%E5%AD%97%E7%AC%A6/" data-id="ckdsqbn5u000j74x1cs9aap36" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" rel="tag">檔案上傳</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%B7%A8%E7%A2%BC/" rel="tag">編碼</a></li></ul>
@@ -340,7 +413,7 @@ php artisan migrate
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/24/java-%E4%BF%AE%E6%94%B9-jsp-%E4%B8%AD-template-%E5%B0%8D%E6%87%89-tld-%E8%88%87-tag-java-%E7%A8%8B%E5%BC%8F-1/" data-id="ckds5h7qt0005e0x12oad6n5j" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/24/java-%E4%BF%AE%E6%94%B9-jsp-%E4%B8%AD-template-%E5%B0%8D%E6%87%89-tld-%E8%88%87-tag-java-%E7%A8%8B%E5%BC%8F-1/" data-id="ckdsqbn5i000174x1ces7dxki" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jsp/" rel="tag">jsp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tagbase/" rel="tag">tagbase</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tld/" rel="tag">tld</a></li></ul>
@@ -391,7 +464,7 @@ php artisan migrate
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/24/hello-world/" data-id="ckds5h7qs0004e0x11o80gn50" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/24/hello-world/" data-id="ckdsqbn5m000474x1cwep6qjy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -426,7 +499,7 @@ php artisan migrate
   <div class="widget-wrap">
     <h3 class="widget-title">標籤</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOM/" rel="tag">DOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eclipse/" rel="tag">Eclipse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ajax/" rel="tag">ajax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/" rel="tag">jsp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/migration/" rel="tag">migration</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/" rel="tag">svn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tagbase/" rel="tag">tagbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tld/" rel="tag">tld</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8F%9B%E8%A1%8C%E7%AC%A6%E8%99%9F/" rel="tag">換行符號</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" rel="tag">檔案上傳</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B7%A8%E7%A2%BC/" rel="tag">編碼</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B7%A8%E8%AD%AF/" rel="tag">編譯</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOM/" rel="tag">DOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eclipse/" rel="tag">Eclipse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ajax/" rel="tag">ajax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ajax/" rel="tag">ajax()</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/" rel="tag">jsp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/migration/" rel="tag">migration</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/" rel="tag">svn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tagbase/" rel="tag">tagbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tld/" rel="tag">tld</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8F%9B%E8%A1%8C%E7%AC%A6%E8%99%9F/" rel="tag">換行符號</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" rel="tag">檔案上傳</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B7%A8%E7%A2%BC/" rel="tag">編碼</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B7%A8%E8%AD%AF/" rel="tag">編譯</a></li></ul>
     </div>
   </div>
 
@@ -436,7 +509,7 @@ php artisan migrate
   <div class="widget-wrap">
     <h3 class="widget-title">標籤雲</h3>
     <div class="widget tagcloud">
-      <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jquery/" style="font-size: 16.67px;">jquery</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/laravel/" style="font-size: 20px;">laravel</a> <a href="/tags/migration/" style="font-size: 13.33px;">migration</a> <a href="/tags/mvc/" style="font-size: 10px;">mvc</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/tagbase/" style="font-size: 10px;">tagbase</a> <a href="/tags/tld/" style="font-size: 10px;">tld</a> <a href="/tags/%E6%8F%9B%E8%A1%8C%E7%AC%A6%E8%99%9F/" style="font-size: 10px;">換行符號</a> <a href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" style="font-size: 10px;">檔案上傳</a> <a href="/tags/%E7%B7%A8%E7%A2%BC/" style="font-size: 13.33px;">編碼</a> <a href="/tags/%E7%B7%A8%E8%AD%AF/" style="font-size: 10px;">編譯</a>
+      <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax()</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jquery/" style="font-size: 16.67px;">jquery</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/laravel/" style="font-size: 20px;">laravel</a> <a href="/tags/migration/" style="font-size: 13.33px;">migration</a> <a href="/tags/mvc/" style="font-size: 10px;">mvc</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/tagbase/" style="font-size: 10px;">tagbase</a> <a href="/tags/tld/" style="font-size: 10px;">tld</a> <a href="/tags/%E6%8F%9B%E8%A1%8C%E7%AC%A6%E8%99%9F/" style="font-size: 10px;">換行符號</a> <a href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" style="font-size: 10px;">檔案上傳</a> <a href="/tags/%E7%B7%A8%E7%A2%BC/" style="font-size: 13.33px;">編碼</a> <a href="/tags/%E7%B7%A8%E8%AD%AF/" style="font-size: 10px;">編譯</a>
     </div>
   </div>
 
@@ -458,6 +531,10 @@ php artisan migrate
       <ul>
         
           <li>
+            <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/">[作品集9] 撰寫左樹選單6-新增分類後更新左樹選單</a>
+          </li>
+        
+          <li>
             <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%868-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE5-%E7%94%A2%E7%94%9F-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E-%E8%BC%B8%E5%85%A5%E6%A1%86/">[作品集8] 撰寫左樹選單5-產生[新增分類]輸入框</a>
           </li>
         
@@ -471,10 +548,6 @@ php artisan migrate
         
           <li>
             <a href="/2020/08/01/laravel-%E4%BD%9C%E5%93%81%E9%9B%867-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE4-%E6%8C%89%E4%B8%8B%E9%81%B8%E5%96%AE%E5%BE%8C%E5%B0%8D%E6%87%89%E5%8F%B3%E5%85%A7%E5%AE%B9%E9%A0%81/">[laravel][作品集7] 撰寫左樹選單4-按下選單後對應右內容頁</a>
-          </li>
-        
-          <li>
-            <a href="/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%866-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE3-%E7%94%A2%E7%94%9F%E4%B8%8B%E4%B8%80%E5%B1%A4%E7%AF%80%E9%BB%9E%EF%BC%8C%E4%B8%A6%E4%BD%BF%E7%94%A8jquery%E8%A8%AD%E8%A8%88%E6%A8%B9%E9%81%B8%E5%96%AE%E9%96%8B%E9%97%94/">[laravel][作品集6] 撰寫左樹選單3-產生下一層節點，並使用jquery設計樹選單開闔</a>
           </li>
         
       </ul>

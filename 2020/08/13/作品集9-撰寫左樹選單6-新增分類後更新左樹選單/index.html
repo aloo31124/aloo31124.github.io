@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>[作品集9] 撰寫左樹選單6-新增分類後更新左樹選單 | 阿盧的程式筆記</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="新增分類的操作邏輯 規劃若使用者需要新增分類，先點選需要在新增的父分類，按下 [新增分類] 就會在父分類下產生新增分類的輸入框。例如我想在 &quot;大學作品&quot; 的分類中新增其他分類，就先點選 &quot;大學作品&quot; 然後再按下 &quot;新增分類&quot; 按鈕，如下圖:  但按下儲存後，會將分類資料存入資料庫並重新刷新該層左樹選單。  按下儲存後新增分類存入資料庫  ajax() 導向到 controller 上一篇文章中所提">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[作品集9] 撰寫左樹選單6-新增分類後更新左樹選單">
+<meta property="og:url" content="http://aloo31124.github.io/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/index.html">
+<meta property="og:site_name" content="阿盧的程式筆記">
+<meta property="og:description" content="新增分類的操作邏輯 規劃若使用者需要新增分類，先點選需要在新增的父分類，按下 [新增分類] 就會在父分類下產生新增分類的輸入框。例如我想在 &quot;大學作品&quot; 的分類中新增其他分類，就先點選 &quot;大學作品&quot; 然後再按下 &quot;新增分類&quot; 按鈕，如下圖:  但按下儲存後，會將分類資料存入資料庫並重新刷新該層左樹選單。  按下儲存後新增分類存入資料庫  ajax() 導向到 controller 上一篇文章中所提">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-38.png">
+<meta property="og:image" content="https://i.imgur.com/gLj3Le1.gif">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-42.png">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-43.png">
+<meta property="article:published_time" content="2020-08-13T11:15:00.000Z">
+<meta property="article:modified_time" content="2020-08-13T11:37:20.127Z">
+<meta property="article:author" content="盧本翔">
+<meta property="article:tag" content="php">
+<meta property="article:tag" content="laravel">
+<meta property="article:tag" content="jquery">
+<meta property="article:tag" content="ajax()">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://aloo31124.github.io/images/pasted-38.png">
+  
+    <link rel="alternate" href="/atom.xml" title="阿盧的程式筆記" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">阿盧的程式筆記</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">程式學海無涯~回頭是岸阿~~ QAQ</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜尋"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://aloo31124.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-作品集9-撰寫左樹選單6-新增分類後更新左樹選單" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/" class="article-date">
+  <time datetime="2020-08-13T11:15:00.000Z" itemprop="datePublished">2020-08-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/laravel-%E5%B1%A5%E6%AD%B7%E4%BD%9C%E5%93%81%E7%B7%B4%E7%BF%92/">laravel 履歷作品練習</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [作品集9] 撰寫左樹選單6-新增分類後更新左樹選單
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4>新增分類的操作邏輯</h4>
+規劃若使用者需要新增分類，先點選需要在新增的父分類，按下 [新增分類] 就會在父分類下產生新增分類的輸入框。例如我想在 "大學作品" 的分類中新增其他分類，就先點選 "大學作品" 然後再按下 "新增分類" 按鈕，如下圖:
+
+<p>但按下儲存後，會將分類資料存入資料庫並重新刷新該層左樹選單。<br><img src="/images/pasted-38.png" alt=""></p>
+<hr>
+<h4>按下儲存後新增分類存入資料庫</h4>
+
+<h5>ajax() 導向到 controller</h5>
+上一篇文章中所提，在輸入框按下儲存後，會使用addCategoryAjaxAndReloadTree() 函式中的 ajax() 導向到 controller 並存入資料庫。
+因為輸入框產生是使用 jquery 的 .prepend() 等方法去組串 html ，因此並不好將分類 id 帶入addCategoryAjaxAndReloadTree() 方法中，
+所以在前章節中每次點選左樹選單會儲存目前分類 id 於 input hidden 中。
+
+<p>所以進入addCategoryAjaxAndReloadTree() 函式中使用 $(“#id”).val() 取得目前點選的分類 id 與 新增的分類名稱，並使用 ajax() 的值使用 post 導向到 controller 。<br>而導向出去的 ajax() 方法一樣需要設定為非同步 async : false ，要不 ajax() 為同步的狀態下在addCategoryAjaxAndReloadTree() 函式中一樣是最後執行，如下程式:</p>
+<pre>
+function buildAddCategoryHtml(){
+......
+  $(&#x22;&#x23;&#x22;+CategoryId).next(&#x27;ul&#x27;).prepend( 
+    &#x22;&#x3C;li id=&#x27;add_category_item&#x27; class=&#x27;list-group-item&#x27;&#x3E;&#x22;    
+      + &#x22;&#x3C;input type=&#x27;text&#x27; class=&#x27;form-control&#x27; placeholder=&#x27;請輸入新增分類&#x27; value=&#x27;&#x27; id=&#x27;addCategoryNameInput&#x27;&#x3E;&#x22;
+        ......
+      + &#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-info&#x27;onclick=&#x27;addCategoryAjaxAndReloadTree()&#x27; &#x3E;儲存&#x3C;&#x2F;button&#x3E;&#x22;            
+    + &#x22;&#x3C;&#x2F;li&#x3E;&#x22;
+  );
+}
+
+function addCategoryAjaxAndReloadTree(){
+  var categoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
+  var categoryName = $(&#x22;&#x23;addCategoryNameInput&#x22;).val();  
+  $.ajax({
+    type:&#x27;POST&#x27;,
+    url:&#x27;&#x2F;portfolioCategory&#x27;,
+    data:{
+      categoryId : categoryId,
+      categoryName : categoryName,
+      &#x22;_token&#x22;: &#x22; csrf_token() &#x22;
+    },
+    async : false,
+    success:function(result){ ...... }
+    ......
+}
+    ......
+&#x3C;input type=&#x22;hidden&#x22; id=&#x22;currentCategoryId&#x22; value=&#x22;0&#x22;&#x3E;
+</pre>
+
+<h5>controller 將新增分類存入資料庫</h5>
+在 routes / web.php 路由器中，post 導向到 controller 的 insertCategoryInDB() 函式中:
+<pre>
+Route::post('/portfolioCategory','portfolioController@insertCategoryInDB');
+</pre>
+
+<p>controller 的 insertCategoryInDB() 函式從  Request 取得 ajax() 帶來的該新增分類名稱與目前被選取的分類 id ，也就是此新增分類的父分類。<br>將作品分類Model存入 $db ，$db = new portfolioCategory() ，將新增的分類名稱與其父分類 id 存入資料庫 $db-&gt;save() 。</p>
+<pre>
+&#x3C;?php
+namespace App&#x5C;Http&#x5C;Controllers;
+use Illuminate&#x5C;Http&#x5C;Request;
+use App&#x5C;portfolioCategory;
+    ......
+class portfolioController extends Controller
+{
+    ......
+    public function insertCategoryInDB(Request $request){
+        $db = new portfolioCategory();
+        $db-&#x3E;name = $request-&#x3E;categoryName;
+        $db-&#x3E;parent_id = $request-&#x3E;categoryId;
+        $db-&#x3E;sort = 0;        
+        return $db-&#x3E;save();
+    }
+}
+</pre>
+
+<hr>
+<h4>重新刷新顯示下一層與新節點</h4>
+
+<p>將新增分類從 controller 存入資料庫後，重新 return 回 ajax() 。因為 ajax() 設為非同步 async : false ，所以執行完 ajax() 後下一個執行 reloadNextLevelByThisNodeForTreeMenu() 函式 。</p>
+<p>在 reloadNextLevelByThisNodeForTreeMenu() 函式中將該選取的分類下一層子項目 ul 清除後，重新刷新該層。</p>
+<pre>
+function addCategoryAjaxAndReloadTree(){
+  var categoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
+  var categoryName = $(&#x22;&#x23;addCategoryNameInput&#x22;).val();  
+  $.ajax({
+    type:&#x27;POST&#x27;,
+    url:&#x27;&#x2F;portfolioCategory&#x27;,
+    data:{
+      categoryId : categoryId,
+      categoryName : categoryName,
+      &#x22;_token&#x22;: &#x22; csrf_token() &#x22;
+    },
+    async : false,
+    success:function(result){
+      console.log(&#x22;result: &#x22;+result);
+    },error:function(){
+      console.log(&#x22;addCategoryAjax error&#x22;);
+    }
+  });
+  reloadNextLevelByThisNodeForTreeMenu(categoryId);
+}
+
+function reloadNextLevelByThisNodeForTreeMenu(categoryId){  
+  $(&#x27;&#x23;&#x27;+categoryId).next(&#x27;ul&#x27;).html(&#x27;&#x27;);
+  buildNextLevelByThisNodeIdForTreeMenu(categoryId);  
+}
+
+function buildNextLevelByThisNodeIdForTreeMenu(ThisNodeCategoryId){
+  $.ajax({
+    type:&#x27;GET&#x27;,
+    url:&#x27;&#x2F;portfolioTreeMenuThisNodeBuildNextLevel&#x27;,
+    data: { ...... },
+    async : false,
+    success:function(result){ ...... } ......
+  });
+}
+</pre>
+
+<h4>新增分類與刷新效果</h4>
+
+<img src="https://i.imgur.com/gLj3Le1.gif" />
+
+<hr>
+<h5>從view中分離出 js ，使用 asset 引入 js</h5>
+可以將撰寫的 &#x3C;script&#x3E; 功能的 js 分離到到 public &#x2F; js &#x2F; 的目錄下:
+
+<p><img src="/images/pasted-42.png" alt=""></p>
+<p>將前面撰寫的新增分類的 js 程式，移到 addCategoryInLeftTreeMenu.js 程式中，<br>並在 view 中使用 script 將該 js 引入view 中， src 使用 { { URL :: asset( ‘/js/… ‘ ) } } 引入。</p>
+<pre>
+&#x3C;script type=&#x22;text&#x2F;javascript&#x22; src=&#x22; URL::asset(&#x27;&#x2F;js&#x2F;portfolioIndex&#x2F;buildLeftTreeMenu.js&#x27;) &#x22;&#x3E;&#x3C;&#x2F;script&#x3E;
+&#x3C;script type=&#x22;text&#x2F;javascript&#x22; src=&#x22; URL::asset(&#x27;&#x2F;js&#x2F;portfolioIndex&#x2F;addCategoryInLeftTreeMenu.js&#x27;) &#x22;&#x3E;&#x3C;&#x2F;script&#x3E;
+</pre>
+
+<p>參考資料:<br><a href="https://blog.csdn.net/qq_28018283/article/details/53114446" target="_blank" rel="noopener">https://blog.csdn.net/qq_28018283/article/details/53114446</a></p>
+<h5>引入 js 中ajx() 使用 post 造成 419 錯誤</h5>
+在 addCategoryInLeftTreeMenu.js 程式中，使用 addCategoryAjaxAndReloadTree() 中的 ajax() 其使用 post 方法會造成 419 錯誤，data 參數使用 "_token": " csrf_token()  也沒用，產生如下錯誤:
+
+<p><img src="/images/pasted-43.png" alt=""></p>
+<p>該 ajax() 改為 GET 暫時處理此問題，需要再追蹤。</p>
+<p>addCategoryInLeftTreeMenu.js 程式:</p>
+<pre>
+&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+&#x2F;&#x2F;新增左樹選單分類
+$(document).ready(function(){
+    $(&#x27;html&#x27;).click(function(e){
+      if($(e).parents(&#x27;&#x23;add_category_item&#x27;).length==0 &#x26;&#x26; e.target.id != &#x27;add_category_item&#x27;
+        &#x26;&#x26; e.target.id != &#x27;addCategoryBtn&#x27; &#x26;&#x26; e.target.id != &#x27;addCategoryNameInput&#x27;
+      ){
+        cleanAddCategoryHtml();      
+      }
+    });
+});
+
+  function buildAddCategoryHtml(){
+    cleanAddCategoryHtml();
+    var CategoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
+    $(&#x22;&#x23;&#x22;+CategoryId).find(&#x27;img&#x27;).attr(&#x27;src&#x27;,&#x27;&#x2F;icon&#x2F;folder-open.png&#x27;);  
+    $(&#x22;&#x23;&#x22;+CategoryId).next(&#x27;ul&#x27;).show(&#x22;slow&#x22;);
+
+    if($(&#x22;&#x23;&#x22;+CategoryId).next(&#x27;ul&#x27;).length == 0)
+      buildNextLevelByThisNodeIdForTreeMenu(CategoryId);      
+
+    $(&#x22;&#x23;&#x22;+CategoryId).next(&#x27;ul&#x27;).prepend(
+        &#x22;&#x3C;li id=&#x27;add_category_item&#x27; class=&#x27;list-group-item&#x27;&#x3E;&#x22;    
+        + &#x22;&#x3C;input type=&#x27;text&#x27; class=&#x27;form-control&#x27; placeholder=&#x27;請輸入新增分類&#x27; value=&#x27;&#x27; id=&#x27;addCategoryNameInput&#x27;&#x3E;&#x22;
+        + &#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-secondary&#x27;onclick=&#x27;cleanAddCategoryHtml()&#x27; &#x3E;取消&#x3C;&#x2F;button&#x3E;&#x22;
+        + &#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-info&#x27;onclick=&#x27;addCategoryAjaxAndReloadTree()&#x27; &#x3E;儲存&#x3C;&#x2F;button&#x3E;&#x22;            
+      + &#x22;&#x3C;&#x2F;li&#x3E;&#x22;
+    );
+  }
+
+  function cleanAddCategoryHtml(){
+    $(&#x27;&#x23;add_category_item&#x27;).remove();
+  }
+
+function addCategoryAjaxAndReloadTree(){
+    var categoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
+    var categoryName = $(&#x22;&#x23;addCategoryNameInput&#x22;).val();  
+    $.ajax({
+      type:&#x27;GET&#x27;,
+      url:&#x27;&#x2F;portfolioCategoryAdd&#x27;,
+      data:{
+        categoryId : categoryId,
+        categoryName : categoryName,
+        &#x22;_token&#x22;: &#x22; csrf_token() &#x22;
+      },
+      async : false,
+      success:function(result){
+        console.log(&#x22;result: &#x22;+result);
+      },error:function(){
+        console.log(&#x22;addCategoryAjax error&#x22;);
+      }
+    });
+    reloadNextLevelByThisNodeForTreeMenu(categoryId);
+}
+</pre>
+
+<p>buildLeftTreeMenu.js 程式:</p>
+<pre>
+......
+function buildNextLevelByThisNodeIdForTreeMenu(ThisNodeCategoryId){
+  $.ajax({
+    type:&#x27;GET&#x27;,
+    url:&#x27;&#x2F;portfolioTreeMenuThisNodeBuildNextLevel&#x27;,
+    data: { ...... },
+    async : false,
+    success:function(result){ ...... } ......
+  });
+}
+    ......
+function reloadNextLevelByThisNodeForTreeMenu(categoryId){  
+  $(&#x27;&#x23;&#x27;+categoryId).next(&#x27;ul&#x27;).html(&#x27;&#x27;);
+  buildNextLevelByThisNodeIdForTreeMenu(categoryId);  
+}  
+</pre>
+
+
+
+<h5>後續編輯與刪除分類</h5>
+後續章節中還須設計編輯分類與刪除分類功能，
+其編輯分類的邏輯與撰寫方法與新增相似。
+
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://aloo31124.github.io/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/" data-id="ckdsqbn6f002a74x187gt7h88" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ajax/" rel="tag">ajax()</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%868-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE5-%E7%94%A2%E7%94%9F-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E-%E8%BC%B8%E5%85%A5%E6%A1%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[作品集8] 撰寫左樹選單5-產生[新增分類]輸入框</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分類</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js-%E9%9A%A8%E7%AD%86%E8%A8%98/">js 隨筆記</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/laravel-%E5%B1%A5%E6%AD%B7%E4%BD%9C%E5%93%81%E7%B7%B4%E7%BF%92/">laravel 履歷作品練習</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/svn-%E9%9A%A8%E7%AD%86%E8%A8%98/">svn 隨筆記</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E7%AD%86%E8%A8%98/">工作筆記</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B7%A8%E7%A2%BC/">編碼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOM/" rel="tag">DOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eclipse/" rel="tag">Eclipse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ajax/" rel="tag">ajax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ajax/" rel="tag">ajax()</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/" rel="tag">jsp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/migration/" rel="tag">migration</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/" rel="tag">svn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tagbase/" rel="tag">tagbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tld/" rel="tag">tld</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8F%9B%E8%A1%8C%E7%AC%A6%E8%99%9F/" rel="tag">換行符號</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" rel="tag">檔案上傳</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B7%A8%E7%A2%BC/" rel="tag">編碼</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B7%A8%E8%AD%AF/" rel="tag">編譯</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤雲</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax()</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jquery/" style="font-size: 16.67px;">jquery</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/laravel/" style="font-size: 20px;">laravel</a> <a href="/tags/migration/" style="font-size: 13.33px;">migration</a> <a href="/tags/mvc/" style="font-size: 10px;">mvc</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/tagbase/" style="font-size: 10px;">tagbase</a> <a href="/tags/tld/" style="font-size: 10px;">tld</a> <a href="/tags/%E6%8F%9B%E8%A1%8C%E7%AC%A6%E8%99%9F/" style="font-size: 10px;">換行符號</a> <a href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" style="font-size: 10px;">檔案上傳</a> <a href="/tags/%E7%B7%A8%E7%A2%BC/" style="font-size: 13.33px;">編碼</a> <a href="/tags/%E7%B7%A8%E8%AD%AF/" style="font-size: 10px;">編譯</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">彙整</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/">[作品集9] 撰寫左樹選單6-新增分類後更新左樹選單</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%868-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE5-%E7%94%A2%E7%94%9F-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E-%E8%BC%B8%E5%85%A5%E6%A1%86/">[作品集8] 撰寫左樹選單5-產生[新增分類]輸入框</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/12/svn-svn-commit-%E9%81%87%E5%88%B0-ending-style-%E9%8C%AF%E8%AA%A4/">[svn] svn commit 遇到 ending style 錯誤</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/11/Eclipse-%E7%B7%A8%E8%AD%AF-The-project-was-not-built-since-its-build-path-is-incomplete/">[Eclipse][編譯] The project was not built since its build path is incomplete.</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/01/laravel-%E4%BD%9C%E5%93%81%E9%9B%867-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE4-%E6%8C%89%E4%B8%8B%E9%81%B8%E5%96%AE%E5%BE%8C%E5%B0%8D%E6%87%89%E5%8F%B3%E5%85%A7%E5%AE%B9%E9%A0%81/">[laravel][作品集7] 撰寫左樹選單4-按下選單後對應右內容頁</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 盧本翔<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

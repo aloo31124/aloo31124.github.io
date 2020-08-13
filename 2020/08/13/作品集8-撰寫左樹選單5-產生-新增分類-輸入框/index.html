@@ -5,35 +5,28 @@
   
 
   
-  <title>[laravel][作品集3] 新增簡易的作品集 MVC 架構 | 阿盧的程式筆記</title>
+  <title>[作品集8] 撰寫左樹選單5-產生[新增分類]輸入框 | 阿盧的程式筆記</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="規劃設計一個能有左選單樹進行分類的作品集介面，如下圖:  設計MVC簡易架構 新增作品集的 MVC 三支程式:        Model :  portfolioCategory.php     View : portfolioIndex.blade.php     Controller : portfolioController.php    網址請求 http:&#x2F;&#x2F;127.0.0.1:8000">
+  <meta name="description" content="新增分類的操作邏輯 規劃若使用者需要新增分類，先點選需要在新增的父分類，按下 [新增分類] 就會在父分類下產生新增分類的輸入框。例如我想在 &quot;大學作品&quot; 的分類中新增其他分類，就先點選 &quot;大學作品&quot; 然後再按下 &quot;新增分類&quot; 按鈕，如下圖:    新增按鈕與顯示新增分類輸入框 首先於左樹選單上方新增對分類的 &quot;新增&quot;、&quot;重新命名&quot;、&quot;刪除&quot; 三個功能的按鈕，如下圖:   使用 div row 將功">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[laravel][作品集3] 新增簡易的作品集 MVC 架構">
-<meta property="og:url" content="http://aloo31124.github.io/2020/07/27/laravel-%E4%BD%9C%E5%93%81%E9%9B%863-%E6%96%B0%E5%A2%9E%E7%B0%A1%E6%98%93%E7%9A%84%E4%BD%9C%E5%93%81%E9%9B%86-MVC-%E7%A8%8B%E5%BC%8F/index.html">
+<meta property="og:title" content="[作品集8] 撰寫左樹選單5-產生[新增分類]輸入框">
+<meta property="og:url" content="http://aloo31124.github.io/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%868-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE5-%E7%94%A2%E7%94%9F-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E-%E8%BC%B8%E5%85%A5%E6%A1%86/index.html">
 <meta property="og:site_name" content="阿盧的程式筆記">
-<meta property="og:description" content="規劃設計一個能有左選單樹進行分類的作品集介面，如下圖:  設計MVC簡易架構 新增作品集的 MVC 三支程式:        Model :  portfolioCategory.php     View : portfolioIndex.blade.php     Controller : portfolioController.php    網址請求 http:&#x2F;&#x2F;127.0.0.1:8000">
+<meta property="og:description" content="新增分類的操作邏輯 規劃若使用者需要新增分類，先點選需要在新增的父分類，按下 [新增分類] 就會在父分類下產生新增分類的輸入框。例如我想在 &quot;大學作品&quot; 的分類中新增其他分類，就先點選 &quot;大學作品&quot; 然後再按下 &quot;新增分類&quot; 按鈕，如下圖:    新增按鈕與顯示新增分類輸入框 首先於左樹選單上方新增對分類的 &quot;新增&quot;、&quot;重新命名&quot;、&quot;刪除&quot; 三個功能的按鈕，如下圖:   使用 div row 將功">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="http://aloo31124.github.io/images/pasted-1.png">
-<meta property="og:image" content="http://aloo31124.github.io/images/pasted-11.png">
-<meta property="og:image" content="http://aloo31124.github.io/images/pasted-12.png">
-<meta property="og:image" content="http://aloo31124.github.io/images/pasted-13.png">
-<meta property="og:image" content="http://aloo31124.github.io/images/pasted-14.png">
-<meta property="og:image" content="http://aloo31124.github.io/images/pasted-15.png">
-<meta property="og:image" content="http://aloo31124.github.io/images/pasted-16.png">
-<meta property="og:image" content="http://aloo31124.github.io/images/pasted-17.png">
-<meta property="og:image" content="http://aloo31124.github.io/images/pasted-18.png">
-<meta property="og:image" content="http://aloo31124.github.io/images/pasted-19.png">
-<meta property="og:image" content="http://aloo31124.github.io/images/pasted-20.png">
-<meta property="og:image" content="http://aloo31124.github.io/images/pasted-21.png">
-<meta property="article:published_time" content="2020-07-27T11:04:00.000Z">
-<meta property="article:modified_time" content="2020-07-30T00:06:34.390Z">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-38.png">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-39.png">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-40.png">
+<meta property="og:image" content="https://i.imgur.com/HiItxHc.gif">
+<meta property="og:image" content="https://i.imgur.com/7QqBT7x.gif">
+<meta property="article:published_time" content="2020-08-13T01:02:00.000Z">
+<meta property="article:modified_time" content="2020-08-13T01:31:54.201Z">
 <meta property="article:author" content="盧本翔">
 <meta property="article:tag" content="php">
 <meta property="article:tag" content="laravel">
-<meta property="article:tag" content="mvc">
+<meta property="article:tag" content="jquery">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://aloo31124.github.io/images/pasted-1.png">
+<meta name="twitter:image" content="http://aloo31124.github.io/images/pasted-38.png">
   
     <link rel="alternate" href="/atom.xml" title="阿盧的程式筆記" type="application/atom+xml">
   
@@ -86,10 +79,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-laravel-作品集3-新增簡易的作品集-MVC-程式" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-作品集8-撰寫左樹選單5-產生-新增分類-輸入框" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/07/27/laravel-%E4%BD%9C%E5%93%81%E9%9B%863-%E6%96%B0%E5%A2%9E%E7%B0%A1%E6%98%93%E7%9A%84%E4%BD%9C%E5%93%81%E9%9B%86-MVC-%E7%A8%8B%E5%BC%8F/" class="article-date">
-  <time datetime="2020-07-27T11:04:00.000Z" itemprop="datePublished">2020-07-27</time>
+    <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%868-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE5-%E7%94%A2%E7%94%9F-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E-%E8%BC%B8%E5%85%A5%E6%A1%86/" class="article-date">
+  <time datetime="2020-08-13T01:02:00.000Z" itemprop="datePublished">2020-08-13</time>
 </a>
     
   <div class="article-category">
@@ -104,7 +97,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      [laravel][作品集3] 新增簡易的作品集 MVC 架構
+      [作品集8] 撰寫左樹選單5-產生[新增分類]輸入框
     </h1>
   
 
@@ -112,74 +105,121 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>規劃設計一個能有左選單樹進行分類的作品集介面，如下圖:<br><img src="/images/pasted-1.png" alt="圖:預計畫面"></p>
+        <h4>新增分類的操作邏輯</h4>
+規劃若使用者需要新增分類，先點選需要在新增的父分類，按下 [新增分類] 就會在父分類下產生新增分類的輸入框。例如我想在 "大學作品" 的分類中新增其他分類，就先點選 "大學作品" 然後再按下 "新增分類" 按鈕，如下圖:
+
+<p><img src="/images/pasted-38.png" alt=""></p>
 <hr>
-<h4>設計MVC簡易架構</h4>
-新增作品集的 MVC 三支程式:
-<ul>
-      <li>Model :  portfolioCategory.php</li>
-    <li>View : portfolioIndex.blade.php</li>
-    <li>Controller : portfolioController.php</li>
-</ul>
+<h4>新增按鈕與顯示新增分類輸入框</h4>
+首先於左樹選單上方新增對分類的 "新增"、"重新命名"、"刪除" 三個功能的按鈕，如下圖:
+
+<p><img src="/images/pasted-39.png" alt=""></p>
+<p>使用 div row 將功能按鈕整理同一行，方便操作，功能按鈕程式如下:</p>
+<pre>
+&#x3C;div class=&#x22;row&#x22; style=&#x22;margin-top:20px&#x22;&#x3E;
+  &#x3C;div class=&#x22;col-11&#x22; &#x3E;
+    &#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-info&#x27; id=&#x27;addCategoryBtn&#x27; onclick=&#x27;buildAddCategoryHtml()&#x27; &#x3E;新增分類&#x3C;&#x2F;button&#x3E;
+    &#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-info&#x27; id=&#x27;editCategoryBtn&#x27; onclick=&#x27;&#x27; &#x3E;重新命名分類&#x3C;&#x2F;button&#x3E;
+    &#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-danger&#x27; data-toggle=&#x27;modal&#x27; data-target=&#x27;&#x27; onclick=&#x27;&#x27; &#x3E;刪除分類&#x3C;&#x2F;button&#x3E;
+  &#x3C;&#x2F;div&#x3E;
+&#x3C;&#x2F;div&#x3E;
+</pre>
+
+<h5>儲存分類id</h5>
+點選[新增分類]按鈕後，執行 buildAddCategoryHtml()函式，需要對目前點選的分類項目，也就是左樹選單的 span 進行操作，例如展開節點、開啟圖片等等...。<br>
+此時就需要知道當前點選的分類 id 是多少 ，因此在之前章節的程式中，$("#LeftTreeMenu").on("click", "span" ,function() 點選 span的項目時就需要儲存當前的分類 id 。最適合就是將其存在 input hidden 的參數中，如下:
+<pre>
+$(&#x22;&#x23;LeftTreeMenu&#x22;).on(&#x22;click&#x22;, &#x22;span&#x22; ,function(){
+        ......
+    $(&#x22;&#x23;currentCategoryId&#x22;).val(ThisNodeCategoryId);     
+        ......
+});
+    ......
+&#x3C;input type=&#x22;hidden&#x22; id=&#x22;currentCategoryId&#x22; value=&#x22;0&#x22;&#x3E;
+</pre>
 
 
-<p>網址請求 <a href="http://127.0.0.1:8000/portfolio" target="_blank" rel="noopener">http://127.0.0.1:8000/portfolio</a> 的時候路由程式 routes/ web.php 會導向 controller後，controller 程式再使用 index 方法初始並顯示使用 Model 從資料庫撈取的資料於作品集的頁面。</p>
+<p>儲存完分類 id 後，再回到點選 [新增分類] 所onclick 觸發的 buildAddCategoryHtml() 方法，先取得前面所撰寫所儲存的 分類 id ，並將其父分類的 資料夾圖示與 ul 都展開顯示:</p>
+<pre>
+function buildAddCategoryHtml(){
+    var CategoryId = $("#currentCategoryId").val();
+    $("#"+CategoryId).find('img').attr('src','/icon/folder-open.png');  
+    $("#"+CategoryId).next('ul').show("slow");
+    ......
+}
+</pre>
+
+
+<h5>新增分類輸入框相關位置</h5>
+如下圖，在[大學作品]的 li 項目下一個位置，產生 ul ，而新增分類的輸入框，則是包覆在 ul 內的第一個 li 。
+
+<p><img src="/images/pasted-40.png" alt=""></p>
+<h5>判斷是否已經產生下一層</h5>
+回到之前文章談的左樹選單產生邏輯，點選該項目之後才會產生此項目的下一層子項目。因此需要顯示新增分類的輸入框之前，需要先判斷是否有產生下一層的子項目，若沒有的話就使用之前的 buildNextLevelByThisNodeIdForTreeMenu() 方法產生下一層 <br>
+(但此重新呼叫此方法就需要將此方法中的 ajax 改為非同步 async : false ，這部分會在後面的部分中說明。 )<br>
+所以  $("#"+CategoryId).next('ul').length 是否為 0 ，判斷 ul 是否有子節點項目，為0 就執行產生下一層的動作。
+
+<pre>
+function buildAddCategoryHtml(){
+    ......
+    if($("#"+CategoryId).next('ul').length == 0)
+        buildNextLevelByThisNodeIdForTreeMenu(CategoryId);      
+    ......
+}
+</pre>
+
+<h5>將串下一層樹節點函式的 ajax() 設定非同步</h5>
+在最一開始產生左樹選單與產生下一層節點所撰寫的 buildNextLevelByThisNodeIdForTreeMenu() 函數，須將其改為非同步。ajax() 函式一開始預設為同步，ajax() 在同步的情況下會將 ajax() 外部的程式執行完後，最後才會執行 ajax() 內的動作。<br>
+
+<p>所以若ajax() 是同步的情況下，在 buildAddCategoryHtml() 方法中執行順序將會變成先產生輸入框，但輸入框需要於該項目的下一個 ul 中產出，可是此時ajax() 並未執行產生下一層，ul 也沒有產生出來，無法產生輸入框。最後會執行 ajax() 產生下一層節點。<br></p>
+<p>承上造成的操作情況為，若該左樹選單的項目還未產生，點選第一次 [新增分類] 只會產生出下一層子項目，不會顯示輸入框。<br><br>直到點選第二次 [新增分類] 才會產生出輸入框，此並不符合預期的操作邏輯，如下:</p>
+<img src="https://i.imgur.com/HiItxHc.gif" />
+
+
+<p>將該ajax()程式改為非同步，如下程式:</p>
+<pre>
+function buildNextLevelByThisNodeIdForTreeMenu(ThisNodeCategoryId){
+  $.ajax({
+    type:'GET',
+    url:'/portfolioTreeMenuThisNodeBuildNextLevel',
+    data: { ...... },
+    async : false,
+    success:function(result){ ...... } ......
+  });
+}
+</pre>
+
+<p>改為非同步後，點選一次即可正常顯示:<br><img src="https://i.imgur.com/7QqBT7x.gif" /></p>
+<h5>於ul內產生新增分類輸入框</h5>
+在該被點選的分類項目 id 中，使用 .next( 'ul' ).prepend( ... ) 就是在該 ul 標籤內的第一個項目位置 .prepend() 產生輸入框。另位輸入框 li 的 id 固定為 add_category_item ，方便後續刪除。
+<pre>
+function buildAddCategoryHtml(){
+    ......
+  $(&#x22;&#x23;&#x22;+CategoryId).next(&#x27;ul&#x27;).prepend(
+    &#x22;&#x3C;li id=&#x27;add_category_item&#x27; class=&#x27;list-group-item&#x27;&#x3E;&#x22;    
+        + &#x22;&#x3C;input type=&#x27;text&#x27; class=&#x27;form-control&#x27; placeholder=&#x27;請輸入新增分類&#x27; value=&#x27;&#x27; id=&#x27;addCategoryNameInput&#x27;&#x3E;&#x22;
+        + &#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-secondary&#x27;onclick=&#x27;cleanAddCategoryHtml()&#x27; &#x3E;取消&#x3C;&#x2F;button&#x3E;&#x22;
+        + &#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-info&#x27;onclick=&#x27;addCategoryAjaxAndBuildHtml()&#x27; &#x3E;儲存&#x3C;&#x2F;button&#x3E;&#x22;            
+    +&#x22;&#x3C;&#x2F;li&#x3E;&#x22;
+  );
+}
+</pre>
+
 <hr>
-<h4>Controller路由導向View</h4>
-於resources / views 目錄下手動新增 作品集的 .blade.php頁面 portfolioIndex.blade.php
-![圖:頁面 portfolioIndex.blade.php](/images/pasted-10.png)
-
-<p>於 portfolioIndex.blade.php 新增測試文字，方便後續測試。<br><img src="/images/pasted-11.png" alt=""></p>
-<p>下指令新增 controller:</p>
-<pre>
-php artisan make:controller portfolioController
-</pre>
-
-<p>在 app / Http / Controllers 目錄下會有一支新增的 portfolioController.php 程式<br><img src="/images/pasted-12.png" alt=""></p>
-<p>在 Controller 中新增 index() 方法，並在 路由程式 web.php 導向到index()方法時，<br>return view 到 頁面 portfolioIndex.blade.php<br><img src="/images/pasted-13.png" alt=""></p>
-<p>在程式 routes/ web.php 新增http get 導向的語法，導向到 portfolioController.php 程式的 index()方法。</p>
-<pre>
-Route::get('/portfolio','portfolioController@index');
-</pre>
-
-<p><img src="/images/pasted-14.png" alt=""></p>
-<p><a href="http://127.0.0.1:8000/portfolio" target="_blank" rel="noopener">http://127.0.0.1:8000/portfolio</a> 網址可成功顯示頁面:<br><img src="/images/pasted-15.png" alt=""></p>
-<hr>
-<h4>從Controller撈取Model資料並顯示於View</h4>
-
-<p>因為下一篇文章將會以樹選單開始撰寫，因此這篇文章將以新增作品分類的資料模組為練習範例。<br>一樣下 make 的指令，新增一個作品分類的 Model</p>
-<pre>
-php artisan make:model portfolioCategory
-</pre>
-
-<p>下完指令後，會在 app的根目錄新增出 Model<br><img src="/images/pasted-16.png" alt=""></p>
-<p>新增 protected $table 參數，指定之前篇章中新增於資料庫的 作品分類資料表:<br><img src="/images/pasted-17.png" alt=""></p>
-<p>對應作品分類表:<br><img src="/images/pasted-18.png" alt=""></p>
-<p>新增好作品分類的資料模型後，可使用簡易的方法來測試呈現Model資料是否正常。<br>先在 Controller 中引用(use) app根目錄下的該作品分類Model，</p>
-<pre>
-use App\portfolioCategory;
-</pre>
-<p>使用該Model 的靜態方法 ::all() 將所有資料取出:</p>
-<pre>
-$portfolioCategory = portfolioCategory::all();
-</pre>
-<p>使用 view 將變數另外存於 response 之中，並傳給 View</p>
-<pre>
-return view("portfolioIndex", [ 'portfolioCategory' => $portfolioCategory ]);
-</pre>
+<h4>移除 ul 內產生的分類輸入框</h4>
 
 
-<p>依如下程式撰寫將 資料導向 view<br><img src="/images/pasted-19.png" alt=""></p>
-<p>在 view 的.blade 刀語法，用 雙引號加錢字號就可直接印出資料:<br><img src="/images/pasted-20.png" alt=""></p>
-<p>如下為直接印出的作品表於資料庫內容:<br><img src="/images/pasted-21.png" alt=""></p>
+
+
+
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/27/laravel-%E4%BD%9C%E5%93%81%E9%9B%863-%E6%96%B0%E5%A2%9E%E7%B0%A1%E6%98%93%E7%9A%84%E4%BD%9C%E5%93%81%E9%9B%86-MVC-%E7%A8%8B%E5%BC%8F/" data-id="ckds4p5r4000avcx1hye8fe2r" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%868-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE5-%E7%94%A2%E7%94%9F-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E-%E8%BC%B8%E5%85%A5%E6%A1%86/" data-id="ckds4p5r6000evcx1d2br62nr" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
 
     </footer>
   </div>
@@ -187,19 +227,10 @@ return view("portfolioIndex", [ 'portfolioCategory' => $portfolioCategory ]);
     
 <nav id="article-nav">
   
-    <a href="/2020/07/28/laravel-%E4%BD%9C%E5%93%81%E9%9B%864-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE1-%E5%BE%9E%E8%B3%87%E6%96%99%E5%BA%AB%E6%92%88%E5%8F%96%E7%AC%AC%E4%B8%80%E5%B1%A4/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          [laravel][作品集4] 撰寫左樹選單1-設計樣式 與 操作邏輯
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/07/26/laravel-%E4%BD%9C%E5%93%81%E9%9B%862-%E4%BB%A5-migration-%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F%E6%96%B0%E5%A2%9E%E6%B8%AC%E8%A9%A6%E8%B3%87%E6%96%99/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/08/12/svn-svn-commit-%E9%81%87%E5%88%B0-ending-style-%E9%8C%AF%E8%AA%A4/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">[laravel][作品集2] 以 migration 資料遷移程式新增測試資料</div>
+      <div class="article-nav-title">[svn] svn commit 遇到 ending style 錯誤</div>
     </a>
   
 </nav>

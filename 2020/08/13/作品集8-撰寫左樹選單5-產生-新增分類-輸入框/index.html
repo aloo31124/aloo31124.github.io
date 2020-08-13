@@ -19,11 +19,12 @@
 <meta property="og:image" content="http://aloo31124.github.io/images/pasted-40.png">
 <meta property="og:image" content="https://i.imgur.com/HiItxHc.gif">
 <meta property="og:image" content="https://i.imgur.com/7QqBT7x.gif">
+<meta property="og:image" content="https://i.imgur.com/pd3lSUT.gif">
 <meta property="article:published_time" content="2020-08-13T01:02:00.000Z">
-<meta property="article:modified_time" content="2020-08-13T01:31:54.201Z">
+<meta property="article:modified_time" content="2020-08-13T01:52:26.873Z">
 <meta property="article:author" content="盧本翔">
-<meta property="article:tag" content="php">
 <meta property="article:tag" content="laravel">
+<meta property="article:tag" content="php">
 <meta property="article:tag" content="jquery">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://aloo31124.github.io/images/pasted-38.png">
@@ -208,6 +209,94 @@ function buildAddCategoryHtml(){
 <hr>
 <h4>移除 ul 內產生的分類輸入框</h4>
 
+<h5>移除方法remove()</h5>
+輸入完新增分類後自然就需要將該對話框移除，而移除的方法很簡單，在前面產生輸入框時就已經將 id 設定為 add_category_item ，因此搭配 .remove() 方法就可以移出該 li 項目，如: $('#add_category_item').remove(); 。
+
+<h5>產生與取消情況進行 remove() </h5>
+在按下 [新增分類] 的按鈕後，就是執行 buildAddCategoryHtml() 的方法，但每次按該按鈕產生輸入框前都需要在開始執行先執行舊的輸入框清出的動作，要不就會造成重複按 [新增分類] 按鈕會一直重複產生。
+另外若按下該輸入框的取消按鈕，自然也要執行清除輸入框動作，下列程式將 $('#add_category_item').remove(); 的清除語法放在 cleanAddCategoryHtml() 函式中方便之後 reuse。
+
+<pre>
+&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-info&#x27; id=&#x27;addCategoryBtn&#x27; onclick=&#x27;buildAddCategoryHtml()&#x27; &#x3E;新增分類&#x3C;&#x2F;button&#x3E;
+    ......
+function buildAddCategoryHtml(){
+  cleanAddCategoryHtml();
+    ......
+  $(&#x22;&#x23;&#x22;+CategoryId).next(&#x27;ul&#x27;).prepend(
+    ......
+      + &#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-secondary&#x27;onclick=&#x27;cleanAddCategoryHtml()&#x27; &#x3E;取消&#x3C;&#x2F;button&#x3E;&#x22;
+    ......
+  );
+}
+</pre>
+
+<h5>點選輸入框以外的位置時執行清除動作</h5>
+為了方便操作，使用者再點選該輸入框以外的地方皆會將該輸入框清除。使用 $('html').click( function( e ){ ... } 的方法，在頁面的 html標籤被點選便開始判斷，若不是點選輸入框相關元件，或 新增分類按鈕的情況便刪除輸入框。
+$('html').click( function( e ){ ... } 帶入的 e 便是被點選事件，使用 e.target.id 便可以知道被點選的元件 id 進一步作排除，完成程式如下:
+
+<pre>
+$(document).ready(function(){
+  $(&#x27;html&#x27;).click(function(e){
+    if($(e).parents(&#x27;&#x23;add_category_item&#x27;).length==0 &#x26;&#x26; e.target.id != &#x27;add_category_item&#x27;
+      &#x26;&#x26; e.target.id != &#x27;addCategoryBtn&#x27; &#x26;&#x26; e.target.id != &#x27;addCategoryNameInput&#x27;
+    ){
+      cleanAddCategoryHtml();      
+    }
+  });
+});
+</pre>
+
+<p>效果如下，點選輸入框或新增分類按鈕其他的地方，輸入框會消失。<br><img src="https://i.imgur.com/pd3lSUT.gif" /></p>
+<p>總結完整程式如下，在 view 中撰寫:</p>
+<pre>
+&#x3C;script&#x3E;
+$(document).ready(function(){
+  $(&#x27;html&#x27;).click(function(e){
+    if($(e).parents(&#x27;&#x23;add_category_item&#x27;).length==0 &#x26;&#x26; e.target.id != &#x27;add_category_item&#x27;
+      &#x26;&#x26; e.target.id != &#x27;addCategoryBtn&#x27; &#x26;&#x26; e.target.id != &#x27;addCategoryNameInput&#x27;
+    ){
+      cleanAddCategoryHtml();      
+    }
+  });
+});
+
+
+function buildAddCategoryHtml(){
+  cleanAddCategoryHtml();
+  var CategoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
+  $(&#x22;&#x23;&#x22;+CategoryId).find(&#x27;img&#x27;).attr(&#x27;src&#x27;,&#x27;&#x2F;icon&#x2F;folder-open.png&#x27;);  
+  $(&#x22;&#x23;&#x22;+CategoryId).next(&#x27;ul&#x27;).show(&#x22;slow&#x22;);
+
+
+  if($(&#x22;&#x23;&#x22;+CategoryId).next(&#x27;ul&#x27;).length == 0)
+    buildNextLevelByThisNodeIdForTreeMenu(CategoryId);      
+
+  $(&#x22;&#x23;&#x22;+CategoryId).next(&#x27;ul&#x27;).prepend(
+      &#x22;&#x3C;li id=&#x27;add_category_item&#x27; class=&#x27;list-group-item&#x27;&#x3E;&#x22;    
+      + &#x22;&#x3C;input type=&#x27;text&#x27; class=&#x27;form-control&#x27; placeholder=&#x27;請輸入新增分類&#x27; value=&#x27;&#x27; id=&#x27;addCategoryNameInput&#x27;&#x3E;&#x22;
+      + &#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-secondary&#x27;onclick=&#x27;cleanAddCategoryHtml()&#x27; &#x3E;取消&#x3C;&#x2F;button&#x3E;&#x22;
+      + &#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-info&#x27;onclick=&#x27;addCategoryAjaxAndBuildHtml()&#x27; &#x3E;儲存&#x3C;&#x2F;button&#x3E;&#x22;            
+    + &#x22;&#x3C;&#x2F;li&#x3E;&#x22;
+  );
+}
+
+function cleanAddCategoryHtml(){
+  $(&#x27;&#x23;add_category_item&#x27;).remove();
+}
+
+function buildNextLevelByThisNodeIdForTreeMenu(ThisNodeCategoryId){
+  $.ajax({
+    type:&#x27;GET&#x27;,
+    url:&#x27;&#x2F;portfolioTreeMenuThisNodeBuildNextLevel&#x27;,
+    data: { ...... },
+    async : false, &#x2F;&#x2F; ajax() 改為非同步，可讓其在產生輸入框前先產生下一層子項目
+    success:function(result){ ...... } ......
+  });
+}
+&#x3C;&#x2F;script&#x3E;
+......
+    &#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-info&#x27; id=&#x27;addCategoryBtn&#x27; onclick=&#x27;buildAddCategoryHtml()&#x27; &#x3E;新增分類&#x3C;&#x2F;button&#x3E;
+</pre>
 
 
 
@@ -216,7 +305,7 @@ function buildAddCategoryHtml(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%868-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE5-%E7%94%A2%E7%94%9F-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E-%E8%BC%B8%E5%85%A5%E6%A1%86/" data-id="ckds4p5r6000evcx1d2br62nr" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%868-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE5-%E7%94%A2%E7%94%9F-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E-%E8%BC%B8%E5%85%A5%E6%A1%86/" data-id="ckds5h7rw002ae0x1cthq6dx3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>

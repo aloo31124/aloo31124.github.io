@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>[laravel][作品集12] 右側內容頁面1-新增作品 | 阿盧的程式筆記</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="產生新增視窗與刪除 顯示新增作品的 對話框 Modal  按下[新增作品]按鈕  隨後會跳出新增作品的對話框 Modal  按下 [新增作品] 按鈕 ，一樣先呼叫 buildAddPortfolioModalInfo() 函式，從 $(‘#RightContentTitle’).text() 右內容頁事先取得目錄名稱。隨後用 data-target&#x3D;”#addPortfolioModal” 導向">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[laravel][作品集12] 右側內容頁面1-新增作品">
+<meta property="og:url" content="http://aloo31124.github.io/2020/08/25/laravel/index.html">
+<meta property="og:site_name" content="阿盧的程式筆記">
+<meta property="og:description" content="產生新增視窗與刪除 顯示新增作品的 對話框 Modal  按下[新增作品]按鈕  隨後會跳出新增作品的對話框 Modal  按下 [新增作品] 按鈕 ，一樣先呼叫 buildAddPortfolioModalInfo() 函式，從 $(‘#RightContentTitle’).text() 右內容頁事先取得目錄名稱。隨後用 data-target&#x3D;”#addPortfolioModal” 導向">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-48.png">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-49.png">
+<meta property="og:image" content="https://i.imgur.com/CunKURE.gif">
+<meta property="article:published_time" content="2020-08-25T11:17:00.000Z">
+<meta property="article:modified_time" content="2020-08-25T11:29:34.141Z">
+<meta property="article:author" content="盧本翔">
+<meta property="article:tag" content="php">
+<meta property="article:tag" content="laravel">
+<meta property="article:tag" content="jquery">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://aloo31124.github.io/images/pasted-48.png">
+  
+    <link rel="alternate" href="/atom.xml" title="阿盧的程式筆記" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">阿盧的程式筆記</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">程式學海無涯~回頭是岸阿~~ QAQ</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜尋"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://aloo31124.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-laravel" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/25/laravel/" class="article-date">
+  <time datetime="2020-08-25T11:17:00.000Z" itemprop="datePublished">2020-08-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/laravel-%E5%B1%A5%E6%AD%B7%E4%BD%9C%E5%93%81%E7%B7%B4%E7%BF%92/">laravel 履歷作品練習</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [laravel][作品集12] 右側內容頁面1-新增作品
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4>產生新增視窗與刪除</h4>
+<h5>顯示新增作品的 對話框 Modal</h5>
+
+<p>按下[新增作品]按鈕</p>
+<p><img src="/images/pasted-48.png" alt=""></p>
+<p>隨後會跳出新增作品的對話框 Modal</p>
+<p><img src="/images/pasted-49.png" alt=""></p>
+<p>按下 [新增作品] 按鈕 ，一樣先呼叫 buildAddPortfolioModalInfo() 函式，從 $(‘#RightContentTitle’).text() 右內容頁事先取得目錄名稱。<br>隨後用 data-target=”#addPortfolioModal” 導向 Modal ，產生如上圖的 Modal的對話視窗。</p>
+<p>public\js\portfolioIndex\addPortfolio.js</p>
+<pre>
+  function buildAddPortfolioModalInfo(){
+    $(&#x27;&#x23;addPortfolioForCategory&#x27;).text( $(&#x27;&#x23;RightContentTitle&#x27;).text() );
+  }
+</pre>
+
+<p>隨後用 data-target=”#addPortfolioModal” 導向 Modal ，產生如上圖的 Modal的對話視窗。</p>
+<p>resources\views\portfolioIndex.blade.php</p>
+<pre>
+&#x3C;div class=&#x22;col-8&#x22;&#x3E;  
+    &#x3C;h2&#x3E;作品分類:&#x3C;span id=&#x27;RightContentTitle&#x27;&#x3E;&#x3C;&#x2F;span&#x3E;&#x3C;&#x2F;h2&#x3E;    
+    &#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-info&#x27; data-toggle=&#x22;modal&#x22; onclick=&#x22;buildAddPortfolioModalInfo()&#x22; data-target=&#x22;&#x23;addPortfolioModal&#x22; &#x3E;新增作品&#x3C;&#x2F;button&#x3E;    
+......
+
+    &#x3C;!--新增作品 Modal start--&#x3E;
+    &#x3C;div class=&#x22;modal fade &#x22; id=&#x22;addPortfolioModal&#x22; tabindex=&#x22;-1&#x22; role=&#x22;dialog&#x22; aria-labelledby=&#x22;editModalLabel&#x22; aria-hidden=&#x22;true&#x22; data-backdrop=&#x22;static&#x22;&#x3E;
+      &#x3C;div class=&#x22;modal-dialog  modal-lg&#x22; role=&#x22;document&#x22;&#x3E;          
+          &#x3C;div class=&#x22;modal-content&#x22;&#x3E;
+            &#x3C;div class=&#x22;modal-header&#x22;&#x3E;
+              &#x3C;h5 class=&#x22;modal-title&#x22; id=&#x22;editModalLabel&#x22;&#x3E;新增作品&#x3C;&#x2F;h5&#x3E;
+            &#x3C;&#x2F;div&#x3E;            
+            &#x3C;div class=&#x22;modal-body&#x22;&#x3E;        
+              作品分類:&#x3C;span id=&#x27;addPortfolioForCategory&#x27;&#x3E;&#x3C;&#x2F;span&#x3E;              
+              &#x3C;div class=&#x22;form-group&#x22;&#x3E;
+                &#x3C;label class=&#x22;col-form-label&#x22;&#x3E;作品名稱:&#x3C;&#x2F;label&#x3E;
+                &#x3C;input type=&#x22;text&#x22; class=&#x22;form-control&#x22;  value=&#x22;&#x22; id=&#x22;insertPortfolioName&#x22; name=&#x22;insertPortfolioName&#x22;&#x3E;              
+                &#x3C;label class=&#x22;col-form-label&#x22;&#x3E;作品說明:&#x3C;&#x2F;label&#x3E;
+                &#x3C;input type=&#x22;text&#x22; class=&#x22;form-control&#x22;  value=&#x22;&#x22; id=&#x22;insertPortfolioDiscription&#x22;  name=&#x22;insertPortfolioDiscription&#x22;&#x3E;                      
+              &#x3C;&#x2F;div&#x3E;
+            &#x3C;&#x2F;div&#x3E;
+            &#x3C;div class=&#x22;modal-footer&#x22;&#x3E;
+              &#x3C;button type=&#x22;button&#x22; class=&#x22;btn btn-secondary&#x22; data-dismiss=&#x22;modal&#x22; onclick=&#x22;cleanAddPortfolioModal()&#x22; &#x3E;取消&#x3C;&#x2F;button&#x3E;
+              &#x3C;button type=&#x22;button&#x22; class=&#x22;btn btn-info&#x22; data-dismiss=&#x22;modal&#x22; onclick=&#x22;addPortfolioAndReloadRightContentCard()&#x22; &#x3E;儲存&#x3C;&#x2F;button&#x3E;                                       
+            &#x3C;&#x2F;div&#x3E;
+          &#x3C;&#x2F;div&#x3E;        
+      &#x3C;&#x2F;div&#x3E;
+    &#x3C;&#x2F;div&#x3E;
+    &#x3C;!--新增作品 Modal end--&#x3E;
+</pre>
+
+
+<h5>按下取消將原本 Modal 內容刪除</h5>
+Modal 的設計類似該網頁的延伸，當將該視窗直接關閉的時候，輸入框 input type="text" 會仍然保有之前輸入的文字。
+因此按下取消按鈕時，會執行 cleanAddPortfolioModal() 方法，將兩輸入框 "作品名稱"、"作品說明" 清空，如下程式:
+
+<p>public\js\portfolioIndex\addPortfolio.js</p>
+<pre>
+  function cleanAddPortfolioModal(){
+    $(&#x22;&#x23;insertPortfolioName&#x22;).val(&#x22;&#x22;);
+    $(&#x22;&#x23;insertPortfolioDiscription&#x22;).val(&#x22;&#x22;);
+  }
+</pre>
+
+
+<hr>
+
+<h4>存入資料庫並刷新</h4>
+
+<h5>按下[儲存]導向 controller</h5>
+使用 ajax() 分別將 "作品名稱 (insertPortfolioName)"、"作品說明(insertPortfolioDiscription)" 與該作品所屬分類 id 從 request 經由路由傳給 controller 程式處理。
+
+<p>public\js\portfolioIndex\addPortfolio.js</p>
+<pre>
+  function addPortfolioAndReloadRightContentCard(){
+    var insertPortfolioName = $(&#x22;&#x23;insertPortfolioName&#x22;).val();
+    var insertPortfolioDiscription = $(&#x22;&#x23;insertPortfolioDiscription&#x22;).val();
+    var currentCategoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
+    $.ajax({
+      type:&#x27;GET&#x27;,
+      url:&#x27;&#x2F;portfolioAdd&#x27;,
+      data: {
+        insertPortfolioName : insertPortfolioName,
+        insertPortfolioDiscription : insertPortfolioDiscription,
+        currentCategoryId : currentCategoryId,
+        &#x22;_token&#x22;: &#x22; csrf_token() &#x22;
+      } ,&#x2F;&#x2F;419
+      success:function(result){
+        $(&#x22;&#x23;RightContent&#x22;).html(result);
+      },
+      error:function(){
+        console.log(&#x22;addPortfolioAndReloadRightContentCard() error&#x22;);
+      }
+    });
+    cleanAddPortfolioModal();
+  }
+</pre>
+
+<p>routes\web.php</p>
+<pre>
+Route::get('/portfolioAdd','portfolioController@insertPortfolioInDBAndReload');
+</pre>
+
+<p>導向到 portfolioController.php 程式的 insertPortfolioInDBAndReload() 函式中，並新增一個作品資料存入資料庫。<br>呼叫 buildRightContent() 函式，重建右內容頁已完成重新刷新。</p>
+<p>app\Http\Controllers\portfolioController.php</p>
+<pre>
+    public function insertPortfolioInDBAndReload(Request $reqeust){
+        $db = new portfolio();
+        $db-&#x3E;name = $reqeust-&#x3E;insertPortfolioName;        
+        $db-&#x3E;discription = $reqeust-&#x3E;insertPortfolioDiscription;        
+        $db-&#x3E;portfolio_category_id = $reqeust-&#x3E;currentCategoryId;        
+        $db-&#x3E;sort = 0;                
+        $db-&#x3E;save();                
+        return $this-&#x3E;buildRightContent($reqeust);
+    }
+
+    function buildRightContent(Request $request){
+        $db = new portfolio();
+        $portfolioInfoFromDB = $db -&#x3E; findportfolioInfoByCategoryId($request-&#x3E;currentCategoryId);
+        $RightContentHtml = &#x22;&#x22;;
+            ......
+        return $RightContentHtml;
+    }
+</pre>
+
+<h5>重新刷新右內容頁，顯示新增作品</h5>
+buildRightContent() 函式串好右內容頁後，return 回傳給 ajax()，並顯示。
+備註: ajax() 的運作機制，若是預設(非同步) 會執行 addPortfolioAndReloadRightContentCard()函式外層的程式後，才會執行 ajax()。
+也就是說會先執行完 cleanAddPortfolioModal() 函式，才會執行 ajax() ，不過不會影響本次功能。
+
+<p>public\js\portfolioIndex\addPortfolio.js</p>
+<pre>
+  function addPortfolioAndReloadRightContentCard(){
+               ......
+    $.ajax({
+            ......
+      } ,
+      success:function(result){
+        $(&#x22;&#x23;RightContent&#x22;).html(result);
+      },
+      error:function(){
+        console.log(&#x22;addPortfolioAndReloadRightContentCard() error&#x22;);
+      }
+    });
+    cleanAddPortfolioModal();
+  }
+</pre>
+
+
+<hr>
+<h4>執行結果:</h4>
+
+<img src='https://i.imgur.com/CunKURE.gif' />
+
+<hr>
+<h4>完整程式:</h4>
+
+<p>resources\views\portfolioIndex.blade.php</p>
+<pre>
+&#x3C;div class=&#x22;col-8&#x22;&#x3E;  
+    &#x3C;h2&#x3E;作品分類:&#x3C;span id=&#x27;RightContentTitle&#x27;&#x3E;&#x3C;&#x2F;span&#x3E;&#x3C;&#x2F;h2&#x3E;    
+    &#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-info&#x27; data-toggle=&#x22;modal&#x22; onclick=&#x22;buildAddPortfolioModalInfo()&#x22; data-target=&#x22;&#x23;addPortfolioModal&#x22; &#x3E;新增作品&#x3C;&#x2F;button&#x3E;    
+......
+
+    &#x3C;!--新增作品 Modal start--&#x3E;
+    &#x3C;div class=&#x22;modal fade &#x22; id=&#x22;addPortfolioModal&#x22; tabindex=&#x22;-1&#x22; role=&#x22;dialog&#x22; aria-labelledby=&#x22;editModalLabel&#x22; aria-hidden=&#x22;true&#x22; data-backdrop=&#x22;static&#x22;&#x3E;
+      &#x3C;div class=&#x22;modal-dialog  modal-lg&#x22; role=&#x22;document&#x22;&#x3E;          
+          &#x3C;div class=&#x22;modal-content&#x22;&#x3E;
+            &#x3C;div class=&#x22;modal-header&#x22;&#x3E;
+              &#x3C;h5 class=&#x22;modal-title&#x22; id=&#x22;editModalLabel&#x22;&#x3E;新增作品&#x3C;&#x2F;h5&#x3E;
+            &#x3C;&#x2F;div&#x3E;            
+            &#x3C;div class=&#x22;modal-body&#x22;&#x3E;        
+              作品分類:&#x3C;span id=&#x27;addPortfolioForCategory&#x27;&#x3E;&#x3C;&#x2F;span&#x3E;              
+              &#x3C;div class=&#x22;form-group&#x22;&#x3E;
+                &#x3C;label class=&#x22;col-form-label&#x22;&#x3E;作品名稱:&#x3C;&#x2F;label&#x3E;
+                &#x3C;input type=&#x22;text&#x22; class=&#x22;form-control&#x22;  value=&#x22;&#x22; id=&#x22;insertPortfolioName&#x22; name=&#x22;insertPortfolioName&#x22;&#x3E;              
+                &#x3C;label class=&#x22;col-form-label&#x22;&#x3E;作品說明:&#x3C;&#x2F;label&#x3E;
+                &#x3C;input type=&#x22;text&#x22; class=&#x22;form-control&#x22;  value=&#x22;&#x22; id=&#x22;insertPortfolioDiscription&#x22;  name=&#x22;insertPortfolioDiscription&#x22;&#x3E;                      
+              &#x3C;&#x2F;div&#x3E;
+            &#x3C;&#x2F;div&#x3E;
+            &#x3C;div class=&#x22;modal-footer&#x22;&#x3E;
+              &#x3C;button type=&#x22;button&#x22; class=&#x22;btn btn-secondary&#x22; data-dismiss=&#x22;modal&#x22; onclick=&#x22;cleanAddPortfolioModal()&#x22; &#x3E;取消&#x3C;&#x2F;button&#x3E;
+              &#x3C;button type=&#x22;button&#x22; class=&#x22;btn btn-info&#x22; data-dismiss=&#x22;modal&#x22; onclick=&#x22;addPortfolioAndReloadRightContentCard()&#x22; &#x3E;儲存&#x3C;&#x2F;button&#x3E;                                       
+            &#x3C;&#x2F;div&#x3E;
+          &#x3C;&#x2F;div&#x3E;        
+      &#x3C;&#x2F;div&#x3E;
+    &#x3C;&#x2F;div&#x3E;
+    &#x3C;!--新增作品 Modal end--&#x3E;
+</pre>
+
+<p>public\js\portfolioIndex\addPortfolio.js</p>
+<pre>
+&#x2F;&#x2F;新增作品
+
+
+  function buildAddPortfolioModalInfo(){
+    $(&#x27;&#x23;addPortfolioForCategory&#x27;).text( $(&#x27;&#x23;RightContentTitle&#x27;).text() );
+  }
+
+  function cleanAddPortfolioModal(){
+    $(&#x22;&#x23;insertPortfolioName&#x22;).val(&#x22;&#x22;);
+    $(&#x22;&#x23;insertPortfolioDiscription&#x22;).val(&#x22;&#x22;);
+  }
+
+  function addPortfolioAndReloadRightContentCard(){
+    var insertPortfolioName = $(&#x22;&#x23;insertPortfolioName&#x22;).val();
+    var insertPortfolioDiscription = $(&#x22;&#x23;insertPortfolioDiscription&#x22;).val();
+    var currentCategoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
+    $.ajax({
+      type:&#x27;GET&#x27;,
+      url:&#x27;&#x2F;portfolioAdd&#x27;,
+      data: {
+        insertPortfolioName : insertPortfolioName,
+        insertPortfolioDiscription : insertPortfolioDiscription,
+        currentCategoryId : currentCategoryId,
+        &#x22;_token&#x22;: &#x22; csrf_token() &#x22;
+      } ,&#x2F;&#x2F;419
+      success:function(result){
+        $(&#x22;&#x23;RightContent&#x22;).html(result);
+      },
+      error:function(){
+        console.log(&#x22;addPortfolioAndReloadRightContentCard() error&#x22;);
+      }
+    });
+    cleanAddPortfolioModal();
+  }
+</pre>
+
+<p>routes\web.php</p>
+<pre>
+Route::get(&#x27;&#x2F;portfolioAdd&#x27;,&#x27;portfolioController@insertPortfolioInDBAndReload&#x27;);
+</pre>
+
+<p>app\Http\Controllers\portfolioController.php</p>
+<pre>
+    public function insertPortfolioInDBAndReload(Request $reqeust){
+        $db = new portfolio();
+        $db-&#x3E;name = $reqeust-&#x3E;insertPortfolioName;        
+        $db-&#x3E;discription = $reqeust-&#x3E;insertPortfolioDiscription;        
+        $db-&#x3E;portfolio_category_id = $reqeust-&#x3E;currentCategoryId;        
+        $db-&#x3E;sort = 0;                
+        $db-&#x3E;save();                
+        return $this-&#x3E;buildRightContent($reqeust);
+    }
+
+    function buildRightContent(Request $request){
+        $db = new portfolio();
+        $portfolioInfoFromDB = $db -&#x3E; findportfolioInfoByCategoryId($request-&#x3E;currentCategoryId);
+        $RightContentHtml = &#x22;&#x22;;
+            ......
+        return $RightContentHtml;
+    }
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://aloo31124.github.io/2020/08/25/laravel/" data-id="cke9vbrc8000uggx150x76582" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/08/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%8611-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE8-%E5%88%AA%E9%99%A4%E5%88%86%E9%A1%9E/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[laravel][作品集11] 撰寫左樹選單8-刪除分類</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分類</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js-%E9%9A%A8%E7%AD%86%E8%A8%98/">js 隨筆記</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/laravel-%E5%B1%A5%E6%AD%B7%E4%BD%9C%E5%93%81%E7%B7%B4%E7%BF%92/">laravel 履歷作品練習</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/svn-%E9%9A%A8%E7%AD%86%E8%A8%98/">svn 隨筆記</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E7%AD%86%E8%A8%98/">工作筆記</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B7%A8%E7%A2%BC/">編碼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOM/" rel="tag">DOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eclipse/" rel="tag">Eclipse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ajax/" rel="tag">ajax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ajax/" rel="tag">ajax()</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/" rel="tag">jsp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/migration/" rel="tag">migration</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/" rel="tag">svn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tagbase/" rel="tag">tagbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tld/" rel="tag">tld</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8F%9B%E8%A1%8C%E7%AC%A6%E8%99%9F/" rel="tag">換行符號</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" rel="tag">檔案上傳</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B7%A8%E7%A2%BC/" rel="tag">編碼</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B7%A8%E8%AD%AF/" rel="tag">編譯</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤雲</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax()</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jquery/" style="font-size: 16.67px;">jquery</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/laravel/" style="font-size: 20px;">laravel</a> <a href="/tags/migration/" style="font-size: 13.33px;">migration</a> <a href="/tags/mvc/" style="font-size: 10px;">mvc</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/tagbase/" style="font-size: 10px;">tagbase</a> <a href="/tags/tld/" style="font-size: 10px;">tld</a> <a href="/tags/%E6%8F%9B%E8%A1%8C%E7%AC%A6%E8%99%9F/" style="font-size: 10px;">換行符號</a> <a href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" style="font-size: 10px;">檔案上傳</a> <a href="/tags/%E7%B7%A8%E7%A2%BC/" style="font-size: 13.33px;">編碼</a> <a href="/tags/%E7%B7%A8%E8%AD%AF/" style="font-size: 10px;">編譯</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">彙整</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/08/25/laravel/">[laravel][作品集12] 右側內容頁面1-新增作品</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%8611-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE8-%E5%88%AA%E9%99%A4%E5%88%86%E9%A1%9E/">[laravel][作品集11] 撰寫左樹選單8-刪除分類</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%8610-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE7-%E4%BF%AE%E6%94%B9%E5%88%86%E9%A1%9E%E5%90%8D%E7%A8%B1/">[laravel][作品集10] 撰寫左樹選單7-修改分類名稱</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/">[laravel][作品集9] 撰寫左樹選單6-新增分類後更新左樹選單</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%868-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE5-%E7%94%A2%E7%94%9F-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E-%E8%BC%B8%E5%85%A5%E6%A1%86/">[laravel][作品集8] 撰寫左樹選單5-產生[新增分類]輸入框</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 盧本翔<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

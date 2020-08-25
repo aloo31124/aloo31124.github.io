@@ -5,24 +5,27 @@
   
 
   
-  <title>[laravel][作品集10] 撰寫左樹選單7-修改分類名稱 | 阿盧的程式筆記</title>
+  <title>[laravel][作品集11] 撰寫左樹選單8-刪除分類 | 阿盧的程式筆記</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="修改左樹選單選項名稱 上一篇文章已經說明新增分類的操作邏輯與撰寫方法，接下來討論如何修改左樹選單。 其操作邏輯如下圖，點選需要修改的項目後，按下 [重新命名分類] 後，該點選的項目會自動轉成輸入框。 此輸入框會保留原本名稱，修改後按下儲存，便刷新該頁面並存入資料庫。 ![](&#x2F;images&#x2F;pasted-44.png)  按下 [重新命名分類] 後產生輸入框 點選需要修改的項目後，按下[重新命名]">
+  <meta name="description" content="刪除左樹選單中項目操作 如下圖操作，選擇左樹選單需要刪除的項目，並按下 [刪除分類] 後，便會跳出警告視窗。 若按下確定刪除，則會修改資料庫並於左樹選單移除該項目與子分類和其下作品。 在刪除此分類項目後，系統會自動跳到其上一層分類，也就是顯示被刪除項目的父分類。    刪除分類的程式邏輯 本系統對左樹選單的分類刪除採軟刪除，也就是該被刪除的分類項目其資料庫欄位只是將 is_delete 改為1 (">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[laravel][作品集10] 撰寫左樹選單7-修改分類名稱">
-<meta property="og:url" content="http://aloo31124.github.io/2020/08/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%8610-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE7-%E4%BF%AE%E6%94%B9%E5%88%86%E9%A1%9E%E5%90%8D%E7%A8%B1/index.html">
+<meta property="og:title" content="[laravel][作品集11] 撰寫左樹選單8-刪除分類">
+<meta property="og:url" content="http://aloo31124.github.io/2020/08/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%8611-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE8-%E5%88%AA%E9%99%A4%E5%88%86%E9%A1%9E/index.html">
 <meta property="og:site_name" content="阿盧的程式筆記">
-<meta property="og:description" content="修改左樹選單選項名稱 上一篇文章已經說明新增分類的操作邏輯與撰寫方法，接下來討論如何修改左樹選單。 其操作邏輯如下圖，點選需要修改的項目後，按下 [重新命名分類] 後，該點選的項目會自動轉成輸入框。 此輸入框會保留原本名稱，修改後按下儲存，便刷新該頁面並存入資料庫。 ![](&#x2F;images&#x2F;pasted-44.png)  按下 [重新命名分類] 後產生輸入框 點選需要修改的項目後，按下[重新命名]">
+<meta property="og:description" content="刪除左樹選單中項目操作 如下圖操作，選擇左樹選單需要刪除的項目，並按下 [刪除分類] 後，便會跳出警告視窗。 若按下確定刪除，則會修改資料庫並於左樹選單移除該項目與子分類和其下作品。 在刪除此分類項目後，系統會自動跳到其上一層分類，也就是顯示被刪除項目的父分類。    刪除分類的程式邏輯 本系統對左樹選單的分類刪除採軟刪除，也就是該被刪除的分類項目其資料庫欄位只是將 is_delete 改為1 (">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/rXNSNga.gif">
-<meta property="article:published_time" content="2020-08-25T08:23:00.000Z">
-<meta property="article:modified_time" content="2020-08-25T10:56:20.450Z">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-45.png">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-46.png">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-47.png">
+<meta property="og:image" content="https://i.imgur.com/XzwLcl1.gif">
+<meta property="article:published_time" content="2020-08-25T10:55:00.000Z">
+<meta property="article:modified_time" content="2020-08-25T11:14:53.986Z">
 <meta property="article:author" content="盧本翔">
 <meta property="article:tag" content="php">
 <meta property="article:tag" content="laravel">
 <meta property="article:tag" content="jquery">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/rXNSNga.gif">
+<meta name="twitter:image" content="http://aloo31124.github.io/images/pasted-45.png">
   
     <link rel="alternate" href="/atom.xml" title="阿盧的程式筆記" type="application/atom+xml">
   
@@ -75,10 +78,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-laravel-作品集10-撰寫左樹選單7-修改分類名稱" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-laravel-作品集11-撰寫左樹選單8-刪除分類" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/08/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%8610-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE7-%E4%BF%AE%E6%94%B9%E5%88%86%E9%A1%9E%E5%90%8D%E7%A8%B1/" class="article-date">
-  <time datetime="2020-08-25T08:23:00.000Z" itemprop="datePublished">2020-08-25</time>
+    <a href="/2020/08/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%8611-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE8-%E5%88%AA%E9%99%A4%E5%88%86%E9%A1%9E/" class="article-date">
+  <time datetime="2020-08-25T10:55:00.000Z" itemprop="datePublished">2020-08-25</time>
 </a>
     
   <div class="article-category">
@@ -93,7 +96,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      [laravel][作品集10] 撰寫左樹選單7-修改分類名稱
+      [laravel][作品集11] 撰寫左樹選單8-刪除分類
     </h1>
   
 
@@ -101,19 +104,31 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5>修改左樹選單選項名稱</h5>
-上一篇文章已經說明新增分類的操作邏輯與撰寫方法，接下來討論如何修改左樹選單。
-其操作邏輯如下圖，點選需要修改的項目後，按下 [重新命名分類] 後，該點選的項目會自動轉成輸入框。
-此輸入框會保留原本名稱，修改後按下儲存，便刷新該頁面並存入資料庫。
-![](/images/pasted-44.png)
+        <h4>刪除左樹選單中項目操作</h4>
+如下圖操作，選擇左樹選單需要刪除的項目，並按下 [刪除分類] 後，便會跳出警告視窗。
+若按下確定刪除，則會修改資料庫並於左樹選單移除該項目與子分類和其下作品。
+在刪除此分類項目後，系統會自動跳到其上一層分類，也就是顯示被刪除項目的父分類。
 
-<h5>按下 [重新命名分類] 後產生輸入框</h5>
-點選需要修改的項目後，按下[重新命名]按鈕，呼叫buildEditCategoryHtml() 函式，後續的 js程式將分離到 editeCategoryInLeftTreeMenu.js 的程式中撰寫。
 
+<p><img src="/images/pasted-45.png" alt=""></p>
+<h5>刪除分類的程式邏輯</h5>
+本系統對左樹選單的分類刪除採軟刪除，也就是該被刪除的分類項目其資料庫欄位只是將 is_delete 改為1 (true) 而已，實際上還是存在於資料庫。
+而其下的子分類與作品 is_delete 欄位與其他資料則不改變，因為到時還原其被刪除分類的時候，還能保持它底下的分類與作品的刪除狀態。
+
+
+<hr>
+<h4>顯示刪除警告訊息</h4>
+
+<h5>button中的 onclick 與 data-target 運作順序</h5>
+如 view portfolioIndex.blade.php 程式中，按下刪除分類後會使用 bootstrap 的 data-target 導向 刪除的警告的對話框 dialog ，在 bootstrap 中稱為 Modal 。
+在按下刪除分類的 button，程式的運作順序是先執行 onclick的函式後，才會執行並顯示 Modal 對話框 。
+我們可以利用這個機制事先在 onclick 的函示中事先做邏輯判斷後再處理 Modal 對話框的顯示訊息。
+如下程式中，點選[刪除分類] 按鈕後，會先 onclick 觸發 buildDeleteCategoryModalInfo() 函式。
+
+
+<p>resources\views\portfolioIndex.blade.php</p>
 <pre>
-&#x3C;script type=&#x22;text&#x2F;javascript&#x22; src=&#x22; URL::asset(&#x27;&#x2F;js&#x2F;portfolioIndex&#x2F;editeCategoryInLeftTreeMenu.js&#x27;) &#x22;&#x3E;&#x3C;&#x2F;script&#x3E;
-
-......
+&#x3C;script type=&#x22;text&#x2F;javascript&#x22; src=&#x22; URL::asset(&#x27;&#x2F;js&#x2F;portfolioIndex&#x2F;deleteCategoryInLeftTreeMenu.js&#x27;) &#x22;&#x3E;&#x3C;&#x2F;script&#x3E;
 
 &#x3C;input type=&#x22;hidden&#x22; id=&#x22;currentCategoryId&#x22; value=&#x22;0&#x22;&#x3E;
 
@@ -124,189 +139,184 @@
     &#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-danger&#x27; data-toggle=&#x27;modal&#x27; onclick=&#x27;buildDeleteCategoryModalInfo()&#x27; data-target=&#x27;&#x23;deleteCategoryModal&#x27;  &#x3E;刪除分類&#x3C;&#x2F;button&#x3E;
   &#x3C;&#x2F;div&#x3E;
 &#x3C;&#x2F;div&#x3E;
+
+&#x3C;!-- 刪除分類警告訊息 --&#x3E;
+&#x3C;div class=&#x22;modal&#x22; id=&#x22;deleteCategoryModal&#x22; tabindex=&#x22;-1&#x22; role=&#x22;dialog&#x22;  aria-hidden=&#x22;true&#x22; data-backdrop=&#x22;static&#x22;&#x3E;
+  &#x3C;div class=&#x22;modal-dialog&#x22; role=&#x22;document&#x22;&#x3E;
+    &#x3C;div class=&#x22;modal-content&#x22;&#x3E;
+      &#x3C;div class=&#x22;modal-header&#x22;&#x3E;
+        &#x3C;h5 class=&#x22;modal-title&#x22;&#x3E;警告!!&#x3C;&#x2F;h5&#x3E;
+        &#x3C;button type=&#x22;button&#x22; class=&#x22;close&#x22; data-dismiss=&#x22;modal&#x22; aria-label=&#x22;Close&#x22;&#x3E;
+          &#x3C;span aria-hidden=&#x22;true&#x22;&#x3E;&#x26;times;&#x3C;&#x2F;span&#x3E;
+        &#x3C;&#x2F;button&#x3E;
+      &#x3C;&#x2F;div&#x3E;
+      &#x3C;div class=&#x22;modal-body&#x22;&#x3E;
+        &#x3C;p id=&#x27;deleteCategoryModalInfo&#x27;&#x3E;&#x3C;&#x2F;p&#x3E;
+      &#x3C;&#x2F;div&#x3E;
+      &#x3C;div class=&#x22;modal-footer&#x22;&#x3E;        
+        &#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-danger&#x27; data-dismiss=&#x27;modal&#x27;  onclick=&#x27;deleteCategoryAjaxAndReloadTree()&#x27; id=&#x22;deleteCategoryModalBtn&#x22; &#x3E;確定刪除&#x3C;&#x2F;button&#x3E;
+        &#x3C;button type=&#x22;button&#x22; class=&#x22;btn btn-secondary&#x22;  data-dismiss=&#x22;modal&#x22; &#x3E;取消&#x3C;&#x2F;button&#x3E;
+      &#x3C;&#x2F;div&#x3E;
+    &#x3C;&#x2F;div&#x3E;
+  &#x3C;&#x2F;div&#x3E;
+&#x3C;&#x2F;div&#x3E;
 </pre>
 
 
-<p>在 buildEditCategoryHtml() 函式中，取得點選項目的id :CategoryId 與 點選項目名稱 categoryName。<br>與 新增分類的方法類似，使用 $(“#”+CategoryId).find(‘span’).replaceWith( … ) 方法，將 span 替換為輸入框。<br>如下editeCategoryInLeftTreeMenu.js 程式:</p>
+<p>public\js\portfolioIndex\deleteCategoryInLeftTreeMenu.js</p>
 <pre>
-function buildEditCategoryHtml(){
-    var CategoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
-    var categoryName = $(&#x22;&#x23;RightContentTitle&#x22;).text();
-    cleanEditCategoryHtmlAndReloadSpan();
-    if(CategoryId==0){
-      alert(&#x22;無法修改總目錄名稱&#x22;);
-    }else{
-      $(&#x22;&#x23;&#x22;+CategoryId).find(&#x27;span&#x27;).replaceWith(
-          &#x22;&#x3C;span  id=&#x27;edit_category_item&#x27;&#x3E;&#x22;
-        +   &#x22;&#x3C;input type=&#x27;text&#x27; class=&#x27;form-control&#x27; value=&#x27;&#x22;+categoryName+&#x22;&#x27; id=&#x27;editCategoryNameInput&#x27;&#x3E;&#x22;
-        +   &#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-secondary&#x27; onclick=&#x27;cleanEditCategoryHtml()&#x27; &#x3E;取消&#x3C;&#x2F;button&#x3E;&#x22;
-        +   &#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-info&#x27; onclick=&#x27;editCategoryAjaxAndReloadTree()&#x27; &#x3E;儲存&#x3C;&#x2F;button&#x3E;&#x22;                
-        + &#x22;&#x3C;&#x2F;span&#x3E;&#x22;
-      );
-    }
-}
-</pre>
-
-
-<p>而按下取消則是使用 cleanEditCategoryHtmlAndReloadSpan() 函式，清除輸入框，並還原 span內的文字。<br>在後續成功將修改分類名稱存入資料庫後，也會使用此方法。</p>
-<pre>
-function cleanEditCategoryHtmlAndReloadSpan(){
-    var categoryName = $(&#x22;&#x23;RightContentTitle&#x22;).text();
-    $(&#x27;&#x23;edit_category_item&#x27;).replaceWith(
-      &#x22;&#x3C;span id=&#x27;folder_span&#x27; &#x3E;&#x22; + categoryName +  &#x22;&#x3C;&#x2F;span&#x3E;&#x22;
-    );    
-    var CategoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
-    changeTreeWordingWeightBolder($(&#x22;&#x23;&#x22;+CategoryId).find(&#x22;span&#x22;));
-}
-</pre>
-
-
-<hr>
-<h5>按下[儲存] 後存入資料庫</h5>
-於 editCategoryAjaxAndReloadTree() 函式中，使用ajax()導向 controller 程式。
-在此之前，使用 .val() 取得輸入框的修改名稱 editCategoryName ，與當下的分類 id categoryId。
-( 備註: 使用 script 標籤中URL::asset 引入 public 的 js 其 ajax() 只能使用 get 導向 )
-使用 ajax 導向至路由。
-<pre>
-function editCategoryAjaxAndReloadTree(){
+  function buildDeleteCategoryModalInfo(){
     var categoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
-    var editCategoryName = $(&#x22;&#x23;editCategoryNameInput&#x22;).val();
-    $(&#x22;&#x23;RightContentTitle&#x22;).text(editCategoryName);  
+    if(categoryId==0){
+      $(&#x27;&#x23;deleteCategoryModalInfo&#x27;).text(&#x27;總目錄無法刪除!&#x27;);
+      $(&#x22;&#x23;deleteCategoryModalBtn&#x22;).hide();
+    }else{
+      $(&#x27;&#x23;deleteCategoryModalInfo&#x27;).html(
+        &#x27;確定要刪除分類 : &#x5C;&#x22;&#x27; + $(&#x27;&#x23;RightContentTitle&#x27;).text() +&#x27;&#x5C;&#x22; 嗎?&#x27;  +
+        &#x27;該分類刪除後，此分類下的作品與子分類會一併刪除!!&#x27;             
+      );
+      $(&#x22;&#x23;deleteCategoryModalBtn&#x22;).show();
+    }
+  }
+</pre>
+
+<h5>於onclick的函式中判斷不同請況</h5>
+在 buildDeleteCategoryModalInfo() 函式中，會先判斷目前的分類 id 是否為 0 ，也就是判斷是否為總目錄。
+若為總目錄，警告訊息改為顯示 "總目錄無法刪除" 的訊息，並且將 [確定刪除] 按鈕 .hide() 隱藏，如下圖:
+
+<p><img src="/images/pasted-46.png" alt=""></p>
+<p>若是其他分類，則會提出其他警告，如下圖:</p>
+<p><img src="/images/pasted-47.png" alt=""></p>
+<hr>
+<h4>資料庫對該分類進行軟刪除</h4>
+回到剛剛 portfolioIndex.blade.php 程式中的刪除警告的對話框Modal ，若確定按下 [確定刪除] 的按鈕，會呼叫 deleteCategoryAjaxAndReloadTree() 函式。
+該函示會將需要刪除的分類 id 藉由路由導向到 controller 程式中。
+
+<p>public\js\portfolioIndex\deleteCategoryInLeftTreeMenu.js</p>
+<pre>
+  function deleteCategoryAjaxAndReloadTree(){
+    var categoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
+    if(categoryId!=0){
+      $.ajax({
+        type:&#x27;GET&#x27;,
+        url:&#x27;&#x2F;portfolioCategoryDelete&#x27;,
+        data:{
+            categoryId : categoryId,
+          &#x22;_token&#x22;: &#x22; csrf_token() &#x22;
+        },
+        success:function(result){
+          if(result==1){            
+            $(&#x27;&#x23;&#x27;+categoryId).next(&#x27;ul&#x27;).remove();
+            $(&#x27;&#x23;&#x27;+categoryId).remove();
+            backToParentCategory(categoryId);
+          }else{
+            alert(&#x22;刪除失敗&#x22;);
+          }
+        },error:function(){
+          console.log(&#x22;deleteCategoryAjaxAndReloadTree error&#x22;);
+        }
+      });
+    }    
+  }
+</pre>
+
+<p>routes\web.php 路由導向到 portfolioController.php 程式中</p>
+<pre>
+Route::get('/portfolioCategoryDelete','portfolioController@deleteCategoryInDB');
+</pre>
+
+<p>app/Http/Controllers/portfolioController.php</p>
+<pre>
+    public function deleteCategoryInDB(Request $request){
+        $db = portfolioCategory::find($request->categoryId);
+        $db->is_delete = 1;
+        return $db->save();                
+    }
+</pre>
+
+<p>在 Controller 程式中，使用 deleteCategoryInDB() 函式，修改 is_delete 為 1 ，並 save() 完成軟刪除。</p>
+<hr>
+<h4>刪除後更新頁面</h4>
+若資料庫成功修改程式，ajax() 會回傳 result == 1，
+並使用 remove() 的方法，將該刪除分類其下的子分類 .next( 'ul' ) 先 remove 移除，再將該分類 li 也一起移除。
+使用 backToParentCategory() 方法 ，回到上一層分類，也就是該被刪除分類的父分類。
+<br><br>
+在 getCategoryParentIdById() 方法中，使用 ajax() 回到 controller 取得目前分類的父分類 id 。
+最後並在 backToParentCategory() 方法中退回父分類與更新右內容頁。
+
+<p>public\js\portfolioIndex\deleteCategoryInLeftTreeMenu.js</p>
+<pre>
+  function deleteCategoryAjaxAndReloadTree(){
+    var categoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
+    if(categoryId!=0){
+      $.ajax({
+            ......
+        ,success:function(result){
+          if(result==1){            
+            $(&#x27;&#x23;&#x27;+categoryId).next(&#x27;ul&#x27;).remove();
+            $(&#x27;&#x23;&#x27;+categoryId).remove();
+            backToParentCategory(categoryId);
+          }else{  alert(&#x22;刪除失敗&#x22;);    }
+        },error:function(){
+          console.log(&#x22;deleteCategoryAjaxAndReloadTree error&#x22;);
+        }
+      });
+    }    
+  }
+
+
+function backToParentCategory(categoryId){
+  var parentId = getCategoryParentIdById(categoryId);
+  $(&#x27;&#x23;&#x27;+parentId).find(&#x27;span&#x27;).addClass(&#x27;font-weight-bolder text-info h5&#x27;); 
+  $(&#x22;&#x23;RightContentTitle&#x22;).text( $(&#x27;&#x23;&#x27;+parentId).find(&#x27;span&#x27;).text() );  
+  buildRightContentCard(parentId);       
+}
+
+function getCategoryParentIdById(categoryId){
+    var parentId = 0;
     $.ajax({
       type:&#x27;GET&#x27;,
-      url:&#x27;&#x2F;portfolioCategoryEdit&#x27;,
+      url:&#x27;&#x2F;portfolioCategoryGetParentId&#x27;,
       data:{
         categoryId : categoryId,
-        categoryName : editCategoryName,
         &#x22;_token&#x22;: &#x22; csrf_token() &#x22;
       },
-      success:function(result){        
-        if(result==1){
-          if(categoryId&#x3E;0){            
-              cleanEditCategoryHtmlAndReloadSpan();
-          }
-        }
-      },error:function(){
-        console.log(&#x22;editCategoryAjaxAndReloadTree error&#x22;);
-      }
-    });      
-}
-</pre>
-
-<p>路由 routes / web.php</p>
-<pre>
-Route::get('/portfolioCategoryEdit','portfolioController@updateCategoryInDB');
-</pre>
-
-<p>藉由如上路由程式，導向到 portfolioController.php 的 updateCategoryInDB() 函式，並存入資料庫。</p>
-<pre>
-    public function updateCategoryInDB(Request $request){       
-        $db = portfolioCategory::find($request-&#x3E;categoryId);
-        $db-&#x3E;name = $request-&#x3E;categoryName;
-        return $db-&#x3E;save();
-    }
-</pre>
-
-<hr>
-<h5>更新資料庫後刷新頁面</h5>
-回到之前的 editCategoryAjaxAndReloadTree() 函式中，在剛剛 controller的 updateCategoryInDB() 函式若存入資料庫成功後會回傳 1 。
-因此在  success:function() 中會取得 result 為 1 ，最後使用之前復原用的 cleanEditCategoryHtmlAndReloadSpan() 函示將修改的分類名稱更新至左樹選單中。
-
-
-<h5>呈現效果:</h5>
-<img src='https://i.imgur.com/rXNSNga.gif' />
-
-
-<hr>
-<h5>程式內容:</h5>
-
-<p>public/js/portfolioIndex/editeCategoryInLeftTreeMenu.js</p>
-<pre>
-&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-&#x2F;&#x2F;修改左樹選單分類名稱
-$(document).ready(function(){
-    $(&#x27;html&#x27;).click(function(e){
-      if($(e).parents(&#x27;&#x23;edit_category_item&#x27;).length==0 &#x26;&#x26; e.target.id != &#x27;edit_category_item&#x27;
-        &#x26;&#x26; e.target.id != &#x27;editCategoryBtn&#x27; &#x26;&#x26; e.target.id != &#x27;editCategoryNameInput&#x27;
-      ){
-        cleanEditCategoryHtmlAndReloadSpan();      
+      async : false,
+      success:function(result){
+        parentId = result;
+      },
+      error:function(){
+        console.log(&#x22;getCategoryParentIdById error1&#x22;);
       }
     });
-});
-
-
-function buildEditCategoryHtml(){
-    var CategoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
-    var categoryName = $(&#x22;&#x23;RightContentTitle&#x22;).text();
-    cleanEditCategoryHtmlAndReloadSpan();
-    if(CategoryId==0){
-      alert(&#x22;無法修改總目錄名稱&#x22;);
-    }else{
-      $(&#x22;&#x23;&#x22;+CategoryId).find(&#x27;span&#x27;).replaceWith(
-          &#x22;&#x3C;span  id=&#x27;edit_category_item&#x27;&#x3E;&#x22;
-        +   &#x22;&#x3C;input type=&#x27;text&#x27; class=&#x27;form-control&#x27; value=&#x27;&#x22;+categoryName+&#x22;&#x27; id=&#x27;editCategoryNameInput&#x27;&#x3E;&#x22;
-        +   &#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-secondary&#x27; onclick=&#x27;cleanEditCategoryHtmlAndReloadSpan()&#x27; &#x3E;取消&#x3C;&#x2F;button&#x3E;&#x22;
-        +   &#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-info&#x27; onclick=&#x27;editCategoryAjaxAndReloadTree()&#x27; &#x3E;儲存&#x3C;&#x2F;button&#x3E;&#x22;                
-        + &#x22;&#x3C;&#x2F;span&#x3E;&#x22;
-      );
-    }
-}
-
-
-function cleanEditCategoryHtmlAndReloadSpan(){
-    var categoryName = $(&#x22;&#x23;RightContentTitle&#x22;).text();
-    $(&#x27;&#x23;edit_category_item&#x27;).replaceWith(
-      &#x22;&#x3C;span id=&#x27;folder_span&#x27; &#x3E;&#x22; + categoryName +  &#x22;&#x3C;&#x2F;span&#x3E;&#x22;
-    );    
-    var CategoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
-    changeTreeWordingWeightBolder($(&#x22;&#x23;&#x22;+CategoryId).find(&#x22;span&#x22;));
-}
-
-
-function editCategoryAjaxAndReloadTree(){
-    var categoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
-    var editCategoryName = $(&#x22;&#x23;editCategoryNameInput&#x22;).val();
-    $(&#x22;&#x23;RightContentTitle&#x22;).text(editCategoryName);  
-    $.ajax({
-      type:&#x27;GET&#x27;,
-      url:&#x27;&#x2F;portfolioCategoryEdit&#x27;,
-      data:{
-        categoryId : categoryId,
-        categoryName : editCategoryName,
-        &#x22;_token&#x22;: &#x22; csrf_token() &#x22;
-      },
-      success:function(result){        
-        if(result==1){
-          if(categoryId&#x3E;0){            
-            cleanEditCategoryHtmlAndReloadSpan();
-          }
-        }
-      },error:function(){
-        console.log(&#x22;editCategoryAjaxAndReloadTree error&#x22;);
-      }
-    });      
+    return parentId;
 }
 </pre>
-
-
-<p>app\Http\Controllers\portfolioController.php</p>
-<pre>
-    public function updateCategoryInDB(Request $request){       
-        $db = portfolioCategory::find($request->categoryId);
-        $db->name = $request->categoryName;
-        return $db->save();
-    }
-</pre>
-
 
 <p>routes\web.php</p>
 <pre>
-Route::get('/portfolioCategoryEdit','portfolioController@updateCategoryInDB');
+Route::get('/portfolioCategoryGetParentId','portfolioController@findCategoryParentIdById');
 </pre>
+
+<p>app/Http/Controllers/portfolioController.php</p>
+<pre>
+    public function findCategoryParentIdById(Request $request){        
+        $db = portfolioCategory::find($request->categoryId);
+        return $db->parent_id;
+    }
+</pre>
+
+<hr>
+<h4>呈現效果:</h4>
+<img src='https://i.imgur.com/XzwLcl1.gif' />
+
+
+
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/08/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%8610-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE7-%E4%BF%AE%E6%94%B9%E5%88%86%E9%A1%9E%E5%90%8D%E7%A8%B1/" data-id="cke9vbrby0009ggx18zo5eq4u" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/08/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%8611-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE8-%E5%88%AA%E9%99%A4%E5%88%86%E9%A1%9E/" data-id="cke9vbrc0000eggx190jpfmer" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
@@ -317,19 +327,19 @@ Route::get('/portfolioCategoryEdit','portfolioController@updateCategoryInDB');
     
 <nav id="article-nav">
   
-    <a href="/2020/08/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%8611-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE8-%E5%88%AA%E9%99%A4%E5%88%86%E9%A1%9E/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/08/25/laravel/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          [laravel][作品集11] 撰寫左樹選單8-刪除分類
+          [laravel][作品集12] 右側內容頁面1-新增作品
         
       </div>
     </a>
   
   
-    <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/08/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%8610-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE7-%E4%BF%AE%E6%94%B9%E5%88%86%E9%A1%9E%E5%90%8D%E7%A8%B1/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">[laravel][作品集9] 撰寫左樹選單6-新增分類後更新左樹選單</div>
+      <div class="article-nav-title">[laravel][作品集10] 撰寫左樹選單7-修改分類名稱</div>
     </a>
   
 </nav>

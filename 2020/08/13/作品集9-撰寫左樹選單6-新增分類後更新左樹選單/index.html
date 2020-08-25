@@ -5,11 +5,11 @@
   
 
   
-  <title>[作品集9] 撰寫左樹選單6-新增分類後更新左樹選單 | 阿盧的程式筆記</title>
+  <title>[laravel][作品集9] 撰寫左樹選單6-新增分類後更新左樹選單 | 阿盧的程式筆記</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="新增分類的操作邏輯 規劃若使用者需要新增分類，先點選需要在新增的父分類，按下 [新增分類] 就會在父分類下產生新增分類的輸入框。例如我想在 &quot;大學作品&quot; 的分類中新增其他分類，就先點選 &quot;大學作品&quot; 然後再按下 &quot;新增分類&quot; 按鈕，如下圖:  但按下儲存後，會將分類資料存入資料庫並重新刷新該層左樹選單。  按下儲存後新增分類存入資料庫  ajax() 導向到 controller 上一篇文章中所提">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[作品集9] 撰寫左樹選單6-新增分類後更新左樹選單">
+<meta property="og:title" content="[laravel][作品集9] 撰寫左樹選單6-新增分類後更新左樹選單">
 <meta property="og:url" content="http://aloo31124.github.io/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/index.html">
 <meta property="og:site_name" content="阿盧的程式筆記">
 <meta property="og:description" content="新增分類的操作邏輯 規劃若使用者需要新增分類，先點選需要在新增的父分類，按下 [新增分類] 就會在父分類下產生新增分類的輸入框。例如我想在 &quot;大學作品&quot; 的分類中新增其他分類，就先點選 &quot;大學作品&quot; 然後再按下 &quot;新增分類&quot; 按鈕，如下圖:  但按下儲存後，會將分類資料存入資料庫並重新刷新該層左樹選單。  按下儲存後新增分類存入資料庫  ajax() 導向到 controller 上一篇文章中所提">
@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://aloo31124.github.io/images/pasted-42.png">
 <meta property="og:image" content="http://aloo31124.github.io/images/pasted-43.png">
 <meta property="article:published_time" content="2020-08-13T11:15:00.000Z">
-<meta property="article:modified_time" content="2020-08-13T11:37:20.127Z">
+<meta property="article:modified_time" content="2020-08-25T08:22:42.002Z">
 <meta property="article:author" content="盧本翔">
 <meta property="article:tag" content="php">
 <meta property="article:tag" content="laravel">
@@ -97,7 +97,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      [作品集9] 撰寫左樹選單6-新增分類後更新左樹選單
+      [laravel][作品集9] 撰寫左樹選單6-新增分類後更新左樹選單
     </h1>
   
 
@@ -329,7 +329,7 @@ function reloadNextLevelByThisNodeForTreeMenu(categoryId){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/" data-id="ckdsqbn6f002a74x187gt7h88" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/" data-id="cke9p4ka2000vdcx1habi9i4j" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ajax/" rel="tag">ajax()</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
@@ -340,10 +340,19 @@ function reloadNextLevelByThisNodeForTreeMenu(categoryId){
     
 <nav id="article-nav">
   
+    <a href="/2020/08/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%8610-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE7-%E4%BF%AE%E6%94%B9%E5%88%86%E9%A1%9E%E5%90%8D%E7%A8%B1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          [laravel][作品集10] 撰寫左樹選單7-修改分類名稱
+        
+      </div>
+    </a>
+  
   
     <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%868-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE5-%E7%94%A2%E7%94%9F-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E-%E8%BC%B8%E5%85%A5%E6%A1%86/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">[作品集8] 撰寫左樹選單5-產生[新增分類]輸入框</div>
+      <div class="article-nav-title">[laravel][作品集8] 撰寫左樹選單5-產生[新增分類]輸入框</div>
     </a>
   
 </nav>
@@ -401,11 +410,15 @@ function reloadNextLevelByThisNodeForTreeMenu(categoryId){
       <ul>
         
           <li>
-            <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/">[作品集9] 撰寫左樹選單6-新增分類後更新左樹選單</a>
+            <a href="/2020/08/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%8610-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE7-%E4%BF%AE%E6%94%B9%E5%88%86%E9%A1%9E%E5%90%8D%E7%A8%B1/">[laravel][作品集10] 撰寫左樹選單7-修改分類名稱</a>
           </li>
         
           <li>
-            <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%868-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE5-%E7%94%A2%E7%94%9F-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E-%E8%BC%B8%E5%85%A5%E6%A1%86/">[作品集8] 撰寫左樹選單5-產生[新增分類]輸入框</a>
+            <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/">[laravel][作品集9] 撰寫左樹選單6-新增分類後更新左樹選單</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%868-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE5-%E7%94%A2%E7%94%9F-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E-%E8%BC%B8%E5%85%A5%E6%A1%86/">[laravel][作品集8] 撰寫左樹選單5-產生[新增分類]輸入框</a>
           </li>
         
           <li>
@@ -414,10 +427,6 @@ function reloadNextLevelByThisNodeForTreeMenu(categoryId){
         
           <li>
             <a href="/2020/08/11/Eclipse-%E7%B7%A8%E8%AD%AF-The-project-was-not-built-since-its-build-path-is-incomplete/">[Eclipse][編譯] The project was not built since its build path is incomplete.</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/01/laravel-%E4%BD%9C%E5%93%81%E9%9B%867-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE4-%E6%8C%89%E4%B8%8B%E9%81%B8%E5%96%AE%E5%BE%8C%E5%B0%8D%E6%87%89%E5%8F%B3%E5%85%A7%E5%AE%B9%E9%A0%81/">[laravel][作品集7] 撰寫左樹選單4-按下選單後對應右內容頁</a>
           </li>
         
       </ul>

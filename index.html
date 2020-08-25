@@ -71,6 +71,194 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-laravel-作品集10-撰寫左樹選單7-修改分類名稱" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%8610-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE7-%E4%BF%AE%E6%94%B9%E5%88%86%E9%A1%9E%E5%90%8D%E7%A8%B1/" class="article-date">
+  <time datetime="2020-08-25T08:23:00.000Z" itemprop="datePublished">2020-08-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%8610-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE7-%E4%BF%AE%E6%94%B9%E5%88%86%E9%A1%9E%E5%90%8D%E7%A8%B1/">[laravel][作品集10] 撰寫左樹選單7-修改分類名稱</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5>修改左樹選單選項名稱</h5>
+上一篇文章已經說明新增分類的操作邏輯與撰寫方法，接下來討論如何修改左樹選單。
+其操作邏輯如下圖，點選需要修改的項目後，按下 [重新命名分類] 後，該點選的項目會自動轉成輸入框。
+此輸入框會保留原本名稱，修改後按下儲存，便刷新該頁面並存入資料庫。
+![](/images/pasted-44.png)
+
+<h5>按下 [重新命名分類] 後產生輸入框</h5>
+點選需要修改的項目後，按下[重新命名]按鈕，呼叫buildEditCategoryHtml() 函式，後續的 js程式將分離到 editeCategoryInLeftTreeMenu.js 的程式中撰寫。
+
+<pre>
+&#x3C;script type=&#x22;text&#x2F;javascript&#x22; src=&#x22; URL::asset(&#x27;&#x2F;js&#x2F;portfolioIndex&#x2F;editeCategoryInLeftTreeMenu.js&#x27;) &#x22;&#x3E;&#x3C;&#x2F;script&#x3E;
+
+......
+
+&#x3C;input type=&#x22;hidden&#x22; id=&#x22;currentCategoryId&#x22; value=&#x22;0&#x22;&#x3E;
+
+&#x3C;div class=&#x22;row&#x22; style=&#x22;margin-top:20px&#x22;&#x3E;
+  &#x3C;div class=&#x22;col-11&#x22; &#x3E;
+    &#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-info&#x27; id=&#x27;addCategoryBtn&#x27; onclick=&#x27;buildAddCategoryHtml()&#x27; &#x3E;新增分類&#x3C;&#x2F;button&#x3E;
+    &#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-info&#x27; id=&#x27;editCategoryBtn&#x27; onclick=&#x27;buildEditCategoryHtml()&#x27; &#x3E;重新命名分類&#x3C;&#x2F;button&#x3E;
+    &#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-danger&#x27; data-toggle=&#x27;modal&#x27; onclick=&#x27;buildDeleteCategoryModalInfo()&#x27; data-target=&#x27;&#x23;deleteCategoryModal&#x27;  &#x3E;刪除分類&#x3C;&#x2F;button&#x3E;
+  &#x3C;&#x2F;div&#x3E;
+&#x3C;&#x2F;div&#x3E;
+</pre>
+
+
+<p>在 buildEditCategoryHtml() 函式中，取得點選項目的id :CategoryId 與 點選項目名稱 categoryName。<br>與 新增分類的方法類似，使用 $(“#”+CategoryId).find(‘span’).replaceWith( … ) 方法，將 span 替換為輸入框。<br>如下editeCategoryInLeftTreeMenu.js 程式:</p>
+<pre>
+function buildEditCategoryHtml(){
+    var CategoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
+    var categoryName = $(&#x22;&#x23;RightContentTitle&#x22;).text();
+    cleanEditCategoryHtmlAndReloadSpan();
+    if(CategoryId==0){
+      alert(&#x22;無法修改總目錄名稱&#x22;);
+    }else{
+      $(&#x22;&#x23;&#x22;+CategoryId).find(&#x27;span&#x27;).replaceWith(
+          &#x22;&#x3C;span  id=&#x27;edit_category_item&#x27;&#x3E;&#x22;
+        +   &#x22;&#x3C;input type=&#x27;text&#x27; class=&#x27;form-control&#x27; value=&#x27;&#x22;+categoryName+&#x22;&#x27; id=&#x27;editCategoryNameInput&#x27;&#x3E;&#x22;
+        +   &#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-secondary&#x27; onclick=&#x27;cleanEditCategoryHtml()&#x27; &#x3E;取消&#x3C;&#x2F;button&#x3E;&#x22;
+        +   &#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-info&#x27; onclick=&#x27;editCategoryAjaxAndReloadTree()&#x27; &#x3E;儲存&#x3C;&#x2F;button&#x3E;&#x22;                
+        + &#x22;&#x3C;&#x2F;span&#x3E;&#x22;
+      );
+    }
+}
+</pre>
+
+
+<p>而按下取消則是使用 cleanEditCategoryHtmlAndReloadSpan() 函式，清除輸入框，並還原 span內的文字。<br>在後續成功將修改分類名稱存入資料庫後，也會使用此方法。</p>
+<pre>
+function cleanEditCategoryHtmlAndReloadSpan(){
+    var categoryName = $(&#x22;&#x23;RightContentTitle&#x22;).text();
+    $(&#x27;&#x23;edit_category_item&#x27;).replaceWith(
+      &#x22;&#x3C;span id=&#x27;folder_span&#x27; &#x3E;&#x22; + categoryName +  &#x22;&#x3C;&#x2F;span&#x3E;&#x22;
+    );    
+    var CategoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
+    changeTreeWordingWeightBolder($(&#x22;&#x23;&#x22;+CategoryId).find(&#x22;span&#x22;));
+}
+</pre>
+
+
+<hr>
+<h5>按下[儲存] 後存入資料庫</h5>
+於 editCategoryAjaxAndReloadTree() 函式中，使用ajax()導向 controller 程式。
+在此之前，使用 .val() 取得輸入框的修改名稱 editCategoryName ，與當下的分類 id categoryId。
+( 備註: 使用 script 標籤中URL::asset 引入 public 的 js 其 ajax() 只能使用 get 導向 )
+使用 ajax 導向至路由。
+<pre>
+function editCategoryAjaxAndReloadTree(){
+    var categoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
+    var editCategoryName = $(&#x22;&#x23;editCategoryNameInput&#x22;).val();
+    $(&#x22;&#x23;RightContentTitle&#x22;).text(editCategoryName);  
+    $.ajax({
+      type:&#x27;GET&#x27;,
+      url:&#x27;&#x2F;portfolioCategoryEdit&#x27;,
+      data:{
+        categoryId : categoryId,
+        categoryName : editCategoryName,
+        &#x22;_token&#x22;: &#x22; csrf_token() &#x22;
+      },
+      success:function(result){        
+        if(result==1){
+          if(categoryId&#x3E;0){            
+              cleanEditCategoryHtmlAndReloadSpan();
+          }
+        }
+      },error:function(){
+        console.log(&#x22;editCategoryAjaxAndReloadTree error&#x22;);
+      }
+    });      
+}
+</pre>
+
+<p>路由 routes / web.php</p>
+<pre>
+Route::get('/portfolioCategoryEdit','portfolioController@updateCategoryInDB');
+</pre>
+
+<p>藉由如上路由程式，導向到 portfolioController.php 的 updateCategoryInDB() 函式，並存入資料庫。</p>
+<pre>
+    public function updateCategoryInDB(Request $request){       
+        $db = portfolioCategory::find($request-&#x3E;categoryId);
+        $db-&#x3E;name = $request-&#x3E;categoryName;
+        return $db-&#x3E;save();
+    }
+</pre>
+
+<hr>
+<h5>更新資料庫後刷新頁面</h5>
+回到之前的 editCategoryAjaxAndReloadTree() 函式中，在剛剛 controller的 updateCategoryInDB() 函式若存入資料庫成功後會回傳 1 。
+因此在  success:function() 中會取得 result 為 1 ，最後使用之前復原用的 cleanEditCategoryHtmlAndReloadSpan() 函示將修改的分類名稱更新至左樹選單中。
+
+
+<h5>呈現效果:</h5>
+<img src='https://i.imgur.com/rXNSNga.gif' />
+
+
+<hr>
+public/js/portfolioIndex/editeCategoryInLeftTreeMenu.js
+<pre>
+&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+&#x2F;&#x2F;修改左樹選單分類名稱
+$(document).ready(function(){
+    $(&#x27;html&#x27;).click(function(e){
+      if($(e).parents(&#x27;&#x23;edit_category_item&#x27;).length==0 &#x26;&#x26; e.target.id != &#x27;edit_category_item&#x27;
+        &#x26;&#x26; e.target.id != &#x27;editCategoryBtn&#x27; &#x26;&#x26; e.target.id != &#x27;editCategoryNameInput&#x27;
+      ){
+        cleanEditCategoryHtmlAndReloadSpan();      
+      }
+    });
+});
+
+
+<p>function buildEditCategoryHtml(){<br>    var CategoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();<br>    var categoryName = $(&#x22;&#x23;RightContentTitle&#x22;).text();<br>    cleanEditCategoryHtmlAndReloadSpan();<br>    if(CategoryId==0){<br>      alert(&#x22;無法修改總目錄名稱&#x22;);<br>    }else{<br>      $(&#x22;&#x23;&#x22;+CategoryId).find(&#x27;span&#x27;).replaceWith(<br>          &#x22;&#x3C;span  id=&#x27;edit_category_item&#x27;&#x3E;&#x22;<br>        +   &#x22;&#x3C;input type=&#x27;text&#x27; class=&#x27;form-control&#x27; value=&#x27;&#x22;+categoryName+&#x22;&#x27; id=&#x27;editCategoryNameInput&#x27;&#x3E;&#x22;<br>        +   &#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-secondary&#x27; onclick=&#x27;cleanEditCategoryHtmlAndReloadSpan()&#x27; &#x3E;取消&#x3C;&#x2F;button&#x3E;&#x22;<br>        +   &#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-info&#x27; onclick=&#x27;editCategoryAjaxAndReloadTree()&#x27; &#x3E;儲存&#x3C;&#x2F;button&#x3E;&#x22;<br>        + &#x22;&#x3C;&#x2F;span&#x3E;&#x22;<br>      );<br>    }<br>}</p>
+<p>function cleanEditCategoryHtmlAndReloadSpan(){<br>    var categoryName = $(&#x22;&#x23;RightContentTitle&#x22;).text();<br>    $(&#x27;&#x23;edit_category_item&#x27;).replaceWith(<br>      &#x22;&#x3C;span id=&#x27;folder_span&#x27; &#x3E;&#x22; + categoryName +  &#x22;&#x3C;&#x2F;span&#x3E;&#x22;<br>    );<br>    var CategoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();<br>    changeTreeWordingWeightBolder($(&#x22;&#x23;&#x22;+CategoryId).find(&#x22;span&#x22;));<br>}</p>
+<p>function editCategoryAjaxAndReloadTree(){<br>    var categoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();<br>    var editCategoryName = $(&#x22;&#x23;editCategoryNameInput&#x22;).val();<br>    $(&#x22;&#x23;RightContentTitle&#x22;).text(editCategoryName);<br>    $.ajax({<br>      type:&#x27;GET&#x27;,<br>      url:&#x27;&#x2F;portfolioCategoryEdit&#x27;,<br>      data:{<br>        categoryId : categoryId,<br>        categoryName : editCategoryName,<br>        &#x22;_token&#x22;: &#x22; csrf_token() &#x22;<br>      },<br>      success:function(result){<br>        if(result==1){<br>          if(categoryId&#x3E;0){<br>            cleanEditCategoryHtmlAndReloadSpan();<br>          }<br>        }<br>      },error:function(){<br>        console.log(&#x22;editCategoryAjaxAndReloadTree error&#x22;);<br>      }<br>    });<br>}<br></pre></p>
+<p>app\Http\Controllers\portfolioController.php</p>
+<pre>
+    public function updateCategoryInDB(Request $request){       
+        $db = portfolioCategory::find($request->categoryId);
+        $db->name = $request->categoryName;
+        return $db->save();
+    }
+</pre>
+
+
+<p>routes\web.php</p>
+<pre>
+Route::get('/portfolioCategoryEdit','portfolioController@updateCategoryInDB');
+</pre>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://aloo31124.github.io/2020/08/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%8610-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE7-%E4%BF%AE%E6%94%B9%E5%88%86%E9%A1%9E%E5%90%8D%E7%A8%B1/" data-id="cke9p4k9l000ddcx16qi21qcb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-作品集9-撰寫左樹選單6-新增分類後更新左樹選單" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/" class="article-date">
@@ -89,7 +277,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/">[作品集9] 撰寫左樹選單6-新增分類後更新左樹選單</a>
+      <a class="article-title" href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/">[laravel][作品集9] 撰寫左樹選單6-新增分類後更新左樹選單</a>
     </h1>
   
 
@@ -321,7 +509,7 @@ function reloadNextLevelByThisNodeForTreeMenu(categoryId){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/" data-id="ckdsqbn6f002a74x187gt7h88" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/" data-id="cke9p4ka2000vdcx1habi9i4j" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ajax/" rel="tag">ajax()</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
@@ -351,7 +539,7 @@ function reloadNextLevelByThisNodeForTreeMenu(categoryId){
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%868-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE5-%E7%94%A2%E7%94%9F-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E-%E8%BC%B8%E5%85%A5%E6%A1%86/">[作品集8] 撰寫左樹選單5-產生[新增分類]輸入框</a>
+      <a class="article-title" href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%868-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE5-%E7%94%A2%E7%94%9F-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E-%E8%BC%B8%E5%85%A5%E6%A1%86/">[laravel][作品集8] 撰寫左樹選單5-產生[新增分類]輸入框</a>
     </h1>
   
 
@@ -558,7 +746,7 @@ function buildNextLevelByThisNodeIdForTreeMenu(ThisNodeCategoryId){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%868-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE5-%E7%94%A2%E7%94%9F-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E-%E8%BC%B8%E5%85%A5%E6%A1%86/" data-id="ckdsqbn6e002974x1efgk7if8" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%868-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE5-%E7%94%A2%E7%94%9F-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E-%E8%BC%B8%E5%85%A5%E6%A1%86/" data-id="cke9p4ka0000rdcx1aivz53q7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
@@ -656,7 +844,7 @@ function buildNextLevelByThisNodeIdForTreeMenu(ThisNodeCategoryId){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/08/12/svn-svn-commit-%E9%81%87%E5%88%B0-ending-style-%E9%8C%AF%E8%AA%A4/" data-id="ckdsqbn5s000f74x14uj3a9fc" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/08/12/svn-svn-commit-%E9%81%87%E5%88%B0-ending-style-%E9%8C%AF%E8%AA%A4/" data-id="cke9p4ka70012dcx1am7n7u57" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/svn/" rel="tag">svn</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8F%9B%E8%A1%8C%E7%AC%A6%E8%99%9F/" rel="tag">換行符號</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%B7%A8%E7%A2%BC/" rel="tag">編碼</a></li></ul>
@@ -718,7 +906,7 @@ project > properties > java build path > LIbrary 標籤 > Add Library 按鈕
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/08/11/Eclipse-%E7%B7%A8%E8%AD%AF-The-project-was-not-built-since-its-build-path-is-incomplete/" data-id="ckdsqbn5r000e74x17vui023e" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/08/11/Eclipse-%E7%B7%A8%E8%AD%AF-The-project-was-not-built-since-its-build-path-is-incomplete/" data-id="cke9p4ka4000ydcx1e7qg9gl9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Eclipse/" rel="tag">Eclipse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%B7%A8%E8%AD%AF/" rel="tag">編譯</a></li></ul>
@@ -952,7 +1140,7 @@ function buildRightContentCard(ThisNodeCategoryId){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/08/01/laravel-%E4%BD%9C%E5%93%81%E9%9B%867-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE4-%E6%8C%89%E4%B8%8B%E9%81%B8%E5%96%AE%E5%BE%8C%E5%B0%8D%E6%87%89%E5%8F%B3%E5%85%A7%E5%AE%B9%E9%A0%81/" data-id="ckdsqbn6g002c74x12c2iabiw" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/08/01/laravel-%E4%BD%9C%E5%93%81%E9%9B%867-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE4-%E6%8C%89%E4%B8%8B%E9%81%B8%E5%96%AE%E5%BE%8C%E5%B0%8D%E6%87%89%E5%8F%B3%E5%85%A7%E5%AE%B9%E9%A0%81/" data-id="cke9p4ka90018dcx13is33t62" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
@@ -1196,7 +1384,7 @@ function changeTreeChildNodesShowAndHiden(clickImg){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%866-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE3-%E7%94%A2%E7%94%9F%E4%B8%8B%E4%B8%80%E5%B1%A4%E7%AF%80%E9%BB%9E%EF%BC%8C%E4%B8%A6%E4%BD%BF%E7%94%A8jquery%E8%A8%AD%E8%A8%88%E6%A8%B9%E9%81%B8%E5%96%AE%E9%96%8B%E9%97%94/" data-id="ckdsqbn6d002774x18ay81378" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%866-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE3-%E7%94%A2%E7%94%9F%E4%B8%8B%E4%B8%80%E5%B1%A4%E7%AF%80%E9%BB%9E%EF%BC%8C%E4%B8%A6%E4%BD%BF%E7%94%A8jquery%E8%A8%AD%E8%A8%88%E6%A8%B9%E9%81%B8%E5%96%AE%E9%96%8B%E9%97%94/" data-id="cke9p4k9s000ldcx19wzcafjz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
@@ -1424,7 +1612,7 @@ function buildNextLevelByThisNodeIdForTreeMenu(ThisNodeCategoryId){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%865-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE2-%E5%88%9D%E5%A7%8B%E9%A0%81%E9%9D%A2%E5%BE%9E%E8%B3%87%E6%96%99%E5%BA%AB%E6%92%88%E5%8F%96%E7%AC%AC%E4%B8%80%E5%B1%A4/" data-id="ckdsqbn6c002674x1f8ewg0xu" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/31/laravel-%E4%BD%9C%E5%93%81%E9%9B%865-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE2-%E5%88%9D%E5%A7%8B%E9%A0%81%E9%9D%A2%E5%BE%9E%E8%B3%87%E6%96%99%E5%BA%AB%E6%92%88%E5%8F%96%E7%AC%AC%E4%B8%80%E5%B1%A4/" data-id="cke9p4k9y000qdcx1e6q4dx2c" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ajax/" rel="tag">ajax</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
@@ -1576,7 +1764,7 @@ function buildNextLevelByThisNodeIdForTreeMenu(ThisNodeCategoryId){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/28/laravel-%E4%BD%9C%E5%93%81%E9%9B%864-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE1-%E5%BE%9E%E8%B3%87%E6%96%99%E5%BA%AB%E6%92%88%E5%8F%96%E7%AC%AC%E4%B8%80%E5%B1%A4/" data-id="ckdsqbn5p000974x15whb8nxg" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/28/laravel-%E4%BD%9C%E5%93%81%E9%9B%864-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE1-%E5%BE%9E%E8%B3%87%E6%96%99%E5%BA%AB%E6%92%88%E5%8F%96%E7%AC%AC%E4%B8%80%E5%B1%A4/" data-id="cke9p4k9q000idcx1egntfna7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
@@ -1678,203 +1866,10 @@ return view("portfolioIndex", [ 'portfolioCategory' => $portfolioCategory ]);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/27/laravel-%E4%BD%9C%E5%93%81%E9%9B%863-%E6%96%B0%E5%A2%9E%E7%B0%A1%E6%98%93%E7%9A%84%E4%BD%9C%E5%93%81%E9%9B%86-MVC-%E7%A8%8B%E5%BC%8F/" data-id="ckdsqbn5q000a74x1afkth74l" class="article-share-link">Share</a>
+      <a data-url="http://aloo31124.github.io/2020/07/27/laravel-%E4%BD%9C%E5%93%81%E9%9B%863-%E6%96%B0%E5%A2%9E%E7%B0%A1%E6%98%93%E7%9A%84%E4%BD%9C%E5%93%81%E9%9B%86-MVC-%E7%A8%8B%E5%BC%8F/" data-id="cke9p4k9u000mdcx12kku0esu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-laravel-作品集2-以-migration-資料遷移程式新增測試資料" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/07/26/laravel-%E4%BD%9C%E5%93%81%E9%9B%862-%E4%BB%A5-migration-%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F%E6%96%B0%E5%A2%9E%E6%B8%AC%E8%A9%A6%E8%B3%87%E6%96%99/" class="article-date">
-  <time datetime="2020-07-26T10:17:00.000Z" itemprop="datePublished">2020-07-26</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/laravel-%E5%B1%A5%E6%AD%B7%E4%BD%9C%E5%93%81%E7%B7%B4%E7%BF%92/">laravel 履歷作品練習</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/26/laravel-%E4%BD%9C%E5%93%81%E9%9B%862-%E4%BB%A5-migration-%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F%E6%96%B0%E5%A2%9E%E6%B8%AC%E8%A9%A6%E8%B3%87%E6%96%99/">[laravel][作品集2] 以 migration 資料遷移程式新增測試資料</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>規劃設計一個能有左選單樹進行分類的作品集介面，如下圖:<br><img src="/images/pasted-1.png" alt="upload successful"></p>
-<hr>
-在這章節中，先新增測試資料，方便後續撰寫程式時顯示。
-一樣使用 migration資料遷移程式對作品表與作品分類表插入資料。
-
-<p>一樣與 新增表格一樣，下指令新增 migration 資料遷移程式:</p>
-<pre>
-php artisan make:migration insert_portfolio_category_table
-</pre>
-
-<p>成功新增 migration 資料遷移程式:</p>
-<p><img src="/images/pasted-7.png" alt="upload successful"></p>
-<p>依照如上圖的樹狀選單，設計出階層分類的作品集資料:</p>
-<ul>
-<li>總目錄<ul>
-<li>大學作品<ul>
-<li>專題作品</li>
-<li>研究所開發系統/論文</li>
-</ul>
-</li>
-<li>自行開發系統<ul>
-<li>網頁</li>
-<li>手機 app</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>在 insert_portfolio_category_table 分類的 up() 函式撰寫程式內容，<br>一樣在 up( ) 執行 插入資料的語法:</p>
-<pre>
-DB::table('[資料表名稱]') -> insert( array ( ..., ... ) );
-</pre>
-
-<p>依照如上設計，第一層分類為 大學作品，自行開發系統，第二層分類是專題作品、網頁… 以此類推。<br>insert_portfolio_category_table 分類的 up() 函式 程式內容:</p>
-<pre>
-    public function up()
-    {        
-        DB::table('portfolio_category')->insert(array(
-            'id' => '1',
-            'parent_id' => '0',//父節點為 [總目錄]
-            'name' => '大學作品',
-            'sort' => '0',
-            'created_at' => date('Y-m-d H:m:s'),
-            'updated_at' => date('Y-m-d H:m:s')
-        ));
-        DB::table('portfolio_category')->insert(array(
-            'id' => '2',
-            'parent_id' => '0',//父節點為 [總目錄]
-            'name' => '自行開發系統',
-            'sort' => '0',
-            'created_at' => date('Y-m-d H:m:s'),
-            'updated_at' => date('Y-m-d H:m:s')
-        ));
-        DB::table('portfolio_category')->insert(array(
-            'id' => '3',
-            'parent_id' => '1',
-            'name' => '專題作品',
-            'sort' => '0',
-            'created_at' => date('Y-m-d H:m:s'),
-            'updated_at' => date('Y-m-d H:m:s')
-        ));
-        DB::table('portfolio_category')->insert(array(
-            'id' => '4',
-            'parent_id' => '1',
-            'name' => '研究所開發系統/論文',
-            'sort' => '0',
-            'created_at' => date('Y-m-d H:m:s'),
-            'updated_at' => date('Y-m-d H:m:s')
-        ));
-        DB::table('portfolio_category')->insert(array(
-            'id' => '5',
-            'parent_id' => '2',
-            'name' => '網頁',
-            'sort' => '0',
-            'created_at' => date('Y-m-d H:m:s'),
-            'updated_at' => date('Y-m-d H:m:s')
-        ));
-        DB::table('portfolio_category')->insert(array(
-            'id' => '6',
-            'parent_id' => '2',
-            'name' => '手機app',
-            'sort' => '0',
-            'created_at' => date('Y-m-d H:m:s'),
-            'updated_at' => date('Y-m-d H:m:s')
-        ));
-    }
-</pre>
-
-
-<p>下migrate 資料遷移指令，patch 上述分類的資料內容</p>
-<pre>
-php artisan migrate
-</pre>
-
-<p>於 portfolio_category表成功 insert 資料<br><img src="/images/pasted-8.png" alt="upload successful"></p>
-<hr>
-另外新增作品表的資料內容，先增作品表遷移程式
-<pre>
-php artisan make:migration insert_portfolio_table
-</pre>
-
-
-<p>一樣使用 DB::table(‘[資料表名稱]’) -&gt; insert(… ) 新增作品表內容:</p>
-<pre>
-    public function up()
-    {
-        DB::table('portfolio')->insert(array(
-            'id' => '1',
-            'portfolio_category_id' => '4',
-            'name' => 'AQI視覺化介面',
-            'discription' => '從web端顯示全台各空氣汙染數值。',
-            'sort' => '0',
-            'created_at' => date('Y-m-d H:m:s'),
-            'updated_at' => date('Y-m-d H:m:s')
-        ));  
-        DB::table('portfolio')->insert(array(
-            'id' => '2',
-            'portfolio_category_id' => '4',
-            'name' => 'IDW動態網頁',
-            'discription' => '應用IDW視覺化PM2.5趨勢走向，並用IDW修補ARIMA時序資料破損。',
-            'sort' => '0',
-            'created_at' => date('Y-m-d H:m:s'),
-            'updated_at' => date('Y-m-d H:m:s')
-        ));
-         DB::table('portfolio')->insert(array(
-            'id' => '3',
-            'portfolio_category_id' => '5',
-            'name' => '個人履歷網系統',
-            'discription' => '該個人履歷往有後台可調整前台資訊給使用者觀看。',
-            'sort' => '0',
-            'created_at' => date('Y-m-d H:m:s'),
-            'updated_at' => date('Y-m-d H:m:s')
-        ));  
-        DB::table('portfolio')->insert(array(
-            'id' => '4',
-            'portfolio_category_id' => '6',
-            'name' => '叫車app',
-            'discription' => '',
-            'sort' => '0',
-            'created_at' => date('Y-m-d H:m:s'),
-            'updated_at' => date('Y-m-d H:m:s')
-        ));        
-    }       
-</pre>
-
-<p>下migrate 資料遷移指令，patch 上述作品表的資料內容</p>
-<pre>
-php artisan migrate
-</pre>
-
-<p>於 portfolio 表成功 insert 資料:<br><img src="/images/pasted-9.png" alt="upload successful"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://aloo31124.github.io/2020/07/26/laravel-%E4%BD%9C%E5%93%81%E9%9B%862-%E4%BB%A5-migration-%E8%B3%87%E6%96%99%E9%81%B7%E7%A7%BB%E7%A8%8B%E5%BC%8F%E6%96%B0%E5%A2%9E%E6%B8%AC%E8%A9%A6%E8%B3%87%E6%96%99/" data-id="ckdsqbn5n000674x1fd635tct" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/migration/" rel="tag">migration</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
 
     </footer>
   </div>
@@ -1940,11 +1935,15 @@ php artisan migrate
       <ul>
         
           <li>
-            <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/">[作品集9] 撰寫左樹選單6-新增分類後更新左樹選單</a>
+            <a href="/2020/08/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%8610-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE7-%E4%BF%AE%E6%94%B9%E5%88%86%E9%A1%9E%E5%90%8D%E7%A8%B1/">[laravel][作品集10] 撰寫左樹選單7-修改分類名稱</a>
           </li>
         
           <li>
-            <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%868-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE5-%E7%94%A2%E7%94%9F-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E-%E8%BC%B8%E5%85%A5%E6%A1%86/">[作品集8] 撰寫左樹選單5-產生[新增分類]輸入框</a>
+            <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/">[laravel][作品集9] 撰寫左樹選單6-新增分類後更新左樹選單</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%868-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE5-%E7%94%A2%E7%94%9F-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E-%E8%BC%B8%E5%85%A5%E6%A1%86/">[laravel][作品集8] 撰寫左樹選單5-產生[新增分類]輸入框</a>
           </li>
         
           <li>
@@ -1953,10 +1952,6 @@ php artisan migrate
         
           <li>
             <a href="/2020/08/11/Eclipse-%E7%B7%A8%E8%AD%AF-The-project-was-not-built-since-its-build-path-is-incomplete/">[Eclipse][編譯] The project was not built since its build path is incomplete.</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/01/laravel-%E4%BD%9C%E5%93%81%E9%9B%867-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE4-%E6%8C%89%E4%B8%8B%E9%81%B8%E5%96%AE%E5%BE%8C%E5%B0%8D%E6%87%89%E5%8F%B3%E5%85%A7%E5%AE%B9%E9%A0%81/">[laravel][作品集7] 撰寫左樹選單4-按下選單後對應右內容頁</a>
           </li>
         
       </ul>

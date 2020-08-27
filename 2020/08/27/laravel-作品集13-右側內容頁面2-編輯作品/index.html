@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>[laravel][作品集13] 右側內容頁面2-編輯作品 | 阿盧的程式筆記</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="產生修改作品視窗  按下右內容頁面的作品縮圖中的 [編輯] 按鈕:  按下作品縮圖中的[編輯]按鈕，會產生 [修改作品] 的互動視窗 Modal  回到一開始 controller 在串右內容頁的作品縮圖卡的函式 buildRightContent() ，其顯示作品名稱的 &amp;#x3C;h5&amp;#x3E; 標籤，與顯示作品說明的 &amp;#x3C;p&amp;#x3E; 標籤，在後續按下對話視窗中[取消]按鈕時復原">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[laravel][作品集13] 右側內容頁面2-編輯作品">
+<meta property="og:url" content="http://aloo31124.github.io/2020/08/27/laravel-%E4%BD%9C%E5%93%81%E9%9B%8613-%E5%8F%B3%E5%81%B4%E5%85%A7%E5%AE%B9%E9%A0%81%E9%9D%A22-%E7%B7%A8%E8%BC%AF%E4%BD%9C%E5%93%81/index.html">
+<meta property="og:site_name" content="阿盧的程式筆記">
+<meta property="og:description" content="產生修改作品視窗  按下右內容頁面的作品縮圖中的 [編輯] 按鈕:  按下作品縮圖中的[編輯]按鈕，會產生 [修改作品] 的互動視窗 Modal  回到一開始 controller 在串右內容頁的作品縮圖卡的函式 buildRightContent() ，其顯示作品名稱的 &amp;#x3C;h5&amp;#x3E; 標籤，與顯示作品說明的 &amp;#x3C;p&amp;#x3E; 標籤，在後續按下對話視窗中[取消]按鈕時復原">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-50.png">
+<meta property="og:image" content="http://aloo31124.github.io/images/pasted-51.png">
+<meta property="og:image" content="https://i.imgur.com/LjZ1lDK.gif">
+<meta property="article:published_time" content="2020-08-27T10:27:00.000Z">
+<meta property="article:modified_time" content="2020-08-27T10:38:28.591Z">
+<meta property="article:author" content="盧本翔">
+<meta property="article:tag" content="php">
+<meta property="article:tag" content="laravel">
+<meta property="article:tag" content="jquery">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://aloo31124.github.io/images/pasted-50.png">
+  
+    <link rel="alternate" href="/atom.xml" title="阿盧的程式筆記" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">阿盧的程式筆記</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">程式學海無涯~回頭是岸阿~~ QAQ</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜尋"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://aloo31124.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-laravel-作品集13-右側內容頁面2-編輯作品" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/27/laravel-%E4%BD%9C%E5%93%81%E9%9B%8613-%E5%8F%B3%E5%81%B4%E5%85%A7%E5%AE%B9%E9%A0%81%E9%9D%A22-%E7%B7%A8%E8%BC%AF%E4%BD%9C%E5%93%81/" class="article-date">
+  <time datetime="2020-08-27T10:27:00.000Z" itemprop="datePublished">2020-08-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/laravel-%E5%B1%A5%E6%AD%B7%E4%BD%9C%E5%93%81%E7%B7%B4%E7%BF%92/">laravel 履歷作品練習</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [laravel][作品集13] 右側內容頁面2-編輯作品
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4>產生修改作品視窗</h4>
+
+<p>按下右內容頁面的作品縮圖中的 [編輯] 按鈕:</p>
+<p><img src="/images/pasted-50.png" alt=""></p>
+<p>按下作品縮圖中的[編輯]按鈕，會產生 [修改作品] 的互動視窗 Modal</p>
+<p><img src="/images/pasted-51.png" alt=""></p>
+<p>回到一開始 controller 在串右內容頁的作品縮圖卡的函式 buildRightContent() ，<br>其顯示作品名稱的 &#x3C;h5&#x3E; 標籤，與顯示作品說明的 &#x3C;p&#x3E; 標籤，在後續按下對話視窗中[取消]按鈕時復原互動視窗會用到，因此設定 id 。<br>別忘因為右內容頁會有多個作品縮圖，所以標籤 id後面要依照作品 本身的 id 編碼，如:<br>&#x27;portfolio_name_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27; 與 &#x27;portfolio_discription_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27; 。</p>
+<p>在 buildPortfolioEditModalHtml()函式中組出 Modal 互動視窗 ，因此該 Modal 的 id 編碼規則一樣為 &#x27;editPortfolioModal_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27;。</p>
+<p>app&#x5C;Http&#x5C;Controllers&#x5C;portfolioController.php</p>
+<pre>
+    function buildRightContent(Request $request){
+        $db = new portfolio();
+        $portfolioInfoFromDB = $db -&#x3E; findportfolioInfoByCategoryId($request-&#x3E;currentCategoryId);
+        $RightContentHtml = &#x22;&#x22;;
+
+        $cardCount = 1;
+        $cardNumInRow = 2;
+        foreach($portfolioInfoFromDB as $portfolio){
+            if($cardCount%$cardNumInRow==1  ) $RightContentHtml = $RightContentHtml.&#x22;&#x3C;div class=&#x27;row col-12&#x27; style=&#x27;margin-top:20px&#x27;&#x3E;&#x22;;
+            $RightContentHtml = $RightContentHtml
+            .&#x22;&#x3C;div class=&#x27;card col-md-12 col-12&#x27;&#x3E;&#x22;
+                .&#x22;&#x3C;div class=&#x27;card-body&#x27;&#x3E;&#x22;
+                    .&#x22;&#x3C;h5 class=&#x27;card-title&#x27; id=&#x27;portfolio_name_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27;&#x3E;&#x22;
+                        .&#x22;&#x3C;img id=&#x27;skill_icon&#x27; class=&#x27;rounded&#x27; src=&#x27;&#x2F;icon&#x2F;skill.png&#x27; alt=&#x27;profile Pic&#x27;&#x3E;&#x22;
+                        .$portfolio-&#x3E;name
+                    .&#x22;&#x3C;&#x2F;h5&#x3E;&#x22;            
+                    .&#x22;&#x3C;p class=&#x27;card-text&#x27; id=&#x27;portfolio_discription_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27;&#x3E;&#x22;.$portfolio-&#x3E;discription .&#x22;&#x3C;&#x2F;p&#x3E;&#x22;
+                    .&#x22;&#x3C;input type=&#x27;submit&#x27; value=&#x27;編輯&#x27; class=&#x27;btn btn-info&#x27; data-toggle=&#x27;modal&#x27; data-target=&#x27;&#x23;editPortfolioModal_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27; &#x3E;&#x22;
+                    .&#x22;&#x3C;input type=&#x27;button&#x27; value=&#x27;刪除&#x27; class=&#x27;btn btn-danger&#x27; onclick=&#x27;deletePortfolioAndReload(&#x22;.$portfolio-&#x3E;id.&#x22;)&#x27; &#x3E;&#x22;
+                .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;
+            .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;;
+            if($cardCount%$cardNumInRow==0  ) $RightContentHtml = $RightContentHtml.&#x22;&#x3C;&#x2F;div&#x3E;&#x22;;
+            $RightContentHtml = $this-&#x3E;buildPortfolioEditModalHtml($RightContentHtml,$request-&#x3E;currentCategoryId,$portfolio);           
+            $cardCount ++;
+        }    
+        return $RightContentHtml;
+    }
+
+
+    public function buildPortfolioEditModalHtml(String $RightContentHtml,int $categoryId,  $portfolio){
+        $RightContentHtml = $RightContentHtml
+        .&#x22;&#x3C;div class=&#x27;modal fade&#x27; id=&#x27;editPortfolioModal_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27; tabindex=&#x27;-1&#x27; role=&#x27;dialog&#x27; aria-labelledby=&#x27;editModalLabel&#x27; aria-hidden=&#x27;true&#x27; data-backdrop=&#x27;static&#x27;&#x3E;&#x22;
+            .&#x22;&#x3C;div class=&#x27;modal-dialog  modal-lg&#x27; role=&#x27;document&#x27;&#x3E;&#x22;
+                .&#x22;&#x3C;div class=&#x27;modal-content&#x27;&#x3E;&#x22;
+                    .&#x22;&#x3C;div class=&#x27;modal-header&#x27;&#x3E;&#x22;
+                        .&#x22;&#x3C;h5 class=&#x27;modal-title&#x27; id=&#x27;editModalLabel&#x27;&#x3E;修改作品:&#x22;.$portfolio-&#x3E;name.&#x22;&#x3C;&#x2F;h5&#x3E;&#x22;
+                    .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;
+                    .&#x22;&#x3C;div class=&#x27;modal-body&#x27;&#x3E;&#x22;
+                        .&#x22;&#x3C;div class=&#x27;form-group&#x27;&#x3E;&#x22;
+                            .&#x22;&#x3C;label class=&#x27;col-form-label&#x27;&#x3E;作品名稱:&#x3C;&#x2F;label&#x3E;&#x22;
+                            .&#x22;&#x3C;input type=&#x27;text&#x27; class=&#x27;form-control&#x27;  value=&#x27;&#x22;.$portfolio-&#x3E;name.&#x22;&#x27; id=&#x27;updatePortfolioName_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27; name=&#x27;updatePortfolioName_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27;&#x3E;&#x22;
+                            .&#x22;&#x3C;label class=&#x27;col-form-label&#x27;&#x3E;作品說明:&#x3C;&#x2F;label&#x3E;&#x22;
+                            .&#x22;&#x3C;input type=&#x27;text&#x27; class=&#x27;form-control&#x27;  value=&#x27;&#x22;.$portfolio-&#x3E;discription.&#x22;&#x27; id=&#x27;updatePortfolioDiscription_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27;  name=&#x27;updatePortfolioDiscription_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27;&#x3E;&#x22;
+                        .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;
+                    .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;
+                    .&#x22;&#x3C;div class=&#x27;modal-footer&#x27;&#x3E;&#x22;
+                        .&#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-secondary&#x27; data-dismiss=&#x27;modal&#x27; onclick=&#x27;recoverEditPortfolioModal(&#x22;.$portfolio-&#x3E;id.&#x22;)&#x27; &#x3E;取消&#x3C;&#x2F;button&#x3E;&#x22;
+                        .&#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-info&#x27; data-dismiss=&#x27;modal&#x27; onclick=&#x27;editPortfolioAndReload(&#x22;.$portfolio-&#x3E;id.&#x22;)&#x27; &#x3E;儲存&#x3C;&#x2F;button&#x3E;&#x22;
+                    .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;
+                .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;
+            .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;
+        .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;;
+        return $RightContentHtml;
+    }
+</pre>
+
+<hr>
+<h4>互動視窗 Modal 的取消與儲存</h4>
+在如上的 buildPortfolioEditModalHtml() 函式中在每個作品卡旁串出編輯該作品的互動視窗 Modal ，其Modal 的取消與儲存按鈕。
+
+<p>取消功能 recoverEditPortfolioModal()函式 是將 作品名稱與作品說明兩個輸入框還原，這是Modal的特性，需要手動還原。<br>儲存功能 editPortfolioAndReload()函式使用 ajax() 將修改的作品名稱與作品說明使用 ajax() 導向回 controller 程式。</p>
+<p>public\js\portfolioIndex\editPortfolio.js</p>
+<pre>
+&#x2F;&#x2F;編輯作品
+function recoverEditPortfolioModal(portfolioId){
+    $(&#x22;&#x23;updatePortfolioName_&#x22;+ portfolioId).val( $(&#x22;&#x23;portfolio_name_&#x22;+ portfolioId).text() );
+    $(&#x22;&#x23;updatePortfolioDiscription_&#x22; + portfolioId).val($(&#x22;&#x23;portfolio_discription_&#x22;+ portfolioId).text());
+}
+
+function editPortfolioAndReload(portfolioId){
+    var updatePortfolioName = $(&#x22;&#x23;updatePortfolioName_&#x22;+ portfolioId).val();
+    var updatePortfolioDiscription = $(&#x22;&#x23;updatePortfolioDiscription_&#x22; + portfolioId).val();
+    var categoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
+    $.ajax({
+      type:&#x27;GET&#x27;,
+      url:&#x27;&#x2F;portfolioEdit&#x27;,
+      data: {
+        updatePortfolioName : updatePortfolioName,
+        updatePortfolioDiscription : updatePortfolioDiscription,
+        currentCategoryId : categoryId,
+        portfolioId : portfolioId,
+        &#x22;_token&#x22;: &#x22; csrf_token() &#x22;
+      } ,&#x2F;&#x2F;419
+      success:function(result){
+        $(&#x22;&#x23;RightContent&#x22;).html(result);
+        &#x2F;&#x2F;$(&#x22;.modal-backdrop&#x22;).removeClass(&#x22;in&#x22;).removeClass(&#x22;fade&#x22;).remove();
+        recoverEditPortfolioModal(portfolioId);
+      },
+      error:function(){
+        console.log(&#x22;editPortfolioAndReload() error&#x22;);
+      }
+    });
+}
+</pre>
+
+<p>routes\web.php</p>
+<pre>
+Route::get('/portfolioEdit','portfolioController@updatePortfolioInDBAndReload');
+</pre>
+
+<p>app\Http\Controllers\portfolioController.php</p>
+<pre>
+    public function updatePortfolioInDBAndReload(Request $reqeust){
+        $db = portfolio::find($reqeust-&#x3E;portfolioId);
+        $db-&#x3E;name = $reqeust-&#x3E;updatePortfolioName;         
+        $db-&#x3E;discription = $reqeust-&#x3E;updatePortfolioDiscription;        
+        $db-&#x3E;portfolio_category_id = $reqeust-&#x3E;currentCategoryId;                             
+        $db-&#x3E;sort = 0;
+        $db-&#x3E;save();  
+        return $this-&#x3E;buildRightContent($reqeust);
+    }
+</pre>
+
+<p>回到 portfolioController.php 的 updatePortfolioInDBAndReload()函式存入資料庫，<br>並使用 buildRightContent() 回傳給ajax() 重新刷新畫面。</p>
+<hr>
+<h4>呈現效果</h4>
+<img src='https://i.imgur.com/LjZ1lDK.gif' />
+
+<hr>
+<h4>完整程式</h4>
+
+<p>app\Http\Controllers\portfolioController.php</p>
+<pre>
+    function buildRightContent(Request $request){
+        $db = new portfolio();
+        $portfolioInfoFromDB = $db -&#x3E; findportfolioInfoByCategoryId($request-&#x3E;currentCategoryId);
+        $RightContentHtml = &#x22;&#x22;;
+
+        $cardCount = 1;
+        $cardNumInRow = 2;
+        foreach($portfolioInfoFromDB as $portfolio){
+            if($cardCount%$cardNumInRow==1  ) $RightContentHtml = $RightContentHtml.&#x22;&#x3C;div class=&#x27;row col-12&#x27; style=&#x27;margin-top:20px&#x27;&#x3E;&#x22;;
+            $RightContentHtml = $RightContentHtml
+            .&#x22;&#x3C;div class=&#x27;card col-md-12 col-12&#x27;&#x3E;&#x22;
+                .&#x22;&#x3C;div class=&#x27;card-body&#x27;&#x3E;&#x22;
+                    .&#x22;&#x3C;h5 class=&#x27;card-title&#x27; id=&#x27;portfolio_name_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27;&#x3E;&#x22;
+                        .&#x22;&#x3C;img id=&#x27;skill_icon&#x27; class=&#x27;rounded&#x27; src=&#x27;&#x2F;icon&#x2F;skill.png&#x27; alt=&#x27;profile Pic&#x27;&#x3E;&#x22;
+                        .$portfolio-&#x3E;name
+                    .&#x22;&#x3C;&#x2F;h5&#x3E;&#x22;            
+                    .&#x22;&#x3C;p class=&#x27;card-text&#x27; id=&#x27;portfolio_discription_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27;&#x3E;&#x22;.$portfolio-&#x3E;discription .&#x22;&#x3C;&#x2F;p&#x3E;&#x22;
+                    .&#x22;&#x3C;input type=&#x27;submit&#x27; value=&#x27;編輯&#x27; class=&#x27;btn btn-info&#x27; data-toggle=&#x27;modal&#x27; data-target=&#x27;&#x23;editPortfolioModal_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27; &#x3E;&#x22;
+                    .&#x22;&#x3C;input type=&#x27;button&#x27; value=&#x27;刪除&#x27; class=&#x27;btn btn-danger&#x27; onclick=&#x27;deletePortfolioAndReload(&#x22;.$portfolio-&#x3E;id.&#x22;)&#x27; &#x3E;&#x22;
+                .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;
+            .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;;
+            if($cardCount%$cardNumInRow==0  ) $RightContentHtml = $RightContentHtml.&#x22;&#x3C;&#x2F;div&#x3E;&#x22;;
+            $RightContentHtml = $this-&#x3E;buildPortfolioEditModalHtml($RightContentHtml,$request-&#x3E;currentCategoryId,$portfolio);           
+            $cardCount ++;
+        }    
+        return $RightContentHtml;
+    }
+
+
+    public function buildPortfolioEditModalHtml(String $RightContentHtml,int $categoryId,  $portfolio){
+        $RightContentHtml = $RightContentHtml
+        .&#x22;&#x3C;div class=&#x27;modal fade&#x27; id=&#x27;editPortfolioModal_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27; tabindex=&#x27;-1&#x27; role=&#x27;dialog&#x27; aria-labelledby=&#x27;editModalLabel&#x27; aria-hidden=&#x27;true&#x27; data-backdrop=&#x27;static&#x27;&#x3E;&#x22;
+            .&#x22;&#x3C;div class=&#x27;modal-dialog  modal-lg&#x27; role=&#x27;document&#x27;&#x3E;&#x22;
+                .&#x22;&#x3C;div class=&#x27;modal-content&#x27;&#x3E;&#x22;
+                    .&#x22;&#x3C;div class=&#x27;modal-header&#x27;&#x3E;&#x22;
+                        .&#x22;&#x3C;h5 class=&#x27;modal-title&#x27; id=&#x27;editModalLabel&#x27;&#x3E;修改作品:&#x22;.$portfolio-&#x3E;name.&#x22;&#x3C;&#x2F;h5&#x3E;&#x22;
+                    .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;
+                    .&#x22;&#x3C;div class=&#x27;modal-body&#x27;&#x3E;&#x22;
+                        .&#x22;&#x3C;div class=&#x27;form-group&#x27;&#x3E;&#x22;
+                            .&#x22;&#x3C;label class=&#x27;col-form-label&#x27;&#x3E;作品名稱:&#x3C;&#x2F;label&#x3E;&#x22;
+                            .&#x22;&#x3C;input type=&#x27;text&#x27; class=&#x27;form-control&#x27;  value=&#x27;&#x22;.$portfolio-&#x3E;name.&#x22;&#x27; id=&#x27;updatePortfolioName_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27; name=&#x27;updatePortfolioName_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27;&#x3E;&#x22;
+                            .&#x22;&#x3C;label class=&#x27;col-form-label&#x27;&#x3E;作品說明:&#x3C;&#x2F;label&#x3E;&#x22;
+                            .&#x22;&#x3C;input type=&#x27;text&#x27; class=&#x27;form-control&#x27;  value=&#x27;&#x22;.$portfolio-&#x3E;discription.&#x22;&#x27; id=&#x27;updatePortfolioDiscription_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27;  name=&#x27;updatePortfolioDiscription_&#x22;.$portfolio-&#x3E;id.&#x22;&#x27;&#x3E;&#x22;
+                        .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;
+                    .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;
+                    .&#x22;&#x3C;div class=&#x27;modal-footer&#x27;&#x3E;&#x22;
+                        .&#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-secondary&#x27; data-dismiss=&#x27;modal&#x27; onclick=&#x27;recoverEditPortfolioModal(&#x22;.$portfolio-&#x3E;id.&#x22;)&#x27; &#x3E;取消&#x3C;&#x2F;button&#x3E;&#x22;
+                        .&#x22;&#x3C;button type=&#x27;button&#x27; class=&#x27;btn btn-info&#x27; data-dismiss=&#x27;modal&#x27; onclick=&#x27;editPortfolioAndReload(&#x22;.$portfolio-&#x3E;id.&#x22;)&#x27; &#x3E;儲存&#x3C;&#x2F;button&#x3E;&#x22;
+                    .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;
+                .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;
+            .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;
+        .&#x22;&#x3C;&#x2F;div&#x3E;&#x22;;
+        return $RightContentHtml;
+    }
+
+&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+&#x2F;&#x2F;ajax() 導向次，並存入資料庫
+    public function deletePortfolioInDBAndReload(Request $request){  
+        $db = portfolio::find($request-&#x3E;portfolioId);        
+        $db-&#x3E;is_delete = 1;
+        $db-&#x3E;save();  
+        return $this-&#x3E;buildRightContent($request);    
+    }
+
+</pre>
+
+<p>public\js\portfolioIndex\editPortfolio.js</p>
+<pre>
+&#x2F;&#x2F;編輯作品
+function recoverEditPortfolioModal(portfolioId){
+    $(&#x22;&#x23;updatePortfolioName_&#x22;+ portfolioId).val( $(&#x22;&#x23;portfolio_name_&#x22;+ portfolioId).text() );
+    $(&#x22;&#x23;updatePortfolioDiscription_&#x22; + portfolioId).val($(&#x22;&#x23;portfolio_discription_&#x22;+ portfolioId).text());
+}
+
+function editPortfolioAndReload(portfolioId){
+    var updatePortfolioName = $(&#x22;&#x23;updatePortfolioName_&#x22;+ portfolioId).val();
+    var updatePortfolioDiscription = $(&#x22;&#x23;updatePortfolioDiscription_&#x22; + portfolioId).val();
+    var categoryId = $(&#x22;&#x23;currentCategoryId&#x22;).val();
+    $.ajax({
+      type:&#x27;GET&#x27;,
+      url:&#x27;&#x2F;portfolioEdit&#x27;,
+      data: {
+        updatePortfolioName : updatePortfolioName,
+        updatePortfolioDiscription : updatePortfolioDiscription,
+        currentCategoryId : categoryId,
+        portfolioId : portfolioId,
+        &#x22;_token&#x22;: &#x22; csrf_token() &#x22;
+      } ,&#x2F;&#x2F;419
+      success:function(result){
+        $(&#x22;&#x23;RightContent&#x22;).html(result);
+        &#x2F;&#x2F;$(&#x22;.modal-backdrop&#x22;).removeClass(&#x22;in&#x22;).removeClass(&#x22;fade&#x22;).remove();
+        recoverEditPortfolioModal(portfolioId);
+      },
+      error:function(){
+        console.log(&#x22;editPortfolioAndReload() error&#x22;);
+      }
+    });
+}
+</pre>
+
+<p>routes\web.php</p>
+<pre>
+Route::get(&#x27;&#x2F;portfolioEdit&#x27;,&#x27;portfolioController@updatePortfolioInDBAndReload&#x27;);
+</pre>
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://aloo31124.github.io/2020/08/27/laravel-%E4%BD%9C%E5%93%81%E9%9B%8613-%E5%8F%B3%E5%81%B4%E5%85%A7%E5%AE%B9%E9%A0%81%E9%9D%A22-%E7%B7%A8%E8%BC%AF%E4%BD%9C%E5%93%81/" data-id="ckecoe4vl0035dkx171t08ja8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/08/25/laravel/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[laravel][作品集12] 右側內容頁面1-新增作品</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分類</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js-%E9%9A%A8%E7%AD%86%E8%A8%98/">js 隨筆記</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/laravel-%E5%B1%A5%E6%AD%B7%E4%BD%9C%E5%93%81%E7%B7%B4%E7%BF%92/">laravel 履歷作品練習</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/svn-%E9%9A%A8%E7%AD%86%E8%A8%98/">svn 隨筆記</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E7%AD%86%E8%A8%98/">工作筆記</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B7%A8%E7%A2%BC/">編碼</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOM/" rel="tag">DOM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Eclipse/" rel="tag">Eclipse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ajax/" rel="tag">ajax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ajax/" rel="tag">ajax()</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jquery/" rel="tag">jquery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/" rel="tag">jsp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/migration/" rel="tag">migration</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/" rel="tag">svn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tagbase/" rel="tag">tagbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tld/" rel="tag">tld</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8F%9B%E8%A1%8C%E7%AC%A6%E8%99%9F/" rel="tag">換行符號</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" rel="tag">檔案上傳</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B7%A8%E7%A2%BC/" rel="tag">編碼</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B7%A8%E8%AD%AF/" rel="tag">編譯</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤雲</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax()</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jquery/" style="font-size: 16.67px;">jquery</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/laravel/" style="font-size: 20px;">laravel</a> <a href="/tags/migration/" style="font-size: 13.33px;">migration</a> <a href="/tags/mvc/" style="font-size: 10px;">mvc</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/tagbase/" style="font-size: 10px;">tagbase</a> <a href="/tags/tld/" style="font-size: 10px;">tld</a> <a href="/tags/%E6%8F%9B%E8%A1%8C%E7%AC%A6%E8%99%9F/" style="font-size: 10px;">換行符號</a> <a href="/tags/%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3/" style="font-size: 10px;">檔案上傳</a> <a href="/tags/%E7%B7%A8%E7%A2%BC/" style="font-size: 13.33px;">編碼</a> <a href="/tags/%E7%B7%A8%E8%AD%AF/" style="font-size: 10px;">編譯</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">彙整</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/08/27/laravel-%E4%BD%9C%E5%93%81%E9%9B%8613-%E5%8F%B3%E5%81%B4%E5%85%A7%E5%AE%B9%E9%A0%81%E9%9D%A22-%E7%B7%A8%E8%BC%AF%E4%BD%9C%E5%93%81/">[laravel][作品集13] 右側內容頁面2-編輯作品</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/25/laravel/">[laravel][作品集12] 右側內容頁面1-新增作品</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%8611-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE8-%E5%88%AA%E9%99%A4%E5%88%86%E9%A1%9E/">[laravel][作品集11] 撰寫左樹選單8-刪除分類</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/25/laravel-%E4%BD%9C%E5%93%81%E9%9B%8610-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE7-%E4%BF%AE%E6%94%B9%E5%88%86%E9%A1%9E%E5%90%8D%E7%A8%B1/">[laravel][作品集10] 撰寫左樹選單7-修改分類名稱</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/13/%E4%BD%9C%E5%93%81%E9%9B%869-%E6%92%B0%E5%AF%AB%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE6-%E6%96%B0%E5%A2%9E%E5%88%86%E9%A1%9E%E5%BE%8C%E6%9B%B4%E6%96%B0%E5%B7%A6%E6%A8%B9%E9%81%B8%E5%96%AE/">[laravel][作品集9] 撰寫左樹選單6-新增分類後更新左樹選單</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 盧本翔<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
